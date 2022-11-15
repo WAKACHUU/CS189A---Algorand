@@ -14,7 +14,20 @@ class _LoginDemoState extends State<LoginDemo> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Login Page"),
+        title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                  Image.asset(
+                 'asset/images/algorand.png',
+                  fit: BoxFit.fitHeight,
+                  height: 64,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-System')),
+            ],
+
+          ),
+        backgroundColor: Color.fromARGB(255, 115, 179, 239),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -28,7 +41,7 @@ class _LoginDemoState extends State<LoginDemo> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('asset/images/cow.png')),
+                    child: Image.asset('asset/images/UCSB.png')),
               ),
             ),
             Padding(
@@ -38,7 +51,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    hintText: 'Enter valid email id as abc@ucsb.edu'),
               ),
             ),
             Padding(
@@ -59,14 +72,14 @@ class _LoginDemoState extends State<LoginDemo> {
               },
               child: Text(
                 'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
+                style: TextStyle(color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  color: Color.fromARGB(255, 115, 179, 239), borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
                   // an event to be done

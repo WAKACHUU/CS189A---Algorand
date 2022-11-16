@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/login/login_page.dart';
+import 'package:untitled1/signup/signup.dart';
 
 void main() {
+  // intialize the widgets
   runApp(const MyApp());
 }
 
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginDemo(),
+        '/signup': (context) => SignUpDemo(),
       }
     );
   }

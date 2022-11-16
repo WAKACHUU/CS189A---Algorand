@@ -1,5 +1,5 @@
 // login Page
-
+import 'package:untitled1/signup/signup.dart';
 import 'package:flutter/material.dart';
 // import 'HomePage.dart';
 
@@ -23,7 +23,7 @@ class _LoginDemoState extends State<LoginDemo> {
                   height: 64,
               ),
               Container(
-                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-System')),
+                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-ystem')),
             ],
 
           ),
@@ -93,7 +93,17 @@ class _LoginDemoState extends State<LoginDemo> {
             SizedBox(
               height: 130,
             ),
-            Text('New User? Create Account')
+            Text('New User? Create Account'),
+            TextButton(onPressed: (
+                //TODO SIGNUP SCREEN GOES HERE
+                ) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpDemo()),
+              );
+            }, 
+            child: Text('Sign Up', style: TextStyle(color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),))
+            
           ],
         ),
       ),

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CS 184 Final Project',
+      title: 'Algo-learn',
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginDemo(),

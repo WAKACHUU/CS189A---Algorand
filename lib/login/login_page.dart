@@ -23,7 +23,7 @@ class _LoginDemoState extends State<LoginDemo> {
                   height: 64,
               ),
               Container(
-                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-ystem')),
+                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-system')),
             ],
 
           ),

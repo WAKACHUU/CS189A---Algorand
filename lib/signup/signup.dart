@@ -1,5 +1,6 @@
 // login Page
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 // import 'HomePage.dart';
 
@@ -9,6 +10,22 @@ class SignUpDemo extends StatefulWidget {
 }
 
 class _SignUpDemoState extends State<SignUpDemo> {
+
+  final userNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  
+  late DatabaseReference dbref;
+
+  @override
+  void initState() {
+    super.initState();
+    dbref = FirebaseDatabase.instance.ref().child('users');
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +65,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: userNameController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Full Name',
@@ -59,6 +77,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: emailController,
                 obscureText: false,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -70,6 +89,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -81,6 +101,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               padding: const EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextField(
+                controller: confirmPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -99,6 +120,19 @@ class _SignUpDemoState extends State<SignUpDemo> {
               child: TextButton(
                 onPressed: () {
                   // an event to be done
+                  if(passwordController.text == confirmPasswordController.text){
+                    Map<String, String> users = {
+                      'name': userNameController.text,
+                      'email': emailController.text,
+                      'password': passwordController.text,
+                    };
+                    dbref.push().set(users).then((value) {
+                      print('User Added');
+                      Navigator.of(context).pop();
+                    }).catchError((onError) {
+                      print(onError);
+                    });
+                  }
                 },
                 child: Text(
                   'Sign Up',

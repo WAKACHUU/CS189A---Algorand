@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/login/login_page.dart';
 import 'package:untitled1/signup/signup.dart';
-import 'package:untitled1/mongo_db.dart';
+
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async{
   // ensure the database is connected
   WidgetsFlutterBinding.ensureInitialized();
-  await MongoDataBase.connect();
+  // var Firebase;
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // intialize the widgets
   runApp(const MyApp());
 }

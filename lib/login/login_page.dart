@@ -1,4 +1,6 @@
 // login Page
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:untitled1/signup/signup.dart';
 import 'package:flutter/material.dart';
 // import 'HomePage.dart';
@@ -9,6 +11,18 @@ class LoginDemo extends StatefulWidget {
 }
 
 class _LoginDemoState extends State<LoginDemo> {
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +62,7 @@ class _LoginDemoState extends State<LoginDemo> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -59,6 +74,7 @@ class _LoginDemoState extends State<LoginDemo> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -82,9 +98,7 @@ class _LoginDemoState extends State<LoginDemo> {
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 115, 179, 239), borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
-                  // an event to be done
-                },
+                onPressed: signIn,
                 child: Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
@@ -108,6 +122,15 @@ class _LoginDemoState extends State<LoginDemo> {
           ],
         ),
       ),
+    );
+  }
+
+
+  Future signIn() async{
+    //TODO SIGN IN METHOD GOES HERE
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
     );
   }
 }

@@ -37,7 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   algorand_dart: ^1.0.3
   googleapis: ^9.2.0
-  firebase_core: ^0.4.2+2
+  firebase_core: ^1.17.0
+  firebase_database: ^9.0.15
+  firebase_auth: ^3.3.19
 
 dev_dependencies:
   flutter_test:

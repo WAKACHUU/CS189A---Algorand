@@ -5,6 +5,8 @@ import 'package:untitled1/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/home/home.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class LoginDemo extends StatefulWidget {
   @override
   _LoginDemoState createState() => _LoginDemoState();
@@ -131,32 +133,58 @@ class _LoginDemoState extends State<LoginDemo> {
     // check wether the email and password are in the database
     // if yes then navigate to home page
     // else show error message
-    try{
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim()
-      );
+    // try{
+      // UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      //   email: emailController.text.trim(),
+      //   password: passwordController.text.trim()
+      // );
       // print("Signed in");
-      //navigate to home page
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        // show error message that user not found in frontend
-        setState(() {
+      // get the user email and password from firestore and check if it matches with the input
+      // if yes then navigate to home page
+      // else show error message
+    FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
+      querySnapshot.docs.forEach((doc) {
+        if(doc['email'] == emailController.text.trim() && doc['password'] == passwordController.text.trim()){
+          print("Signed in");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        }
+        else if(doc['email']!=emailController.text.trim()){
+          setState(() {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
-        });
-        // print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        // print('Wrong password provided for that user.');
-        setState(() {
+          }); 
+        }
+        else if(doc['password']!=passwordController.text.trim() && doc['email']==emailController.text.trim()){
+          setState(() {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
-        });
-      }
-    }
+          }); 
+        }
+      })
+    });
+
+
+      //navigate to home page
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => HomePage()),
+      // );
+
+    // } on FirebaseAuthException catch (e) {
+    //   if (e.code == 'user-not-found') {
+    //     // show error message that user not found in frontend
+    //     setState(() {
+    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
+    //     });
+    //     // print('No user found for that email.');
+    //   } else if (e.code == 'wrong-password') {
+    //     // print('Wrong password provided for that user.');
+    //     setState(() {
+    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
+    //     });
+    //   }
+    // }
 
   }
 }

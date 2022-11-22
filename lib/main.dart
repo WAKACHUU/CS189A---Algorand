@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Algo-learn',
-      //initialRoute: '/login',
+      initialRoute: '/login',
       home: Mainpage(),
       routes: {
         '/login': (context) => LoginDemo(),

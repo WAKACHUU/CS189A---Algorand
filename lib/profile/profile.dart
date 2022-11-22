@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:untitled1/login/login_page.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
   @override
@@ -133,6 +133,46 @@ class _MePageState extends State<ProfilePage> {
                           ))),
                 ],
               ),
+              // and a button to logout
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Container(
+                          alignment: Alignment.center,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              // navigate to login page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginDemo()),
+                              );
+                            },
+                            child: Text(
+                              "Logout",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.black,
+                              side: BorderSide(
+                                color: Colors.black,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              minimumSize: Size(300, 40),
+                            ),
+                          ))),
+                ],
+              ),
+
+
               // Padding(
               // //   padding: const EdgeInsets.only(top: 36.0, left: 150.0, right: 80.0),
               // padding: const EdgeInsets.symmetric(horizontal: 10.0),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/login/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
   @override
@@ -142,13 +144,17 @@ class _MePageState extends State<ProfilePage> {
                       child: Container(
                           alignment: Alignment.center,
                           child: OutlinedButton(
-                            onPressed: () {
-                              // navigate to login page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginDemo()),
-                              );
+                            onPressed: () async{
+                              // firebase auth sign out 
+                                await FirebaseAuth.instance.signOut();
+                                print('Signed out');
+                              // navigate to login page and clear the stack
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginDemo()),
+                                  (route) => false);
+                              
                             },
                             child: Text(
                               "Logout",

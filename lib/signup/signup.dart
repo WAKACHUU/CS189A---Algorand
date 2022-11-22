@@ -1,7 +1,11 @@
 // login Page
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis/clouddebugger/v2.dart';
+import 'package:untitled1/login/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'HomePage.dart';
 
 class SignUpDemo extends StatefulWidget {
@@ -118,21 +122,82 @@ class _SignUpDemoState extends State<SignUpDemo> {
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 115, 179, 239), borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
+                onPressed: () async{
                   // an event to be done
-                  if(passwordController.text == confirmPasswordController.text){
-                    Map<String, String> users = {
-                      'name': userNameController.text,
-                      'email': emailController.text,
-                      'password': passwordController.text,
-                    };
-                    dbref.push().set(users).then((value) {
-                      print('User Added');
-                      Navigator.of(context).pop();
-                    }).catchError((onError) {
-                      print(onError);
-                    });
+
+                  // if(passwordController.text == confirmPasswordController.text){
+                  //   Map<String, String> users = {
+                  //     'name': userNameController.text,
+                  //     'email': emailController.text,
+                  //     'password': passwordController.text,
+                  //   };
+                  //   dbref.push().set(users).then((value) {
+                  //     print('User Added');
+                  //     Navigator.of(context).pop();
+                  //   }).catchError((onError) {
+                  //     print(onError);
+                  //   });
+                  // }
+
+                  // add document to firestore database 
+
+                  // check whether the email is already in the firestore database document
+                  // var write=true;
+                  var found=false;
+                  await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
+                     querySnapshot.docs.forEach((doc) {
+                       if(doc['email'] == emailController.text){
+                          found=true;
+                       }
+                     })
+                   });
+                  if(found==true){
+                    setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The email is already registered')));
+                          }); 
                   }
+                  else if(!emailController.text.endsWith('ucsb.edu'))
+                  {
+                    setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The email is not ended with ucsb.edu')));
+                          });
+                  }
+                  else if(passwordController.text != confirmPasswordController.text){
+                    setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The password is not matched')));
+                          });
+                  }
+                  else if(found==false) {
+                    try{
+                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        );
+
+                       // add document to firestore database
+                          FirebaseFirestore.instance.collection('login').add({
+                            'name': userNameController.text,
+                            'email': emailController.text,
+                            'password': passwordController.text,
+                          }).then((value) {
+                            print('User Added');
+                            Navigator.of(context).pop();
+                          }).catchError((onError) {
+                            print(onError);
+                          });
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The password provided is too weak, at least 6 characters')));
+                        });
+                      } 
+                    } catch (e) {
+                      print(e);
+                    }
+                  }
+
+
+    
                 },
                 child: Text(
                   'Sign Up',

@@ -4,6 +4,7 @@ import 'package:untitled1/login/login_page.dart';
 import 'package:untitled1/signup/signup.dart';
 import 'package:untitled1/home/home.dart';
 import 'package:untitled1/profile/profile.dart';
+import 'package:untitled1/courses/course_page.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpDemo(),
         '/home': (context) => HomePage(),
         '/profile': (context) => ProfilePage(),
+         '/courses': (context) => CoursePage()
       }
     );
   }

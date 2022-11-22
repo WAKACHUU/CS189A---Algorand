@@ -142,27 +142,43 @@ class _LoginDemoState extends State<LoginDemo> {
       // get the user email and password from firestore and check if it matches with the input
       // if yes then navigate to home page
       // else show error message
-    FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
+    var sign=false;
+    var account=false;
+    await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
       querySnapshot.docs.forEach((doc) {
         if(doc['email'] == emailController.text.trim() && doc['password'] == passwordController.text.trim()){
-          print("Signed in");
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
+          sign=true;
         }
-        else if(doc['email']!=emailController.text.trim()){
-          setState(() {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
-          }); 
-        }
+        // else if(doc['email']!=emailController.text.trim()){
+        //   account=false;
+        //   // setState(() {
+        //   // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
+        //   // }); 
+        // }
         else if(doc['password']!=passwordController.text.trim() && doc['email']==emailController.text.trim()){
-          setState(() {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
-          }); 
+          account=true;
+          // setState(() {
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
+          // }); 
         }
       })
     });
+    if(sign){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    }
+    else if(account==false){
+      setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
+          });  
+    }
+    else if(account==true){
+      setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
+          });
+    }
 
 
       //navigate to home page

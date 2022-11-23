@@ -146,15 +146,13 @@ class _MePageState extends State<ProfilePage> {
                           child: OutlinedButton(
                             onPressed: () async{
                               // firebase auth sign out 
-                                await FirebaseAuth.instance.signOut();
-                                print('Signed out');
-                              // navigate to login page and clear the stack
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginDemo()),
-                                  (route) => false);
                               
+                                await FirebaseAuth.instance.signOut();
+                                // print(_auth);
+                                // print('Signed out');
+                              // navigate to login page and change the route to login page
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>LoginDemo()), 
+                              (route) => false);
                             },
                             child: Text(
                               "Logout",

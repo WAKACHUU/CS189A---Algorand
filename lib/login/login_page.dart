@@ -8,6 +8,13 @@ import 'package:untitled1/home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginDemo extends StatefulWidget {
+
+  // Navigator.pushAndRemoveUntil(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => HomePage()),
+  //         (Route<dynamic> route) => false,
+  // );
+
   @override
   _LoginDemoState createState() => _LoginDemoState();
 }
@@ -27,6 +34,11 @@ class _LoginDemoState extends State<LoginDemo> {
 
   @override
   Widget build(BuildContext context) {
+    // Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => LoginDemo()),
+    //         (route) => false,
+    // );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -152,7 +164,8 @@ class _LoginDemoState extends State<LoginDemo> {
         email: emailController.text.trim(),
         password: passwordController.text.trim()
       );
-      Navigator.push(
+      // print(FirebaseAuth.instance.currentUser);
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );

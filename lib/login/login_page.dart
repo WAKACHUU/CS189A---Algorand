@@ -66,6 +66,7 @@ class _LoginDemoState extends State<LoginDemo> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: emailController,
+                key: Key('email-field'),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -78,6 +79,7 @@ class _LoginDemoState extends State<LoginDemo> {
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: passwordController,
+                key: Key('password-field'),
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -141,6 +143,7 @@ class _LoginDemoState extends State<LoginDemo> {
     // else show error message
     var sign = false;
     var account = false;
+
     await FirebaseFirestore.instance
         .collection('login')
         .get()

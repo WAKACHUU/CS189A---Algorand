@@ -14,12 +14,11 @@ class SignUpDemo extends StatefulWidget {
 }
 
 class _SignUpDemoState extends State<SignUpDemo> {
-
   final userNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  
+
   late DatabaseReference dbref;
 
   @override
@@ -28,26 +27,24 @@ class _SignUpDemoState extends State<SignUpDemo> {
     dbref = FirebaseDatabase.instance.ref().child('users');
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                  Image.asset(
-                 'asset/images/algorand.png',
-                  fit: BoxFit.fitHeight,
-                  height: 64,
-              ),
-              Container(
-                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-ystem')),
-            ],
-
-          ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'asset/images/algorand.png',
+              fit: BoxFit.fitHeight,
+              height: 64,
+            ),
+            Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Algo-learn Learning Management-ystem')),
+          ],
+        ),
         backgroundColor: Color.fromARGB(255, 115, 179, 239),
       ),
       body: SingleChildScrollView(
@@ -70,6 +67,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: userNameController,
+                key: Key('name'),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Full Name',
@@ -83,10 +81,12 @@ class _SignUpDemoState extends State<SignUpDemo> {
               child: TextField(
                 controller: emailController,
                 obscureText: false,
+                key: Key('email'),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email Address',
-                    hintText: 'Enter valid email address, for instance: abc@ucsb.edu'),
+                    hintText:
+                        'Enter valid email address, for instance: abc@ucsb.edu'),
               ),
             ),
             Padding(
@@ -95,6 +95,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               child: TextField(
                 controller: passwordController,
                 obscureText: true,
+                key: Key('password'),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
@@ -107,6 +108,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               child: TextField(
                 controller: confirmPasswordController,
                 obscureText: true,
+                key: Key('confirmPassword'),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Confirm Password',
@@ -120,9 +122,10 @@ class _SignUpDemoState extends State<SignUpDemo> {
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 115, 179, 239), borderRadius: BorderRadius.circular(20)),
+                  color: Color.fromARGB(255, 115, 179, 239),
+                  borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () async{
+                onPressed: () async {
                   // an event to be done
 
                   // if(passwordController.text == confirmPasswordController.text){
@@ -139,65 +142,69 @@ class _SignUpDemoState extends State<SignUpDemo> {
                   //   });
                   // }
 
-                  // add document to firestore database 
+                  // add document to firestore database
 
                   // check whether the email is already in the firestore database document
                   // var write=true;
-                  var found=false;
-                  await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
-                     querySnapshot.docs.forEach((doc) {
-                       if(doc['email'] == emailController.text){
-                          found=true;
-                       }
-                     })
-                   });
-                  if(found==true){
-                    setState(() {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The email is already registered')));
-                          }); 
-                  }
-                  else if(!emailController.text.endsWith('ucsb.edu'))
-                  {
-                    setState(() {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The email is not ended with ucsb.edu')));
+                  var found = false;
+                  await FirebaseFirestore.instance
+                      .collection('login')
+                      .get()
+                      .then((QuerySnapshot querySnapshot) => {
+                            querySnapshot.docs.forEach((doc) {
+                              if (doc['email'] == emailController.text) {
+                                found = true;
+                              }
+                            })
                           });
-                  }
-                  else if(passwordController.text != confirmPasswordController.text){
+                  if (found == true) {
                     setState(() {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The password is not matched')));
-                          });
-                  }
-                  else if(found==false) {
-                    try{
-                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('The email is already registered')));
+                    });
+                  } else if (!emailController.text.endsWith('ucsb.edu')) {
+                    setState(() {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text('The email is not ended with ucsb.edu')));
+                    });
+                  } else if (passwordController.text !=
+                      confirmPasswordController.text) {
+                    setState(() {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('The password is not matched')));
+                    });
+                  } else if (found == false) {
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      );
 
-                       // add document to firestore database
-                          FirebaseFirestore.instance.collection('login').add({
-                            'name': userNameController.text,
-                            'email': emailController.text,
-                            'password': passwordController.text,
-                          }).then((value) {
-                            print('User Added');
-                            Navigator.of(context).pop();
-                          }).catchError((onError) {
-                            print(onError);
-                          });
+                      // add document to firestore database
+                      FirebaseFirestore.instance.collection('login').add({
+                        'name': userNameController.text,
+                        'email': emailController.text,
+                        'password': passwordController.text,
+                      }).then((value) {
+                        print('User Added');
+                        Navigator.of(context).pop();
+                      }).catchError((onError) {
+                        print(onError);
+                      });
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'weak-password') {
                         setState(() {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('The password provided is too weak, at least 6 characters')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'The password provided is too weak, at least 6 characters')));
                         });
-                      } 
+                      }
                     } catch (e) {
                       print(e);
                     }
                   }
-
-
-    
                 },
                 child: Text(
                   'Sign Up',

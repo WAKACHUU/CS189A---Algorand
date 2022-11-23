@@ -8,7 +8,6 @@ import 'package:untitled1/home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginDemo extends StatefulWidget {
-
   // Navigator.pushAndRemoveUntil(
   //     context,
   //     MaterialPageRoute(builder: (context) => HomePage()),
@@ -20,7 +19,6 @@ class LoginDemo extends StatefulWidget {
 }
 
 class _LoginDemoState extends State<LoginDemo> {
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -43,18 +41,18 @@ class _LoginDemoState extends State<LoginDemo> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                  Image.asset(
-                 'asset/images/algorand.png',
-                  fit: BoxFit.fitHeight,
-                  height: 64,
-              ),
-              Container(
-                  padding: const EdgeInsets.all(8.0), child: Text('Algo-learn Learning Management-system')),
-            ],
-
-          ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'asset/images/algorand.png',
+              fit: BoxFit.fitHeight,
+              height: 64,
+            ),
+            Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Algo-learn Learning Management-system')),
+          ],
+        ),
         backgroundColor: Color.fromARGB(255, 115, 179, 239),
       ),
       body: SingleChildScrollView(
@@ -98,19 +96,20 @@ class _LoginDemoState extends State<LoginDemo> {
             ),
             TextButton(
               onPressed: () {
-                
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
               },
               child: Text(
                 'Forgot Password',
-                style: TextStyle(color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
+                style: TextStyle(
+                    color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 115, 179, 239), borderRadius: BorderRadius.circular(20)),
+                  color: Color.fromARGB(255, 115, 179, 239),
+                  borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: signIn,
                 child: Text(
@@ -123,63 +122,65 @@ class _LoginDemoState extends State<LoginDemo> {
               height: 130,
             ),
             Text('New User? Create Account'),
-            TextButton(onPressed: (
-                //TODO SIGNUP SCREEN GOES HERE
-                ) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignUpDemo()),
-              );
-            }, 
-            child: Text('Sign Up', style: TextStyle(color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),))
-            
+            TextButton(
+                onPressed: (
+                    //TODO SIGNUP SCREEN GOES HERE
+                    ) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpDemo()),
+                  );
+                },
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
+                ))
           ],
         ),
       ),
     );
   }
 
-
-  Future signIn() async{
+  Future signIn() async {
     //TODO SIGN IN METHOD GOES HERE
     // check wether the email and password are in the database
     // if yes then navigate to home page
     // else show error message
-    var sign=false;
-    var account=false;
-    await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        if(doc['email'] == emailController.text.trim() && doc['password'] == passwordController.text.trim()){
-          sign=true;
-        }
-        else if(doc['password']!=passwordController.text.trim() && doc['email']==emailController.text.trim()){
-          account=true;
-        }
-      })
-    });
-    if(sign){
-      // firebase sign in 
+    var sign = false;
+    var account = false;
+    await FirebaseFirestore.instance
+        .collection('login')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                if (doc['email'] == emailController.text.trim() &&
+                    doc['password'] == passwordController.text.trim()) {
+                  sign = true;
+                } else if (doc['password'] != passwordController.text.trim() &&
+                    doc['email'] == emailController.text.trim()) {
+                  account = true;
+                }
+              })
+            });
+    if (sign) {
+      // firebase sign in
       // print("sign in");
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim()
-      );
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
       // print(FirebaseAuth.instance.currentUser);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    }
-    else if(account==false){
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+    } else if (account == false) {
       setState(() {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email.')));
-          });  
-    }
-    else if(account==true){
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('No user found for that email.')));
+      });
+    } else if (account == true) {
       setState(() {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong password provided for that user.')));
-          });
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Wrong password provided for that user.')));
+      });
     }
-
   }
 }

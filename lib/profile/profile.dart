@@ -144,15 +144,15 @@ class _MePageState extends State<ProfilePage> {
                       child: Container(
                           alignment: Alignment.center,
                           child: OutlinedButton(
-                            onPressed: () async{
-                              // firebase auth sign out 
-                              
-                                await FirebaseAuth.instance.signOut();
-                                // print(_auth);
-                                // print('Signed out');
+                            onPressed: () async {
+                              // firebase auth sign out
+
+                              await FirebaseAuth.instance.signOut();
+                              // print(_auth);
+                              // print('Signed out');
                               // navigate to login page and change the route to login page
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>LoginDemo()), 
-                              (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/login', (route) => false);
                             },
                             child: Text(
                               "Logout",
@@ -175,7 +175,6 @@ class _MePageState extends State<ProfilePage> {
                           ))),
                 ],
               ),
-
 
               // Padding(
               // //   padding: const EdgeInsets.only(top: 36.0, left: 150.0, right: 80.0),

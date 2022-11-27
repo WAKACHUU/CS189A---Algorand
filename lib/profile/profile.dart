@@ -16,7 +16,7 @@ class _MePageState extends State<ProfilePage> {
   // var width = MediaQuery.of(context).size.width;
   // var height = MediaQuery.of(context).size.height;
 
-  String username = "aaaa";
+  String username='aaaa';
   String email = "aaaa";
 
 
@@ -33,7 +33,7 @@ class _MePageState extends State<ProfilePage> {
     });
   }
 
-  void get_user_info() async{
+  Future<String> get_user_info() async{
     email= FirebaseAuth.instance.currentUser!.email.toString();
     
     await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
@@ -43,14 +43,14 @@ class _MePageState extends State<ProfilePage> {
         }
       })
     });
-    print(email);
-    print(username);
+    return username;
   }
 
   @override
   void initState(){
-    get_user_info();
     super.initState();
+    get_user_info().then((value) => setState(() {username = value;}));
+   
   }
 
   @override
@@ -110,7 +110,7 @@ class _MePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.only(top: 10.0, left: 90.0),
                       child: Container(
                         child: Text(
-                          "email: ",
+                          "Email: ",
                           textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 16),
                         ),

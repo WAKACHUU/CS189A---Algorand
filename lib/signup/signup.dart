@@ -203,7 +203,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
                       FirebaseFirestore.instance.collection('login').add({
                         'name': userNameController.text,
                         'email': emailController.text,
-                        'password': passwordController.text,
+                        //'password': passwordController.text,
                       }).then((value) {
                         print('User Added');
                         Navigator.of(context).pop();

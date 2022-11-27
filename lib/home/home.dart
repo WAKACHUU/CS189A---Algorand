@@ -188,9 +188,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+          backgroundColor: Colors.blue,
+          title: Text(
+            'Home',
+            style: TextStyle(
+              fontSize: 26,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),  ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

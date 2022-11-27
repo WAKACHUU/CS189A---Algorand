@@ -8,9 +8,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:untitled1/util/my_button.dart';
 import 'package:untitled1/util/my_list.dart';
-import 'package:untitled1/util/my_card.dart';
+import 'package:untitled1/util/my_algo.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
+import 'package:untitled1/util/my_nft.dart';
 
 
 class WalletPage extends StatefulWidget {
@@ -73,26 +73,19 @@ class _WalletPageState extends State<WalletPage> {
               scrollDirection: Axis.horizontal,
               controller: _controller,
               children: [
-                MyCard(
-                  balance: 8950.20,
+                MyAlgo(
+                  balance: 895,
                   cardNumber: 123456789,
                   expiryMonth: 10,
                   expiryYear: 24,
                   color: Colors.blue,
                 ),
-                MyCard(
-                  balance: 5340.20,
+                MyNFT(
+                  balance: 53,
                   cardNumber: 123456789,
                   expiryMonth: 12,
                   expiryYear: 23,
                   color: Colors.red,
-                ),
-                MyCard(
-                  balance: 3330.20,
-                  cardNumber: 123456789,
-                  expiryMonth: 12,
-                  expiryYear: 25,
-                  color: Colors.green[400],
                 ),
               ],
             ),
@@ -101,7 +94,7 @@ class _WalletPageState extends State<WalletPage> {
 
           SmoothPageIndicator(
             controller: _controller,
-            count: 3,
+            count: 2,
             effect: ExpandingDotsEffect(
               activeDotColor: Colors.grey.shade600,
             ),

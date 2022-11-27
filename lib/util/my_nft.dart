@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MyCard extends StatelessWidget {
+class MyNFT extends StatelessWidget {
   final double balance;
   final int cardNumber;
   final int expiryMonth;
   final int expiryYear;
   final color;
 
-  const MyCard(
+  const MyNFT(
       {Key? key,
       required this.balance,
       required this.cardNumber,
@@ -37,7 +37,7 @@ class MyCard extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'Your Balance',
+              'Your NFT',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -46,7 +46,7 @@ class MyCard extends StatelessWidget {
               height: 10,
             ),
             Text(
-              '\$' + balance.toString(),
+              balance.toString(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:untitled1/profile/profile.dart';
+import 'package:algo_learn/profile/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

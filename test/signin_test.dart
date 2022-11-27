@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:untitled1/login/login_page.dart';
+import 'package:algo_learn/login/login_page.dart';
 
-import 'package:untitled1/main.dart' as app;
-import 'package:untitled1/profile/profile.dart' as profile;
+import 'package:algo_learn/main.dart' as app;
+import 'package:algo_learn/profile/profile.dart' as profile;
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import './mock.dart';
 

@@ -1,12 +1,14 @@
 // login Page
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/clouddebugger/v2.dart';
-import 'package:untitled1/login/login_page.dart';
+import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'HomePage.dart';
+
+import 'package:algorand_dart/algorand_dart.dart';
+
 
 class SignUpDemo extends StatefulWidget {
   @override
@@ -143,24 +145,6 @@ class _SignUpDemoState extends State<SignUpDemo> {
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
-                  // an event to be done
-
-                  // if(passwordController.text == confirmPasswordController.text){
-                  //   Map<String, String> users = {
-                  //     'name': userNameController.text,
-                  //     'email': emailController.text,
-                  //     'password': passwordController.text,
-                  //   };
-                  //   dbref.push().set(users).then((value) {
-                  //     print('User Added');
-                  //     Navigator.of(context).pop();
-                  //   }).catchError((onError) {
-                  //     print(onError);
-                  //   });
-                  // }
-
-                  // add document to firestore database
-
                   // check whether the email is already in the firestore database document
                   // var write=true;
                   var found = false;
@@ -199,11 +183,13 @@ class _SignUpDemoState extends State<SignUpDemo> {
                         password: passwordController.text.trim(),
                       );
 
+                      // final account=await Algorand.createAccount();
+
                       // add document to firestore database
                       FirebaseFirestore.instance.collection('login').add({
                         'name': userNameController.text,
                         'email': emailController.text,
-                        //'password': passwordController.text,
+                        //'password': passwordController.text,                        
                       }).then((value) {
                         print('User Added');
                         Navigator.of(context).pop();

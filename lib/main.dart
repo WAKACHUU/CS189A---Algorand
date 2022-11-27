@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled1/login/login_page.dart';
-import 'package:untitled1/signup/signup.dart';
-import 'package:untitled1/home/home.dart';
-import 'package:untitled1/profile/profile.dart';
-import 'package:untitled1/courses/course_page.dart';
-import 'package:untitled1/wallet/wallet.dart';
+import 'package:algo_learn/login/login_page.dart';
+import 'package:algo_learn/signup/signup.dart';
+import 'package:algo_learn/home/home.dart';
+import 'package:algo_learn/profile/profile.dart';
+import 'package:algo_learn/courses/course_page.dart';
+import 'package:algo_learn/wallet/wallet.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';

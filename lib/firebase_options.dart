@@ -74,6 +74,6 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://cs189algo-default-rtdb.firebaseio.com',
     storageBucket: 'cs189algo.appspot.com',
     iosClientId: '390074138238-h7cs0ekcvpvqf0q95jljj4qvmt3n605t.apps.googleusercontent.com',
-    iosBundleId: 'com.example.untitled1',
+    iosBundleId: 'com.example.algo_learn',
   );
 }

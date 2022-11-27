@@ -1,10 +1,10 @@
 // login Page
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:untitled1/signup/signup.dart';
-import 'package:untitled1/reset_password/reset_password.dart';
+import 'package:algo_learn/signup/signup.dart';
+import 'package:algo_learn/reset_password/reset_password.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled1/home/home.dart';
+import 'package:algo_learn/home/home.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 

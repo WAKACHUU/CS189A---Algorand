@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/clouddebugger/v2.dart';
-import 'package:untitled1/login/login_page.dart';
+import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:untitled1/util/my_button.dart';
-import 'package:untitled1/util/my_list.dart';
-import 'package:untitled1/util/my_algo.dart';
+import 'package:algo_learn/util/my_button.dart';
+import 'package:algo_learn/util/my_list.dart';
+import 'package:algo_learn/util/my_algo.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:untitled1/util/my_nft.dart';
+import 'package:algo_learn/util/my_nft.dart';
 
 
 class WalletPage extends StatefulWidget {

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:googleapis/admin/directory_v1.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:googleapis/cloudsearch/v1.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -12,8 +16,8 @@ class _MePageState extends State<ProfilePage> {
   // var width = MediaQuery.of(context).size.width;
   // var height = MediaQuery.of(context).size.height;
 
-  String username = "";
-  String email = "";
+  String username = "aaaa";
+  String email = "aaaa";
 
 
 
@@ -29,13 +33,24 @@ class _MePageState extends State<ProfilePage> {
     });
   }
 
-  @override
-  void initState() {
-    username = "AAA";
-    email = "csil@ucsb.edu";
-    super.initState();
-    // get usrname and email from firestore firebase 
+  void get_user_info() async{
+    email= FirebaseAuth.instance.currentUser!.email.toString();
     
+    await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
+      querySnapshot.docs.forEach((doc) {
+        if(doc['email']==email){
+          username = doc['name']!;
+        }
+      })
+    });
+    print(email);
+    print(username);
+  }
+
+  @override
+  void initState(){
+    get_user_info();
+    super.initState();
   }
 
   @override

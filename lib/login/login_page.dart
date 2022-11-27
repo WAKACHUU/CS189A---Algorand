@@ -42,21 +42,36 @@ class _LoginDemoState extends State<LoginDemo> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
+            Container(
                 child: Image.asset(
               'asset/images/algorand.png',
               fit: BoxFit.fitHeight,
               height: 64,
             )),
+            // Expanded(
+            //     child: Container(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text('Algo-learn Learning Management-system'))),
             Expanded(
-                child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Algo-learn Learning Management-system'))),
+                child: Center(
+                    child: Container(
+                        padding: const EdgeInsets.only(right:125),
+                        child: Text(
+                          'Algo-Learn LMS',
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    )
+            )
+            ),
           ],
         ),
-        backgroundColor: Color.fromARGB(255, 115, 179, 239),
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -110,14 +125,14 @@ class _LoginDemoState extends State<LoginDemo> {
               child: Text(
                 'Forgot Password',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
+                    color: Colors.blue, fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 115, 179, 239),
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: signIn,
@@ -144,7 +159,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
+                      color: Colors.blue, fontSize: 15),
                 ))
           ],
         ),

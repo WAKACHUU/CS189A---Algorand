@@ -33,19 +33,36 @@ class _SignUpDemoState extends State<SignUpDemo> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
+            Container(
+                child: Image.asset(
               'asset/images/algorand.png',
               fit: BoxFit.fitHeight,
               height: 64,
+            )),
+            // Expanded(
+            //     child: Container(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text('Algo-learn Learning Management-system'))),
+            Expanded(
+                child: Center(
+                    child: Container(
+                        padding: const EdgeInsets.only(right:125),
+                        child: Text(
+                          'Algo-Learn LMS',
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    )
+            )
             ),
-            Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Algo-learn Learning Management-ystem')),
           ],
         ),
-        backgroundColor: Color.fromARGB(255, 115, 179, 239),
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -122,7 +139,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 115, 179, 239),
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {

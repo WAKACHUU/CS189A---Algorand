@@ -14,10 +14,14 @@ class _CoursePageState extends State<CoursePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 44, 183, 188),
+          backgroundColor: Colors.blue,
           title: Text(
-            "Courses",
-            textAlign: TextAlign.center,
+            'Course',
+            style: TextStyle(
+              fontSize: 26,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           leading: IconButton(
               onPressed: () {

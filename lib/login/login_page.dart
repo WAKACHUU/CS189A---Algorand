@@ -70,7 +70,7 @@ class _LoginDemoState extends State<LoginDemo> {
             ),
           ],
         ),
-        backgroundColor: Color.fromARGB(255, 115, 179, 239),
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -120,14 +120,14 @@ class _LoginDemoState extends State<LoginDemo> {
               child: Text(
                 'Forgot Password',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
+                    color: Colors.blue, fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 115, 179, 239),
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: signIn,
@@ -154,7 +154,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 115, 179, 239), fontSize: 15),
+                      color: Colors.blue, fontSize: 15),
                 ))
           ],
         ),

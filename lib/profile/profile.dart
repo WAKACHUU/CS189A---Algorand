@@ -15,6 +15,8 @@ class _MePageState extends State<ProfilePage> {
   String username = "";
   String email = "";
 
+
+
   int _selected_index = 0;
   static const option_style = TextStyle(
     fontSize: 30,
@@ -32,17 +34,23 @@ class _MePageState extends State<ProfilePage> {
     username = "AAA";
     email = "csil@ucsb.edu";
     super.initState();
+    // get usrname and email from firestore firebase 
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 44, 183, 188),
+          backgroundColor: Colors.blue,
           title: Text(
-            "Profile",
-            textAlign: TextAlign.center,
-          ),
+            'Profile',
+            style: TextStyle(
+              fontSize: 26,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),  
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();

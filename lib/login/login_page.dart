@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:untitled1/signup/signup.dart';
+import 'package:untitled1/reset_password/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/home/home.dart';
 
@@ -101,6 +102,10 @@ class _LoginDemoState extends State<LoginDemo> {
             TextButton(
               onPressed: () {
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                  );
               },
               child: Text(
                 'Forgot Password',
@@ -152,39 +157,38 @@ class _LoginDemoState extends State<LoginDemo> {
     // check wether the email and password are in the database
     // if yes then navigate to home page
     // else show error message
-    var sign = false;
     var account = false;
     await FirebaseFirestore.instance
         .collection('login')
         .get()
         .then((QuerySnapshot querySnapshot) => {
               querySnapshot.docs.forEach((doc) {
-                if (doc['email'] == emailController.text.trim() &&
-                    doc['password'] == passwordController.text.trim()) {
-                  sign = true;
-                } else if (doc['password'] != passwordController.text.trim() &&
-                    doc['email'] == emailController.text.trim()) {
+                if (doc['email'] == emailController.text.trim()) {
                   account = true;
                 }
               })
             });
-    if (sign) {
+    if (account) {
       // firebase sign in
       // print("sign in");
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      } catch (e) {
+        setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('The password is invalid.')));
+          }
+        );
+      }
+      
       // print(FirebaseAuth.instance.currentUser);
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-    } else if (account == false) {
+    } else {
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('No user found for that email.')));
-      });
-    } else if (account == true) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Wrong password provided for that user.')));
+            SnackBar(content: Text('The Email is not registered')));
       });
     }
   }

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Algo-learn',
       initialRoute: '/login',
-      home: Mainpage(),
+      // home: Mainpage(),
       routes: {
         '/login': (context) => LoginDemo(),
         '/signup': (context) => SignUpDemo(),
@@ -41,18 +41,18 @@ class MyApp extends StatelessWidget {
 }
 
 
-class Mainpage extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    body: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-            return HomePage();
-        } else {
-          return LoginDemo();
-        }
-      },
-    )
-  );
-}
+// class Mainpage extends StatelessWidget{
+//   @override
+//   Widget build(BuildContext context) => Scaffold(
+//     body: StreamBuilder<User?>(
+//       stream: FirebaseAuth.instance.authStateChanges(),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasData) {
+//             return HomePage();
+//         } else {
+//           return LoginDemo();
+//         }
+//       },
+//     )
+//   );
+// }

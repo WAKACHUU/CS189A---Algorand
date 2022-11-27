@@ -217,7 +217,8 @@ class _HomePageState extends State<HomePage> {
                         color: Color.fromARGB(113, 233, 232, 230),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/home');
+                            Navigator.of(context).pushReplacementNamed(
+                                '/home');
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

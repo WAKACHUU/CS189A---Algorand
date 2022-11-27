@@ -112,7 +112,8 @@ class _MePageState extends State<ProfilePage> {
                           alignment: Alignment.center,
                           child: OutlinedButton(
                             onPressed: () {
-                              // todo
+                              // jump to the wallet page
+                              Navigator.pushNamed(context, '/wallet');
                             },
                             child: Text(
                               "Wallet",

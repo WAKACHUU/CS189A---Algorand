@@ -41,18 +41,33 @@ class _LoginDemoState extends State<LoginDemo> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
+            Container(
                 child: Image.asset(
               'asset/images/algorand.png',
               fit: BoxFit.fitHeight,
               height: 64,
             )),
+            // Expanded(
+            //     child: Container(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text('Algo-learn Learning Management-system'))),
             Expanded(
-                child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Algo-learn Learning Management-system'))),
+                child: Center(
+                    child: Container(
+                        padding: const EdgeInsets.only(right:125),
+                        child: Text(
+                          'Algo-Learn LMS',
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    )
+            )
+            ),
           ],
         ),
         backgroundColor: Color.fromARGB(255, 115, 179, 239),

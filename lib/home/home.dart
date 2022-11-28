@@ -5,6 +5,8 @@ import 'package:algo_learn/profile/profile.dart';
 import 'package:googleapis/healthcare/v1.dart';
 // import 'package:googleapis/adsense/v2.dart';
 // import 'package:googleapis/content/v2_1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,16 +18,34 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int current_index = 0;
   int _index=0;
+  String username='aaaa';
+  String email = "aaaa";
+
+  Future<String> get_user_info() async{
+    email= FirebaseAuth.instance.currentUser!.email.toString();
+    
+    await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
+      querySnapshot.docs.forEach((doc) {
+        if(doc['email']==email){
+          username = doc['name']!;
+        }
+      })
+    });
+    return username;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    get_user_info().then((value) => setState(() {username = value;}));
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child:Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: bottomNavigationBar(),
       floatingActionButton: floatingActionButton(),
       appBar:AppBar(
@@ -77,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                   ),
             Container(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -104,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
-                          'email',
+                          email,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -114,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child:Text(
-                                'User Name',
+                                username,
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                       )
@@ -130,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child:Text(
                           'Quarters',
                           style: TextStyle(

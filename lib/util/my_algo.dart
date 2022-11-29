@@ -18,7 +18,12 @@ class MyAlgo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return 
+    InkWell(
+      onTap: () {
+        //todo
+      },
+      child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Container(
         padding: EdgeInsets.all(20),
@@ -71,6 +76,6 @@ class MyAlgo extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

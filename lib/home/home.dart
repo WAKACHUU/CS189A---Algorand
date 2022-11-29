@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   String username='aaaa';
   String email = "aaaa";
 
+
   Future<String> get_user_info() async{
     email= FirebaseAuth.instance.currentUser!.email.toString();
     
@@ -43,6 +44,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return SafeArea(
       child:Scaffold(
       backgroundColor: Colors.white,
@@ -150,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:[
                   Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(8.0),
                     child:Text(
                           'Quarters',
                           style: TextStyle(
@@ -164,30 +169,30 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children:[
                       menuButton(
-                        color:_index==0?Colors.blue:Colors.grey,
+                        color:_index==0?Colors.blue:Colors.grey.shade300,
                         text:'Fall 2022',
                         textColor:_index==0? Colors.white:Colors.black,
-                        width: 85,
+                        width: width,
                         onTap: (){
                           setState(() {
                             _index=0;
                           });
                         }),
                       menuButton(
-                        color:_index==1?Colors.blue:Colors.grey,
+                        color:_index==1?Colors.blue:Colors.grey.shade300,
                         text:'Spring 2022',
                         textColor:_index==1? Colors.white:Colors.black,
-                        width: 85,
+                        width: width,
                         onTap: (){
                           setState(() {
                             _index=1;
                           });
                         }), 
                       menuButton(
-                        color:_index==2?Colors.blue:Colors.grey,
+                        color:_index==2?Colors.blue:Colors.grey.shade300,
                         text:'Summer 2022',
                         textColor:_index==2? Colors.white:Colors.black,
-                        width: 85,
+                        width: width,
                         onTap: (){
                           setState(() {
                             _index=2;
@@ -196,9 +201,40 @@ class _HomePageState extends State<HomePage> {
                     ]
                   ),
       
-                  
+                
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:Text(
+                          'Courses',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    
+                  ), 
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(mainAxisSize: MainAxisSize.max,
+                    children: [
+                      courseButton(name: "CS189A", description: "Capstone project", nftOwned: "7 nft owned", width: width, height: height),
+                      courseButton(name: 'CS165A', description: "Intro to AI", nftOwned: "10 nft owned", width: width, height: height),
+                      courseButton(name: "CS181", description: "Computer Vision", nftOwned: "5 nft owned", width: width, height: height),
+                      courseButton(name: 'CS160', description: 'Transfer to compiling language', nftOwned: '6 nftOwned', width: width, height: height)
+                    ],
+                                  ),
+                  ),
+                  ],
+                )
+                
                  
-                ]
+                ],
+
+              
               ),
             
               )  
@@ -266,21 +302,71 @@ class _HomePageState extends State<HomePage> {
         onTap: onTap,
         child: Container(
           alignment: Alignment.center,
-          width: width,
+          width: width/8,
           height:45, 
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(30)
           ),
           child: Text(text,style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
+                              fontSize: 12*width/800,
+                              color:textColor,
                               fontWeight: FontWeight.bold,
                             ),),
         
         ),
       )
     );
+  }
+
+  courseButton({required String name, required String description, required String nftOwned, required double width, required double height })
+  {
+    return InkWell(
+      onTap:(){
+        //todo
+      },
+      child:Column(
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                        
+                          padding: const EdgeInsets.symmetric(horizontal:8.0),
+                          child: Container(
+                            height: height/8,
+                            width: width/3.5,
+                            decoration:  BoxDecoration(
+                              color: Colors.grey.shade300,
+                              // border: Border.
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(name, style: TextStyle(fontSize: 24*width/1000, color: Colors.black,fontWeight:FontWeight.bold ),),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Text(description, style: TextStyle(fontSize: 15*width/900, color: Colors.black, overflow: TextOverflow.ellipsis),),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: (width/3.5),
+                          color: Colors.blue,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 4),
+                            child: Text(nftOwned, style: TextStyle(fontSize: 12, color: Colors.white)),
+                          ),
+                        ),
+                      ],
+                    ));
   }
   
   

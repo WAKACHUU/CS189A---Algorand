@@ -14,7 +14,11 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        InkWell(
+          onTap: () {
+            //todo
+          },
+          child: Container(
           height: 90,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -31,7 +35,7 @@ class MyButton extends StatelessWidget {
           child: Center(
             child: Image.asset(iconImagePath),
           ),
-        ),
+        ),),
         SizedBox(
           height: 10,
         ),

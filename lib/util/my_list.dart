@@ -14,7 +14,11 @@ class MyListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return InkWell(
+      onTap: () {
+        //todo
+      },
+      child:Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,6 +71,6 @@ class MyListTile extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

@@ -1,6 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:algo_learn/profile/profile.dart';
+import 'package:googleapis/healthcare/v1.dart';
+// import 'package:googleapis/adsense/v2.dart';
+// import 'package:googleapis/content/v2_1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,292 +16,272 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // List<Widget> widgets = [];
-  // void tmp() async {
-  //   var data = await id.get();
-  //   var map = data.value as Map;
+  int current_index = 0;
+  int _index=0;
+  String username='aaaa';
+  String email = "aaaa";
 
-  //   if (map.length > 5) {
-  //     for (var i = map.length - 1; i > map.length - 6; i--) {
-  //       Icon icon = IconTypeMapping()
-  //           .mapTypeToIcon(map.values.elementAt(i)['type'].toString());
-  //       // print(map.values.elementAt(i)['amount']);
-  //       Widget temp = Padding(
-  //         padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-  //         child: Container(
-  //             decoration: BoxDecoration(
-  //               border: Border.all(color: Colors.black, width: 1),
-  //             ),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 Padding(
-  //                   padding: const EdgeInsets.only(left: 10.0),
-  //                   child: Container(
-  //                     decoration: BoxDecoration(
-  //                       border: Border.all(color: Colors.black, width: 1),
-  //                       borderRadius: BorderRadius.circular(20),
-  //                     ),
-  //                     child: icon,
-  //                   ),
-  //                 ),
-  //                 Padding(
-  //                   padding:
-  //                       const EdgeInsets.only(left: 10.0, top: 5, bottom: 5),
-  //                   child: Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Row(
-  //                         mainAxisSize: MainAxisSize.min,
-  //                         children: [
-  //                           Padding(
-  //                             padding: const EdgeInsets.only(left: 5.0),
-  //                             child: Text(
-  //                               map.values.elementAt(i)['type'].toString(),
-  //                               style: TextStyle(
-  //                                   fontSize: 20, fontWeight: FontWeight.bold),
-  //                             ),
-  //                           ),
-  //                           Padding(
-  //                             padding: const EdgeInsets.only(left: 20.0),
-  //                             child: Text(
-  //                               map.values.elementAt(i)['date'].toString(),
-  //                               style: TextStyle(
-  //                                   fontSize: 20,
-  //                                   fontWeight: FontWeight.normal),
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                       Padding(
-  //                         padding: const EdgeInsets.only(
-  //                             left: 10.0, top: 5, bottom: 5),
-  //                         child: Text(
-  //                           map.values.elementAt(i)['note'].toString(),
-  //                           style: TextStyle(fontSize: 16),
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //                 Expanded(child: Container()),
-  //                 Padding(
-  //                   padding:
-  //                       const EdgeInsets.only(right: 10.0, top: 5, bottom: 5),
-  //                   child: Text(
-  //                     map.values.elementAt(i)['amount'].toString(),
-  //                     style:
-  //                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-  //                   ),
-  //                 ),
-  //               ],
-  //             )),
-  //       );
-  //       widgets.add(temp);
-  //     }
-  //   } else {
-  //     for (var i = 0; i < map.length; i++) {
-  //       Icon icon = IconTypeMapping()
-  //           .mapTypeToIcon(map.values.elementAt(i)['type'].toString());
-  //       Widget temp = Padding(
-  //         padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-  //         child: Container(
-  //             decoration: BoxDecoration(
-  //               border: Border.all(color: Colors.black, width: 1),
-  //             ),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 Padding(
-  //                   padding: const EdgeInsets.only(left: 10.0),
-  //                   child: Container(
-  //                     decoration: BoxDecoration(
-  //                       border: Border.all(color: Colors.black, width: 1),
-  //                       borderRadius: BorderRadius.circular(20),
-  //                     ),
-  //                     child: icon,
-  //                   ),
-  //                 ),
-  //                 Padding(
-  //                   padding:
-  //                       const EdgeInsets.only(right: 10.0, top: 5, bottom: 5),
-  //                   child: Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Row(
-  //                         mainAxisSize: MainAxisSize.min,
-  //                         children: [
-  //                           Padding(
-  //                             padding: const EdgeInsets.only(left: 5.0),
-  //                             child: Text(
-  //                               map.values.elementAt(i)['type'].toString(),
-  //                               style: TextStyle(
-  //                                   fontSize: 20, fontWeight: FontWeight.bold),
-  //                             ),
-  //                           ),
-  //                           Padding(
-  //                             padding: const EdgeInsets.only(left: 20.0),
-  //                             child: Text(
-  //                               map.values.elementAt(i)['date'].toString(),
-  //                               style: TextStyle(
-  //                                   fontSize: 20,
-  //                                   fontWeight: FontWeight.normal),
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                       Padding(
-  //                         padding: const EdgeInsets.only(
-  //                             left: 10.0, top: 5, bottom: 5),
-  //                         child: Text(
-  //                           map.values.elementAt(i)['note'].toString(),
-  //                           style: TextStyle(fontSize: 16),
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //                 Expanded(child: Container()),
-  //                 Padding(
-  //                   padding:
-  //                       const EdgeInsets.only(right: 10.0, top: 5, bottom: 5),
-  //                   child: Text(
-  //                     map.values.elementAt(i)['amount'].toString(),
-  //                     style:
-  //                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-  //                   ),
-  //                 ),
-  //               ],
-  //             )),
-  //       );
-  //       widgets.add(temp);
-  //     }
-  //   }
-  //   setState(() {});
-  // }
+  Future<String> get_user_info() async{
+    email= FirebaseAuth.instance.currentUser!.email.toString();
+    
+    await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
+      querySnapshot.docs.forEach((doc) {
+        if(doc['email']==email){
+          username = doc['name']!;
+        }
+      })
+    });
+    return username;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    get_user_info().then((value) => setState(() {username = value;}));
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var height = size.height;
-
-    return Scaffold(
+    return SafeArea(
+      child:Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+      bottomNavigationBar: bottomNavigationBar(),
+      floatingActionButton: floatingActionButton(),
+      appBar:AppBar(
           backgroundColor: Colors.blue,
-          title: Text(
-            'Home',
-            style: TextStyle(
-              fontSize: 26,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),  ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Text(
-                'HOME',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                //todo
+              },
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
               ),
             ),
-            Expanded(
-              child: Container(),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox.fromSize(
-                    size: const Size(60, 60),
-                    child: ClipOval(
-                      child: Material(
-                        color: Color.fromARGB(113, 233, 232, 230),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                '/home');
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              Icon(
-                                Icons.home_filled,
-                                color: Colors.black,
-                              ), // <-- Icon
-                              Text(
-                                "Home",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                              ), // <-- Text
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox.fromSize(
-                    size: const Size(60, 60),
-                    child: ClipOval(
-                      child: Material(
-                        color: Color.fromARGB(113, 233, 232, 230),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/courses');
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              Icon(Icons.person), // <-- Icon
-                              Text(
-                                "Courses",
-                                style: TextStyle(fontSize: 14),
-                              ), // <-- Text
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox.fromSize(
-                    size: const Size(60, 60),
-                    child: ClipOval(
-                      child: Material(
-                        color: Color.fromARGB(113, 233, 232, 230),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/profile');
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              Icon(Icons.person), // <-- Icon
-                              Text(
-                                "Profile",
-                                style: TextStyle(fontSize: 14),
-                              ), // <-- Text
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
+          title: Center(
+                      child: Container(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            'HOME',
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                      )
+              ),
         ),
-      ),
+        body:SingleChildScrollView(
+        child:Column(
+          children: [
+            Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding:const EdgeInsets.all(20.0) ,
+                        child: 
+                          TextFormField(
+                            onTap: (){},
+                            decoration: InputDecoration(
+                              hintText: 'Search',
+                              prefixIcon: Icon(Icons.search,),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          )
+                        ),
+                  ),
+            Container(
+              padding: const EdgeInsets.only(top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.bottomRight,
+                        children:[
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 50,
+                            backgroundImage: AssetImage('asset/images/cat.jpeg'),
+                          ),
+                          InkWell(
+                            onTap:(){},
+                            child: CircleAvatar(
+                              radius: 12,
+                              backgroundColor: Colors.blue,
+                              child: Icon(Icons.edit,color: Colors.white),
+                            )
+                          )
+                        ]
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          email,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child:Text(
+                                username,
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                      )
+                    ],
+                  ),
+                
+                ],)
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              child:              
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:[
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child:Text(
+                          'Quarters',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    
+                  ),
+                  Row(
+                    children:[
+                      menuButton(
+                        color:_index==0?Colors.blue:Colors.grey,
+                        text:'Fall 2022',
+                        textColor:_index==0? Colors.white:Colors.black,
+                        width: 85,
+                        onTap: (){
+                          setState(() {
+                            _index=0;
+                          });
+                        }),
+                      menuButton(
+                        color:_index==1?Colors.blue:Colors.grey,
+                        text:'Spring 2022',
+                        textColor:_index==1? Colors.white:Colors.black,
+                        width: 85,
+                        onTap: (){
+                          setState(() {
+                            _index=1;
+                          });
+                        }), 
+                      menuButton(
+                        color:_index==2?Colors.blue:Colors.grey,
+                        text:'Summer 2022',
+                        textColor:_index==2? Colors.white:Colors.black,
+                        width: 85,
+                        onTap: (){
+                          setState(() {
+                            _index=2;
+                          });
+                        }),
+                    ]
+                  ),
+      
+                  
+                 
+                ]
+              ),
+            
+              )  
+        ])
+          
+          
+    )));
+        // )
+  }
+  
+  bottomNavigationBar(){
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.blue,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+      selectedFontSize: 14,
+      unselectedFontSize: 14,
+      onTap: (int index){
+        setState(() {
+          if(index == 0){
+            Navigator.of(context).pushReplacementNamed('/home');
+          }
+          else if(index == 1){
+            Navigator.of(context).pushNamed('/courses');
+          }
+          else if(index == 2){
+            Navigator.of(context).pushNamed('/profile');
+          }
+        });
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.book),
+          label: 'Courses',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ],
     );
   }
+  
+  floatingActionButton()
+  {
+    return FloatingActionButton(
+      onPressed: (){},
+      elevation: 0,
+      child: Icon(Icons.qr_code_scanner,
+      size: 30,),
+      backgroundColor: Colors.blue,
+    );
+  }
+
+  menuButton({required String text, required Color color, required Color textColor, required double width, required VoidCallback onTap})
+  {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child:InkWell(
+        onTap: onTap,
+        child: Container(
+          alignment: Alignment.center,
+          width: width,
+          height:45, 
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(30)
+          ),
+          child: Text(text,style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),),
+        
+        ),
+      )
+    );
+  }
+  
+  
 }

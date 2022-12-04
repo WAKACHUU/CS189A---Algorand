@@ -1,3 +1,4 @@
+import 'package:algo_learn/theme/palette.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 child: Text('Algo-learn Learning Management-ystem')),
           ],
         ),
-        backgroundColor: Color.fromARGB(255, 115, 179, 239),
+        backgroundColor: Palette.accentColor,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -93,7 +94,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 115, 179, 239),
+                    color: Palette.accentColor,
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
                   onPressed: resetPassword,

@@ -7,7 +7,7 @@ import 'package:algo_learn/models/transaction_event.dart';
 import 'package:algo_learn/repositories/account_repository.dart';
 import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/screens/main/dashboard/dashboard.dart';
-import 'package:algo_learn/util/list_utils.dart';
+import 'package:algo_learn/utils/list_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {

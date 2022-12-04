@@ -1,7 +1,7 @@
 import 'package:algo_learn/database/entities.dart';
 import 'package:algo_learn/database/entities/box_entity.dart';
-import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/models/models.dart';
+import 'package:algo_learn/theme/themes.dart';
 
 part 'algorand_standard_asset_entity.g.dart';
 

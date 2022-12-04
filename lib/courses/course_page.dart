@@ -1,3 +1,4 @@
+import 'package:algo_learn/theme/themes.dart';
 import 'package:flutter/material.dart';
 
 class CoursePage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _CoursePageState extends State<CoursePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Palette.accentColor,
           title: Text(
             'Course',
             style: TextStyle(

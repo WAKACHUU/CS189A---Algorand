@@ -2,12 +2,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/clouddebugger/v2.dart';
+// import 'package:googleapis/clouddebugger/v2.dart';
 import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'HomePage.dart';
 
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:algo_learn/theme/themes.dart';
 
 
 class SignUpDemo extends StatefulWidget {
@@ -39,7 +40,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
           children: [
             Container(
                 child: Image.asset(
-              'asset/images/algorand.png',
+              'assets/images/algorand.png',
               fit: BoxFit.fitHeight,
               height: 64,
             )),
@@ -64,7 +65,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
             ),
           ],
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Palette.accentColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -78,7 +79,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('asset/images/UCSB.png')),
+                    child: Image.asset('assets/images/UCSB.png')),
               ),
             ),
             Padding(
@@ -141,7 +142,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color:Palette.accentColor,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {

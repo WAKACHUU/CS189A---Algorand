@@ -37,8 +37,8 @@ class AccountRepository {
     // NOTE! Storing your private key like this is insecure!
     // Make sure to encrypt
     final privateKey = await account.keyPair.extractPrivateKeyBytes();
-    
-    final entity =AccountEntity.account(account, Uint8List.fromList(privateKey));
+    final entity =
+        AccountEntity.account(account, Uint8List.fromList(privateKey));
     await accountBox.put(0, entity);
 
     // Publish account on stream

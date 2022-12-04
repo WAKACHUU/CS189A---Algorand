@@ -4,7 +4,7 @@ import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/components/buttons/rounded_button.dart';
 import 'package:algo_learn/ui/components/spacing.dart';
 import 'package:algo_learn/ui/screens/asset/transfer/asset_transfer.dart';
-import 'package:algo_learn/util/crypto_utils.dart';
+import 'package:algo_learn/utils/crypto_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:dio/dio.dart';

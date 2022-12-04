@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:algo_learn/home/home.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:algo_learn/theme/themes.dart';
 
 class LoginDemo extends StatefulWidget {
   // Navigator.pushAndRemoveUntil(
@@ -46,7 +47,7 @@ class _LoginDemoState extends State<LoginDemo> {
           children: [
             Container(
                 child: Image.asset(
-              'asset/images/algorand.png',
+              'assets/images/algorand.png',
               fit: BoxFit.fitHeight,
               height: 64,
             )),
@@ -71,7 +72,7 @@ class _LoginDemoState extends State<LoginDemo> {
             ),
           ],
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Palette.accentColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -85,7 +86,7 @@ class _LoginDemoState extends State<LoginDemo> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('asset/images/UCSB.png')),
+                    child: Image.asset('assets/images/UCSB.png')),
               ),
             ),
             Padding(
@@ -125,14 +126,14 @@ class _LoginDemoState extends State<LoginDemo> {
               child: Text(
                 'Forgot Password',
                 style: TextStyle(
-                    color: Colors.blue, fontSize: 15),
+                    color: Palette.accentColor, fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Palette.accentColor,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: signIn,
@@ -159,7 +160,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
-                      color: Colors.blue, fontSize: 15),
+                      color:Palette.accentColor, fontSize: 15),
                 ))
           ],
         ),

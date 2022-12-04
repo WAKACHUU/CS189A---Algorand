@@ -1,18 +1,20 @@
+import 'package:algo_learn/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:googleapis/admin/directory_v1.dart';
+// import 'package:googleapis/admin/directory_v1.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:googleapis/cloudsearch/v1.dart';
+// import 'package:googleapis/cloudsearch/v1.dart';
+import 'package:algo_learn/theme/themes.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class MePage extends StatefulWidget {
+  const MePage({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _MePageState();
 }
 
-class _MePageState extends State<ProfilePage> {
+class _MePageState extends State<MePage> {
   // var width = MediaQuery.of(context).size.width;
   // var height = MediaQuery.of(context).size.height;
 
@@ -57,7 +59,7 @@ class _MePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Palette.accentColor,
           title: Text(
             'Profile',
             style: TextStyle(
@@ -136,10 +138,51 @@ class _MePageState extends State<ProfilePage> {
                           child: OutlinedButton(
                             onPressed: () {
                               // jump to the wallet page
-                              Navigator.pushNamed(context, '/wallet');
+                              Navigator.pushNamed(context, '/wallets');
+                              // Navigator.push(context, new MaterialPageRoute(
+                              //   builder: (context) =>
+                              //     new MainScreen())
+                              //   );
                             },
                             child: Text(
-                              "Wallet",
+                              "Wallets",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.black,
+                              side: BorderSide(
+                                color: Colors.black,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              minimumSize: Size(300, 40),
+                            ),
+                          ))),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Container(
+                          alignment: Alignment.center,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              // jump to the wallet page
+                              Navigator.pushNamed(context, '/mainScreen');
+                              // Navigator.push(context, new MaterialPageRoute(
+                              //   builder: (context) =>
+                              //     new MainScreen())
+                              //   );
+                            },
+                            child: Text(
+                              "Block Chain",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -176,7 +219,7 @@ class _MePageState extends State<ProfilePage> {
                               // print('Signed out');
                               // navigate to login page and change the route to login page
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, '/login', (route) => false);
+                                  context, '/', (route) => false);
                             },
                             child: Text(
                               "Logout",

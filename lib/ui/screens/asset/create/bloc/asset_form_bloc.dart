@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:algorand_dart/algorand_dart.dart';
-import 'package:algo_learn/DI/service_locator.dart';
+import 'package:algo_learn/di/service_locator.dart';
 import 'package:algo_learn/repositories/account_repository.dart';
 import 'package:algo_learn/ui/screens/asset/create/asset_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

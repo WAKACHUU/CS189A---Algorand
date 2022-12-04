@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/clouddebugger/v2.dart';
+// import 'package:googleapis/clouddebugger/v2.dart';
 import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
@@ -31,7 +31,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'asset/images/algorand.png',
+              'assets/images/algorand.png',
               fit: BoxFit.fitHeight,
               height: 64,
             ),
@@ -53,7 +53,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   child: Container(
                       width: 200,
                       height: 150,
-                      child: Image.asset('asset/images/UCSB.png')),
+                      child: Image.asset('assets/images/UCSB.png')),
                 ),
               ),
               Text(

@@ -1,7 +1,7 @@
 import 'package:algo_learn/models/models.dart';
 import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/components/spacing.dart';
-import 'package:algo_learn/util/crypto_utils.dart';
+import 'package:algo_learn/utils/crypto_utils.dart';
 
 typedef OnCryptoCardTap = void Function(AlgorandStandardAsset asset);
 

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatelessWidget {
-  static String routeName = '/profile';
+  static String routeName = '/me';
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,7 @@ import 'package:algo_learn/profile/profile.dart';
 // import 'package:googleapis/content/v2_1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:algo_learn/theme/themes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: bottomNavigationBar(),
       floatingActionButton: floatingActionButton(),
       appBar:AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Palette.accentColor,
           elevation: 0,
           actions: [
             IconButton(
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 //todo
               },
               icon: const Icon(
-                Icons.search,
+                Icons.settings,
                 color: Colors.white,
               ),
             ),
@@ -114,13 +115,13 @@ class _HomePageState extends State<HomePage> {
                           CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 50,
-                            backgroundImage: AssetImage('asset/images/cat.jpeg'),
+                            backgroundImage: AssetImage('assets/images/cat.jpeg'),
                           ),
                           InkWell(
                             onTap:(){},
                             child: CircleAvatar(
                               radius: 12,
-                              backgroundColor: Colors.blue,
+                              backgroundColor: Palette.accentColor,
                               child: Icon(Icons.edit,color: Colors.white),
                             )
                           )
@@ -169,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children:[
                       menuButton(
-                        color:_index==0?Colors.blue:Colors.grey.shade300,
+                        color:_index==0?Palette.accentColor:Colors.grey.shade300,
                         text:'Fall 2022',
                         textColor:_index==0? Colors.white:Colors.black,
                         width: width,
@@ -179,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                           });
                         }),
                       menuButton(
-                        color:_index==1?Colors.blue:Colors.grey.shade300,
+                        color:_index==1?Palette.accentColor:Colors.grey.shade300,
                         text:'Spring 2022',
                         textColor:_index==1? Colors.white:Colors.black,
                         width: width,
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                           });
                         }), 
                       menuButton(
-                        color:_index==2?Colors.blue:Colors.grey.shade300,
+                        color:_index==2?Palette.accentColor:Colors.grey.shade300,
                         text:'Summer 2022',
                         textColor:_index==2? Colors.white:Colors.black,
                         width: width,
@@ -248,7 +249,7 @@ class _HomePageState extends State<HomePage> {
   bottomNavigationBar(){
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.blue,
+      backgroundColor: Palette.accentColor,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.white,
       selectedFontSize: 14,
@@ -259,10 +260,11 @@ class _HomePageState extends State<HomePage> {
             Navigator.of(context).pushReplacementNamed('/home');
           }
           else if(index == 1){
+
             Navigator.of(context).pushNamed('/courses');
           }
           else if(index == 2){
-            Navigator.of(context).pushNamed('/profile');
+            Navigator.of(context).pushNamed('/me');
           }
         });
       },
@@ -290,7 +292,7 @@ class _HomePageState extends State<HomePage> {
       elevation: 0,
       child: Icon(Icons.qr_code_scanner,
       size: 30,),
-      backgroundColor: Colors.blue,
+      backgroundColor: Palette.accentColor,
     );
   }
 
@@ -359,7 +361,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Container(
                           width: (width/3.5),
-                          color: Colors.blue,
+                          color: Palette.accentColor,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 4),
                             child: Text(nftOwned, style: TextStyle(fontSize: 12, color: Colors.white)),

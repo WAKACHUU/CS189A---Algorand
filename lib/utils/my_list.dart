@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:algo_learn/theme/themes.dart';
 
 class MyListTile extends StatelessWidget {
   final String iconImagePath;
@@ -67,7 +68,7 @@ class MyListTile extends StatelessWidget {
           ),
           Icon(
             Icons.arrow_forward_ios,
-            color: Colors.blue,
+            color: Palette.accentColor,
           ),
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/components/buttons/rounded_button.dart';
 import 'package:algo_learn/ui/components/spacing.dart';
 import 'package:algo_learn/ui/screens/asset/create/asset_form.dart';
-import 'package:algo_learn/util/number_utils.dart';
+import 'package:algo_learn/utils/number_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:dio/dio.dart';

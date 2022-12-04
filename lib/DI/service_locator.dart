@@ -1,5 +1,4 @@
 import 'package:algorand_dart/algorand_dart.dart';
-
 import 'package:algo_learn/repositories/account_repository.dart';
 import 'package:algo_learn/theme/themes.dart';
 
@@ -8,7 +7,6 @@ final sl = GetIt.instance;
 class ServiceLocator {
   static Future<void> register() async {}
 }
-
 final apiKey='ewmBLiY2Cu3kD9J6E7Fdi9Ziwplucack4yTSj9XY';
 
 /// TODO Normally use Dependency Injection for this

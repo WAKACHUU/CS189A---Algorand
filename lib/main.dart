@@ -1,56 +1,32 @@
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:algo_learn/login/login_page.dart';
-// import 'package:algo_learn/signup/signup.dart';
-// import 'package:algo_learn/home/home.dart';
-// import 'package:algo_learn/profile/profile.dart';
-// import 'package:algo_learn/courses/course_page.dart';
-// import 'package:algo_learn/wallet/wallet.dart';
-
-import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
-
-// void main() async{
-//   // ensure the database is connected
-//   WidgetsFlutterBinding.ensureInitialized();
-//   // var Firebase;
-//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-//   // intialize the widgets
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return MaterialApp(
-//       title: 'Algo-learn',
-//       initialRoute: '/login',
-//       // home: Mainpage(),
-//       routes: {
-//         '/login': (context) => LoginDemo(),
-//         '/signup': (context) => SignUpDemo(),
-//         '/home': (context) => HomePage(),
-//         '/profile': (context) => ProfilePage(),
-//          '/courses': (context) => CoursePage(),
-//          '/wallet': (context) => WalletPage(),
-//       }
-//     );
-//   }
-
-// }
-
+import 'package:algo_learn/courses/course_page.dart';
+import 'package:algo_learn/home/home.dart';
+import 'package:algo_learn/login/login_page.dart';
+import 'package:algo_learn/signup/signup.dart';
+import 'package:algo_learn/ui/screens/main/profile/profile.dart';
+import 'package:algo_learn/ui/screens/main/wallets/wallet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:algo_learn/database/entities.dart';
 import 'package:algo_learn/database/entities/account_entity.dart';
 import 'package:algo_learn/routes/routes.dart';
 import 'package:algo_learn/theme/themes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:algo_learn/login/login_page.dart';
+// import 'package:algo_learn/signup/signup.dart';
+// import 'package:algo_learn/home/home.dart';
+import 'package:algo_learn/profile/profile.dart';
+// import 'package:algo_learn/courses/course_page.dart';
+// import 'package:algo_learn/wallet/wallet.dart';
+import 'package:algo_learn/ui/screens/screens.dart';
+
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:algo_learn/ui/screens/main/dashboard/dashboard_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  //   // var Firebase;
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Initialize hive
   await Hive.initFlutter();
   Hive.registerAdapter(AlgorandStandardAssetAdapter());
@@ -84,12 +60,22 @@ class AlgorandWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Algorand Wallet',
+      title: 'Algo-learn',
       debugShowCheckedModeBanner: false,
       theme: appTheme(),
       initialRoute: initialRoute,
+      // routes: {
+        // '/': (context) => const MainScreen(),
+        // '/login': (context) => LoginDemo(),
+        // '/signup': (context) => SignUpDemo(),
+        // '/home': (context) =>  HomePage(),
+        // '/me': (context) =>  MePage(),
+        // '/courses': (context) => CoursePage(),
+        // '/wallet': (context) => WalletPage(),
+        // '/mainScreen': (context) => MainScreen(),
+        // '/dashboard': (context) => DashboardPage(),
+      // },
       onGenerateRoute: router.generator,
     );
-    
   }
 }

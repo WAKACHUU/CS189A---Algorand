@@ -22,10 +22,36 @@ final tabHandlers = <NavigationTab, Widget>{
 
 final tabs = tabHandlers.keys.toList();
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+  // static String routeName = '/mainScreen';
+  @override
+  _MainScreenState createState() => _MainScreenState();
+
+
+}
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Palette.accentColor,
+          title: Text(
+            'Block Chain',
+            style: TextStyle(
+              fontSize: 26,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),  
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+              ))),
       body: SafeArea(
         child: BlocListener<MainBloc, Account?>(
           listener: (context, state) {

@@ -2,24 +2,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/clouddebugger/v2.dart';
+// import 'package:googleapis/clouddebugger/v2.dart';
 import 'package:algo_learn/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:algo_learn/util/my_button.dart';
-import 'package:algo_learn/util/my_list.dart';
-import 'package:algo_learn/util/my_algo.dart';
+import 'package:algo_learn/utils/my_button.dart';
+import 'package:algo_learn/utils/my_list.dart';
+import 'package:algo_learn/utils/my_algo.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:algo_learn/util/my_nft.dart';
+import 'package:algo_learn/utils/my_nft.dart';
+import 'package:algo_learn/theme/themes.dart';
 
-
-class WalletPage extends StatefulWidget {
+class WalletsPage extends StatefulWidget {
   @override
-  _WalletPageState createState() => _WalletPageState();
+  _WalletsPageState createState() => _WalletsPageState();
 }
 
 
-class _WalletPageState extends State<WalletPage> {
+class _WalletsPageState extends State<WalletsPage> {
   final _controller=PageController();
 
   @override
@@ -28,7 +28,7 @@ class _WalletPageState extends State<WalletPage> {
       resizeToAvoidBottomInset : false,
       appBar: AppBar(
             // padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16.0),
-            backgroundColor: Colors.blue,
+            backgroundColor: Palette.accentColor,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -49,7 +49,7 @@ class _WalletPageState extends State<WalletPage> {
                     ),
                     child: Icon(
                       Icons.add,
-                      color: Colors.blue,
+                      color: Palette.accentColor,
                     )),
               ],
             ),
@@ -78,7 +78,7 @@ class _WalletPageState extends State<WalletPage> {
                   cardNumber: 123456789,
                   expiryMonth: 10,
                   expiryYear: 24,
-                  color: Colors.blue,
+                  color: Palette.accentColor,
                 ),
                 MyNFT(
                   balance: 53,
@@ -108,15 +108,15 @@ class _WalletPageState extends State<WalletPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 MyButton(
-                  iconImagePath: 'asset/images/credit.png',
+                  iconImagePath: 'assets/images/credit.png',
                   buttonText: 'Pay',
                 ),
                 MyButton(
-                  iconImagePath: 'asset/images/save_money.png',
+                  iconImagePath: 'assets/images/save_money.png',
                   buttonText: 'Send',
                 ),
                 MyButton(
-                  iconImagePath: 'asset/images/bill.png',
+                  iconImagePath: 'assets/images/bill.png',
                   buttonText: 'Bills',
                 ),
               ],
@@ -128,12 +128,12 @@ class _WalletPageState extends State<WalletPage> {
             padding: const EdgeInsets.all(35.0),
             child: Column(children: [
               MyListTile(
-                iconImagePath: 'asset/images/transactions.png',
+                iconImagePath: 'assets/images/transactions.png',
                 tileTitle: 'History',
                 tileSubtitle: 'Transactions Made',
               ),
               MyListTile(
-                iconImagePath: 'asset/images/graph.png',
+                iconImagePath: 'assets/images/graph.png',
                 tileTitle: 'Payments',
                 tileSubtitle: 'Statistics on Payment',
               ),

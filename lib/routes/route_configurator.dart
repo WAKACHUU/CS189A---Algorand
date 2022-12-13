@@ -18,5 +18,6 @@ class RouteConfiguration {
     router.define('/courses', handler: courseHandler);
     router.define('/me', handler: MeHandler);
     router.define('/wallets', handler: walletsHandler);
+    router.define('/me/edit', handler: editProfileHandler);
   }
 }

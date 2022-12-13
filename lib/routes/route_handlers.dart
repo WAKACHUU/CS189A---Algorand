@@ -1,7 +1,7 @@
 import 'package:algo_learn/ui/screens/main/home/home.dart';
 import 'package:algo_learn/models/algorand_standard_asset_model.dart';
 import 'package:algo_learn/models/navigation/navigation_bloc.dart';
-import 'package:algo_learn/ui/screens/main/me/profile.dart';
+import 'package:algo_learn/ui/screens/main/me/me.dart';
 import 'package:algo_learn/routes/routes.dart';
 import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/screens/asset/create/asset_form.dart';
@@ -15,6 +15,12 @@ import 'package:algo_learn/ui/screens/main/login/login_page.dart';
 import 'package:algo_learn/ui/screens/main/signup/signup.dart';
 import 'package:algo_learn/ui/screens/main/courses/course_page.dart';
 import 'package:algo_learn/ui/screens/main/wallet/wallet.dart';
+import 'package:algo_learn/ui/screens/main/me/edit_me.dart';
+
+var editProfileHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return EditProfilePage();
+});
 
 var walletsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

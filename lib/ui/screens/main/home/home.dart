@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:algo_learn/ui/screens/main/me/profile.dart';
+import 'package:algo_learn/ui/screens/main/me/me.dart';
 // import 'package:googleapis/healthcare/v1.dart';
 // import 'package:googleapis/adsense/v2.dart';
 // import 'package:googleapis/content/v2_1.dart';

@@ -1,6 +1,6 @@
 import 'package:algo_learn/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:algo_learn/login/login_page.dart';
+import 'package:algo_learn/ui/screens/main/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:googleapis/admin/directory_v1.dart';
@@ -18,10 +18,8 @@ class _MePageState extends State<MePage> {
   // var width = MediaQuery.of(context).size.width;
   // var height = MediaQuery.of(context).size.height;
 
-  String username='aaaa';
+  String username = 'aaaa';
   String email = "aaaa";
-
-
 
   int _selected_index = 0;
   static const option_style = TextStyle(
@@ -35,24 +33,28 @@ class _MePageState extends State<MePage> {
     });
   }
 
-  Future<String> get_user_info() async{
-    email= FirebaseAuth.instance.currentUser!.email.toString();
-    
-    await FirebaseFirestore.instance.collection('login').get().then((QuerySnapshot querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        if(doc['email']==email){
-          username = doc['name']!;
-        }
-      })
-    });
+  Future<String> get_user_info() async {
+    email = FirebaseAuth.instance.currentUser!.email.toString();
+
+    await FirebaseFirestore.instance
+        .collection('login')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                if (doc['email'] == email) {
+                  username = doc['name']!;
+                }
+              })
+            });
     return username;
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    get_user_info().then((value) => setState(() {username = value;}));
-   
+    get_user_info().then((value) => setState(() {
+          username = value;
+        }));
   }
 
   @override
@@ -67,7 +69,7 @@ class _MePageState extends State<MePage> {
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-          ),  
+          ),
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();

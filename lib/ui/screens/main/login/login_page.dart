@@ -1,10 +1,10 @@
 // login Page
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:algo_learn/signup/signup.dart';
-import 'package:algo_learn/reset_password/reset_password.dart';
+import 'package:algo_learn/ui/screens/main/signup/signup.dart';
+import 'package:algo_learn/ui/screens/main/reset_password/reset_password.dart';
 import 'package:flutter/material.dart';
-import 'package:algo_learn/home/home.dart';
+import 'package:algo_learn/ui/screens/main/home/home.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:algo_learn/theme/themes.dart';
@@ -58,18 +58,16 @@ class _LoginDemoState extends State<LoginDemo> {
             Expanded(
                 child: Center(
                     child: Container(
-                        padding: const EdgeInsets.only(right:125),
-                        child: Text(
-                          'Algo-Learn LMS',
-                          style: TextStyle(
-                            fontSize: 26,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                    )
-            )
-            ),
+              padding: const EdgeInsets.only(right: 125),
+              child: Text(
+                'Algo-Learn LMS',
+                style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ))),
           ],
         ),
         backgroundColor: Palette.accentColor,
@@ -119,14 +117,13 @@ class _LoginDemoState extends State<LoginDemo> {
               onPressed: () {
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ResetPasswordPage()),
-                  );
+                  context,
+                  MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                );
               },
               child: Text(
                 'Forgot Password',
-                style: TextStyle(
-                    color: Palette.accentColor, fontSize: 15),
+                style: TextStyle(color: Palette.accentColor, fontSize: 15),
               ),
             ),
             Container(
@@ -159,8 +156,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 key: Key('signup'), //for testing
                 child: Text(
                   'Sign Up',
-                  style: TextStyle(
-                      color:Palette.accentColor, fontSize: 15),
+                  style: TextStyle(color: Palette.accentColor, fontSize: 15),
                 ))
           ],
         ),
@@ -196,10 +192,9 @@ class _LoginDemoState extends State<LoginDemo> {
         setState(() {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('The password is invalid.')));
-          }
-        );
+        });
       }
-      
+
       // print(FirebaseAuth.instance.currentUser);
     } else {
       setState(() {

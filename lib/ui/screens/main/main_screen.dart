@@ -14,8 +14,8 @@ final tabHandlers = <NavigationTab, Widget>{
       provideDashboardPage(),
   NavigationTab(label: 'Wallet', icon: FeatherIcons.pocket):
       provideWalletPage(),
-  NavigationTab(label: 'Assets', icon: FeatherIcons.shoppingCart):
-      provideAssetPage(),
+  // NavigationTab(label: 'Assets', icon: FeatherIcons.shoppingCart):
+  //     provideAssetPage(),
   NavigationTab(label: 'Profile', icon: FeatherIcons.user):
       provideProfilePage(),
 };
@@ -27,9 +27,8 @@ class MainScreen extends StatefulWidget {
   // static String routeName = '/mainScreen';
   @override
   _MainScreenState createState() => _MainScreenState();
-
-
 }
+
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-          ),  
+          ),
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();

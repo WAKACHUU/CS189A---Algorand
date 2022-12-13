@@ -1,7 +1,7 @@
-import 'package:algo_learn/courses/course_page.dart';
-import 'package:algo_learn/home/home.dart';
-import 'package:algo_learn/login/login_page.dart';
-import 'package:algo_learn/signup/signup.dart';
+import 'package:algo_learn/ui/screens/main/courses/course_page.dart';
+import 'package:algo_learn/ui/screens/main/home/home.dart';
+import 'package:algo_learn/ui/screens/main/login/login_page.dart';
+import 'package:algo_learn/ui/screens/main/signup/signup.dart';
 import 'package:algo_learn/ui/screens/main/profile/profile.dart';
 import 'package:algo_learn/ui/screens/main/wallets/wallet_page.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:algo_learn/login/login_page.dart';
 // import 'package:algo_learn/signup/signup.dart';
 // import 'package:algo_learn/home/home.dart';
-import 'package:algo_learn/profile/profile.dart';
+import 'package:algo_learn/ui/screens/main/profile/profile.dart';
 // import 'package:algo_learn/courses/course_page.dart';
 // import 'package:algo_learn/wallet/wallet.dart';
 import 'package:algo_learn/ui/screens/screens.dart';
@@ -65,15 +65,15 @@ class AlgorandWallet extends StatelessWidget {
       theme: appTheme(),
       initialRoute: initialRoute,
       // routes: {
-        // '/': (context) => const MainScreen(),
-        // '/login': (context) => LoginDemo(),
-        // '/signup': (context) => SignUpDemo(),
-        // '/home': (context) =>  HomePage(),
-        // '/me': (context) =>  MePage(),
-        // '/courses': (context) => CoursePage(),
-        // '/wallet': (context) => WalletPage(),
-        // '/mainScreen': (context) => MainScreen(),
-        // '/dashboard': (context) => DashboardPage(),
+      // '/': (context) => const MainScreen(),
+      // '/login': (context) => LoginDemo(),
+      // '/signup': (context) => SignUpDemo(),
+      // '/home': (context) =>  HomePage(),
+      // '/me': (context) =>  MePage(),
+      // '/courses': (context) => CoursePage(),
+      // '/wallet': (context) => WalletPage(),
+      // '/mainScreen': (context) => MainScreen(),
+      // '/dashboard': (context) => DashboardPage(),
       // },
       onGenerateRoute: router.generator,
     );

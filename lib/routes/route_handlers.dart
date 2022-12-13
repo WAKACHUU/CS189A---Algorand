@@ -1,7 +1,7 @@
-import 'package:algo_learn/home/home.dart';
+import 'package:algo_learn/ui/screens/main/home/home.dart';
 import 'package:algo_learn/models/algorand_standard_asset_model.dart';
 import 'package:algo_learn/models/navigation/navigation_bloc.dart';
-import 'package:algo_learn/profile/profile.dart';
+import 'package:algo_learn/ui/screens/main/me/profile.dart';
 import 'package:algo_learn/routes/routes.dart';
 import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/screens/asset/create/asset_form.dart';
@@ -11,10 +11,10 @@ import 'package:algo_learn/ui/screens/main/wallets/wallet_page.dart';
 import 'package:algo_learn/ui/screens/screens.dart';
 import 'package:algo_learn/ui/screens/share/share_address_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:algo_learn/login/login_page.dart';
-import 'package:algo_learn/signup/signup.dart';
-import 'package:algo_learn/courses/course_page.dart';
-import 'package:algo_learn/wallet/wallet.dart';
+import 'package:algo_learn/ui/screens/main/login/login_page.dart';
+import 'package:algo_learn/ui/screens/main/signup/signup.dart';
+import 'package:algo_learn/ui/screens/main/courses/course_page.dart';
+import 'package:algo_learn/ui/screens/main/wallet/wallet.dart';
 
 var walletsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
@@ -26,7 +26,6 @@ var MeHandler = Handler(
   return MePage();
 });
 
-
 var courseHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return CoursePage();
@@ -37,17 +36,16 @@ var HomeHandler = Handler(
   return HomePage();
 });
 
-var signHandler = Handler(
-    handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+var signHandler =
+    Handler(handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
   return SignUpDemo();
 });
 
 var loginHandler = Handler(
-  type: HandlerType.route,
+    type: HandlerType.route,
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return LoginDemo();
-});
-
+      return LoginDemo();
+    });
 
 var rootHandler = Handler(
   // type: HandlerType.route,

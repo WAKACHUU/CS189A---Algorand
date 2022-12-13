@@ -3,13 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 // import 'package:googleapis/clouddebugger/v2.dart';
-import 'package:algo_learn/login/login_page.dart';
+import 'package:algo_learn/ui/screens/main/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'HomePage.dart';
 
 import 'package:algorand_dart/algorand_dart.dart';
 import 'package:algo_learn/theme/themes.dart';
-
 
 class SignUpDemo extends StatefulWidget {
   @override
@@ -51,18 +50,16 @@ class _SignUpDemoState extends State<SignUpDemo> {
             Expanded(
                 child: Center(
                     child: Container(
-                        padding: const EdgeInsets.only(right:125),
-                        child: Text(
-                          'Algo-Learn LMS',
-                          style: TextStyle(
-                            fontSize: 26,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                    )
-            )
-            ),
+              padding: const EdgeInsets.only(right: 125),
+              child: Text(
+                'Algo-Learn LMS',
+                style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ))),
           ],
         ),
         backgroundColor: Palette.accentColor,
@@ -142,7 +139,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color:Palette.accentColor,
+                  color: Palette.accentColor,
                   borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
@@ -190,7 +187,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
                       FirebaseFirestore.instance.collection('login').add({
                         'name': userNameController.text,
                         'email': emailController.text,
-                        //'password': passwordController.text,                        
+                        //'password': passwordController.text,
                       }).then((value) {
                         print('User Added');
                         Navigator.of(context).pop();

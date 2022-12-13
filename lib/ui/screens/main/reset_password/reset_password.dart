@@ -3,10 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 // import 'package:googleapis/clouddebugger/v2.dart';
-import 'package:algo_learn/login/login_page.dart';
+import 'package:algo_learn/ui/screens/main/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
-
 
 class ResetPasswordPage extends StatefulWidget {
   @override
@@ -46,7 +45,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child:Column(
+          child: Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 60.0),
@@ -77,14 +76,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email Address',
-                      hintText:
-                          'Enter your registered email address'),
+                      hintText: 'Enter your registered email address'),
                   textInputAction: TextInputAction.done,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
-                    email != null && !EmailValidator.validate(email)
-                        ? 'Invalid email'
-                        : null,
+                      email != null && !EmailValidator.validate(email)
+                          ? 'Invalid email'
+                          : null,
                 ),
               ),
               SizedBox(
@@ -115,13 +113,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => Center(child: CircularProgressIndicator()),
+      builder: (BuildContext context) =>
+          Center(child: CircularProgressIndicator()),
     );
 
     if (formKey.currentState!.validate()) {
       try {
-        await FirebaseAuth.instance.sendPasswordResetEmail(
-            email: emailController.text.trim());
+        await FirebaseAuth.instance
+            .sendPasswordResetEmail(email: emailController.text.trim());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Password reset email sent'),
@@ -140,6 +139,4 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       }
     }
   }
-
-
 }

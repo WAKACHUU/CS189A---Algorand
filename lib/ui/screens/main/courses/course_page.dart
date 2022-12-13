@@ -1,5 +1,6 @@
 import 'package:algo_learn/theme/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:algo_learn/ui/components/nft_card.dart';
 
 class CoursePage extends StatefulWidget {
   const CoursePage({Key? key}) : super(key: key);
@@ -40,10 +41,13 @@ class _CoursePageState extends State<CoursePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 5.0),
-                child: Text(
-                  "COURSE_PAGE",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                child: NFTCard(
+                  source: 'LECTURE 1',
+                  title: 'Best Problem Solver',
+                  imgSrc: 'assets/images/cat.jpeg',
+                  description:
+                      'Algorand is a decentralized, permissionless, pure proof-of-stake blockchain protocol that enables the creation of secure, scalable, and decentralized applications.',
+                  onTapped: () {},
                 ),
               ),
             ],

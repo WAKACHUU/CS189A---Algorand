@@ -1,7 +1,7 @@
 import 'package:algo_learn/ui/screens/main/home/home.dart';
 import 'package:algo_learn/models/algorand_standard_asset_model.dart';
 import 'package:algo_learn/models/navigation/navigation_bloc.dart';
-import 'package:algo_learn/ui/screens/main/me/profile.dart';
+import 'package:algo_learn/ui/screens/main/me/profile2.dart';
 import 'package:algo_learn/routes/routes.dart';
 import 'package:algo_learn/theme/themes.dart';
 import 'package:algo_learn/ui/screens/asset/create/asset_form.dart';
@@ -23,7 +23,7 @@ var walletsHandler = Handler(
 
 var MeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return MePage();
+  return MePage2();
 });
 
 var courseHandler = Handler(

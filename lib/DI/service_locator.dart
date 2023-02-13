@@ -22,15 +22,15 @@ final indexerClient = IndexerClient(
     tokenKey: PureStake.API_TOKEN_HEADER,
 );
 
-final kmdClient = KmdClient(
-    apiUrl: '127.0.0.1',
-    apiKey: apiKey,
-);
+// final kmdClient = KmdClient(
+//     apiUrl: '127.0.0.1',
+//     apiKey: apiKey,
+// );
 
 final algorand = Algorand(
     algodClient: algodClient,
     indexerClient: indexerClient,
-    kmdClient: kmdClient,
+    // kmdClient: kmdClient,
 );
 
 final accountRepository = AccountRepository();

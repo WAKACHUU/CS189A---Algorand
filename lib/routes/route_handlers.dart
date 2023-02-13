@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:algo_learn/ui/screens/main/login/login_page.dart';
 import 'package:algo_learn/ui/screens/main/signup/signup.dart';
 import 'package:algo_learn/ui/screens/main/courses/course_page.dart';
-import 'package:algo_learn/ui/screens/main/wallet/wallet.dart';
+// import 'package:algo_learn/ui/screens/main/wallet/wallet.dart';
 import 'package:algo_learn/ui/screens/main/me/edit_me.dart';
 
 var editProfileHandler = Handler(
@@ -22,10 +22,10 @@ var editProfileHandler = Handler(
   return EditProfilePage();
 });
 
-var walletsHandler = Handler(
-    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return WalletsPage();
-});
+// var walletsHandler = Handler(
+//     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+//   return WalletsPage();
+// });
 
 var MeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

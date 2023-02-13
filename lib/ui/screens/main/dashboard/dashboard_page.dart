@@ -46,11 +46,15 @@ class _DashboardPageState extends State<DashboardPage>
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<DashboardBloc>().state;
-
+    // final state = context.watch<DashboardBloc>().state;
+    // use algorand_dart to get information about the account, aset and transactions
+    final state=context.watch <DashboardBloc>().state;
     if (state is DashboardNoAccount) {
       return provideWalletPage();
     }
+
+    // print(state);
+    // print(DashboardSuccess);
 
     if (state is! DashboardSuccess) {
       return Center(

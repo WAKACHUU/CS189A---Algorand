@@ -23,7 +23,7 @@ class DashboardSuccess extends DashboardState {
   final AlgorandStandardAsset? selectedAsset;
   final List<TransactionEvent> transactions;
   final bool isFetchingTransactions;
-
+  
   DashboardSuccess({
     required this.account,
     required this.information,

@@ -43,6 +43,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
     // Fetch the active account
     final account = accountRepository.account;
+    print('account');
+    print(account);
 
     if (account == null) {
       yield DashboardNoAccount();
@@ -51,15 +53,21 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     final currentState = state;
     if (event is DashboardStarted) {
+      print('DashboardStarted');
       yield DashboardInProgress();
+      print('DashboardInProgress');
+      print(account.publicAddress);
+      print('awaiting');
 
       // Fetch the balance
       final information =
           await algorand.getAccountByAddress(account.publicAddress);
+      print('information');
 
       // Sync the assets locally
       final assets = await syncAssets(information.assets);
-
+      print("assets");
+      print(assets);
       final algorandAsset = AlgorandStandardAsset(
         id: -1,
         name: 'Algorand',
@@ -144,8 +152,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   /// Sync the assets
   Future<List<AlgorandStandardAsset>> syncAssets(
-      final List<AssetHolding> holdings) async {
+    final List<AssetHolding> holdings) async {
     final assetBox = Hive.box<AlgorandStandardAssetEntity>('assets');
+    print(assetBox);
     final asas = <AlgorandStandardAsset>[];
 
     for (var holding in holdings) {
@@ -160,7 +169,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       }
 
       // Prevent spamming the API - Only for PureStake
-      // await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 1500));
 
       try {
         final assetResponse =
@@ -168,6 +177,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
         // Store the asset
         final asset = assetResponse.asset;
+        print(asset.index);
+        print(asset.params.name);
+        print(asset.params.unitName);
+        print(asset.params.decimals);
+        print(holding.amount);
 
         final asa = AlgorandStandardAsset(
           id: asset.index,

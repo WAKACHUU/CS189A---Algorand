@@ -24,6 +24,8 @@ class AccountEntity implements BoxEntity<Account> {
 
   @override
   Future<Account> unwrap() async {
+    print(publicAddress);
+    print(privateKey);
     return Account.fromSeed(this.privateKey);
   }
 }

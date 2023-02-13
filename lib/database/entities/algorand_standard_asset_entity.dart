@@ -36,6 +36,12 @@ class AlgorandStandardAssetEntity implements BoxEntity<AlgorandStandardAsset> {
 
   @override
   Future<AlgorandStandardAsset> unwrap() async {
+    print(1);
+    print(id);
+    print(name);
+    print(unitName);
+    print(amount);
+    print(decimals);
     return AlgorandStandardAsset(
       id: id,
       name: name,

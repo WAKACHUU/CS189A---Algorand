@@ -1,23 +1,24 @@
 import { where, query, collection, getDocs } from "firebase/firestore"
-import db from './firebase/init.js'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
-
+const auth = getAuth();
 // sign in function
 // return 1 if successfully signed in
 // return 0 if the password is invalid
 // return -1 if the email is not registered
-async function sign_in(email,password) {
+export async function sign_in(db,email,password)  {
     // fetch the user from the database with the given email
     const q = query(collection(db, "login"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
+    console.log(querySnapshot.size);
     // if the user exists, check if the password matches
     if (querySnapshot.size > 0) {
         try {
             // if the email exist, try to use firebase authentication to sign in
-            await firebase.auth().signInWithEmailAndPassword(email, password);
+            await signInWithEmailAndPassword(auth,email, password);
             console.log("Successfully signed in!");
             return 1;
-
           } catch (error) {
             console.error("The password is invalid.", error);
             return 0;
@@ -36,7 +37,8 @@ async function sign_in(email,password) {
 // return -1 if the email address does not end with @ucsb.edu
 // return -2 if the password and confirm password do not match
 // return -3 if the password is too weak
-async function sign_up(name,email,password,confirm_password) {
+// return -4 if the email is in use or invalid
+export async function sign_up(db,name,email,password,confirm_password) {
     // fetch the user from the database with the given email
     const q = query(collection(db, "login"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
@@ -59,9 +61,15 @@ async function sign_up(name,email,password,confirm_password) {
     else
     {   
         try{
+
             // if the email does not exist, try to use firebase authentication to sign up
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
-            collection(db, "login").add({name: name, email: email})
+            await createUserWithEmailAndPassword(auth,email, password);
+            const docData = {
+                name: name,
+                email: email,
+                timestamp: Timestamp.now(),
+            };
+            await setDoc(doc(db, "login",email), docData);
 
             console.log("Successfully signed up!");
             return 1;
@@ -71,10 +79,28 @@ async function sign_up(name,email,password,confirm_password) {
                 console.log('The password is too weak.');
                 return -3;
             } else {
-              console.log(error);
+                console.log(error);
+                return -4;
             }
         }
     }
 }
 
-export default {sign_in, sign_up}
+
+export async function sign_out() {
+    try{
+        await auth.signOut();
+        console.log("Successfully signed out!");
+        return 1;
+    }
+    catch(error){
+        console.log(error);
+        return 0;
+    }
+
+}
+
+
+
+
+// export default {sign_in, sign_up}

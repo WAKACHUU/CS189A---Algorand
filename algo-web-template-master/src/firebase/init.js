@@ -24,4 +24,6 @@ const analytics = getAnalytics(app);
 
 // init firestore service
 const db = getFirestore()
-export default db
+
+// const auth = app.getAuth();
+export default db;

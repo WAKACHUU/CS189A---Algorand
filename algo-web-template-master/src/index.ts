@@ -5,23 +5,24 @@ import { AlgoSignerSession } from './wallets/algosigner'
 import Utils from './utils'
 import db from './firebase/init'
 import {sign_in,sign_up,sign_out} from './firebase/operations'
-
+import {generateAlgorandKeyPair} from './wallets/algo_create_import'
 try {
 
   // specific use of the firebase database
-  console.log(db)
-  const login_message=sign_in(db,'abc@ucsb.edu','abcabc')
-  // get the return value from the promise
-  login_message.then((value) => {
-    console.log('return value',value)
-  })
+  // console.log(db)
+  // const login_message=sign_in(db,'abc@ucsb.edu','abcabc')
+  // // get the return value from the promise
+  // login_message.then((value) => {
+  //   console.log('return value',value)
+  // })
 
-  const signout_message=sign_out()
-  signout_message.then((value) => {
-    console.log('return value',value)
-  })
+  // const signout_message=sign_out()
+  // signout_message.then((value) => {
+  //   console.log('return value',value)
+  // })
 
-
+  generateAlgorandKeyPair()
+  
 
   // const signup_message=sign_up(db,'XichenHe','abc@ucsb.edu','abcabc','abcabc')
   // signup_message.then((value) => {

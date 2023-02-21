@@ -1,13 +1,14 @@
 import { where, query, collection, getDocs } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
-
-const auth = getAuth();
+import { generateAlgorandKeyPair } from "../algorand/algo_create_import";
+import { db, auth } from "./init.js";
+// const auth = getAuth();
 // sign in function
 // return 1 if successfully signed in
 // return 0 if the password is invalid
 // return -1 if the email is not registered
-export async function sign_in(db,email,password)  {
+export async function sign_in(email,password)  {
     // fetch the user from the database with the given email
     const q = query(collection(db, "login"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
@@ -62,11 +63,15 @@ export async function sign_up(db,name,email,password,confirm_password) {
     {   
         try{
 
+            [address, passphrase] = generateAlgorandKeyPair();
+            console.log(address);
             // if the email does not exist, try to use firebase authentication to sign up
             await createUserWithEmailAndPassword(auth,email, password);
             const docData = {
                 name: name,
                 email: email,
+                address: address,
+                passphrase: passphrase,
                 timestamp: Timestamp.now(),
             };
             await setDoc(doc(db, "login",email), docData);

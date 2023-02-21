@@ -1,3 +1,7 @@
+import algosdk from 'algosdk'
+// import { WalletConnectSession } from './wallets/walletconnect'
+// import { AlgoSignerSession } from './wallets/algosigner'
+
 
 export class Asset{
     // algodclient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')

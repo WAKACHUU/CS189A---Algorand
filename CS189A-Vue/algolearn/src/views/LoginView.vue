@@ -66,7 +66,6 @@ const submitForm = () => {
       console.log("user not exist")
     }
   })
-  console.log(form)
 }
 
 </script>

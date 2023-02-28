@@ -1,18 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <el-scrollbar>
+    <span>User Overview</span>
+    <div class="profile-pic">
+      <img src="@/assets/logo.png">
+    </div>
+    <div>
+      <span>Welcome, </span>
+      <span>{{ username }}</span>
+    </div>
+    <span></span>
+    <div class="home">
+      <CourseCard courseName="CS189A" :courseNum="7"/>
+    </div>
+  </el-scrollbar>
+
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
+<script lang="ts" setup>
+import CourseCard from '@/components/CourseCard.vue'
+import { ref } from 'vue'
 
-@Options({
-  components: {
-    HelloWorld
-  }
-})
-export default class HomeView extends Vue {}
+const username = ref('username')
 </script>
+
+<style lang="less" scoped>
+.home-view {
+  padding: 25px
+}
+.profile-pic {
+
+}
+.home {
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>

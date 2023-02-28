@@ -11,7 +11,7 @@
                     <el-input type="password" id="password" v-model="form.password" @blur="inputBlur('password',form.password)"></el-input>
                     <p>{{form.passwordError}}</p>
                 </el-form-item>
-                <el-button type="primary" @click="submitForm('form')" v-bind:disabled="form.beDisabled">提交</el-button>
+                <el-button type="primary" @click="submitForm()" v-bind:disabled="form.beDisabled">提交</el-button>
             </el-form>
         </div>
     </div>
@@ -50,7 +50,7 @@ const inputBlur = (errorItem : string, inputContent : string) => {
   }
 }
 
-const submitForm = (form : string) => {
+const submitForm = () => {
   console.log(form)
 }
 

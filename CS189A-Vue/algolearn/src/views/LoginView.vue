@@ -1,7 +1,7 @@
 <template>
     <div class="dialog">
         <div class="loginPage">
-            <h1>登录</h1>
+            <h1>Login</h1>
             <el-form :model="form">
                 <el-form-item label="user">
                     <el-input type="text" id="user" v-model="form.user" @blur="inputBlur('user',form.user)"></el-input>
@@ -11,7 +11,7 @@
                     <el-input type="password" id="password" v-model="form.password" @blur="inputBlur('password',form.password)"></el-input>
                     <p>{{form.passwordError}}</p>
                 </el-form-item>
-                <el-button type="primary" @click="submitForm()" v-bind:disabled="form.beDisabled">提交</el-button>
+                <el-button type="primary" @click="submitForm()" v-bind:disabled="form.beDisabled">Login</el-button>
             </el-form>
         </div>
     </div>
@@ -19,6 +19,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { sign_in , sign_up , sign_out } from '../backend/firebase/operations.js'
+// import db  from '../backend/firebase/init.js'
 
 const form = ref({
   user: '',
@@ -31,13 +33,13 @@ const form = ref({
 const inputBlur = (errorItem : string, inputContent : string) => {
   if (errorItem === 'user') {
     if (inputContent === '') {
-      form.value.userError = '用户名不能为空'
+      form.value.userError = 'User name cannot be empty'
     } else {
       form.value.userError = ''
     }
   } else if (errorItem === 'password') {
     if (inputContent === '') {
-      form.value.passwordError = '密码不能为空'
+      form.value.passwordError = 'Password cannot be empty'
     } else {
       form.value.passwordError = ''
     }
@@ -51,7 +53,19 @@ const inputBlur = (errorItem : string, inputContent : string) => {
 }
 
 const submitForm = () => {
-  console.log(form)
+  console.log(form.value)
+  const login_message=sign_in(form.value.user,form.value.password)
+  // console.log(login_message)
+  login_message.then((value: any )=>{
+    if(value==1){
+      console.log("login success")
+    }else if(value==0){
+      console.log("password error")
+    }
+    else if(value==-1){
+      console.log("user not exist")
+    }
+  })
 }
 
 </script>

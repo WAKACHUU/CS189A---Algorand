@@ -1,3 +1,5 @@
+<!-- eslint-disable @typescript-eslint/no-var-requires -->
+<!-- eslint-disable @typescript-eslint/no-var-requires -->
 <template>
     <div class="dialog">
         <div class="loginPage">
@@ -18,9 +20,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { sign_in , sign_up , sign_out } from '../backend/firebase/operations.js'
-// import db  from '../backend/firebase/init.js'
+import { ref} from 'vue'
+import {useStore} from 'vuex';
+const store=useStore()
+
 
 const form = ref({
   user: '',
@@ -53,10 +56,9 @@ const inputBlur = (errorItem : string, inputContent : string) => {
 }
 
 const submitForm = () => {
-  console.log(form.value)
-  const login_message=sign_in(form.value.user,form.value.password)
+  const login_message=store.state.FirebaseOps.sign_in(form.value.user,form.value.password)
   // console.log(login_message)
-  login_message.then((value: any )=>{
+  login_message.then((value: unknown)=>{
     if(value==1){
       console.log("login success")
     }else if(value==0){
@@ -85,7 +87,6 @@ const submitForm = () => {
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -150px;
         margin-left: -175px;
         width: 350px;
         min-height: 300px;

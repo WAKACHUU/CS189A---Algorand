@@ -46,21 +46,20 @@ class FirebaseOperations
     // return -2 if the password and confirm password do not match
     // return -3 if the password is too weak
     // return -4 if the email is in use or invalid
-    async sign_up(db,name,email,password,confirm_password) {
+    async sign_up(name,email,password,confirm_password) {
     // fetch the user from the database with the given email
         // const q = query(collection(db, "login"), where("email", "==", email));
         // const querySnapshot = await getDocs(q);
 
         this.user.user_collection.email=email;
-        try{
-            await this.user.read()
-            console.log("The email is already registered");
+        const read_type=await this.user.read()
+        if(read_type==1)
+        {
+            console.error("The email is already registered");
+            console.log(this.user.user_collection)
             return 0;
         }
-        catch(error){
-            console.log("The email is not registered");
-        }
-        
+        // console.log("The email is not registered");
         // if the user exists, check if the password matches
         
         // if the email address does not end with @ucsb.edu, return -2
@@ -77,11 +76,13 @@ class FirebaseOperations
         else
         {   
             try{
-
-                [address, passphrase] = generateAlgorandKeyPair();
-                console.log(address);
                 // if the email does not exist, try to use firebase authentication to sign up
-                await createUserWithEmailAndPassword(auth,email, password);
+                const KeyPair = generateAlgorandKeyPair();
+                const passphrase = KeyPair[1];
+                const address = KeyPair[0];
+                console.log(address);
+                console.log(passphrase);
+                // console.log(KeyPair);
                 const docData = {
                     name: name,
                     email: email,
@@ -90,10 +91,12 @@ class FirebaseOperations
                     timestamp: Timestamp.now(),
                 };
                 this.user.user_collection=docData;
+                console.log(this.user.user_collection);
                 // await setDoc(doc(db, "login",email), docData);
                 // this.user.user_collection.email=email;
                 await this.user.update();
                 console.log("Successfully signed up!");
+                await createUserWithEmailAndPassword(auth,email, password);
                 return 1;
             }
             catch(error){

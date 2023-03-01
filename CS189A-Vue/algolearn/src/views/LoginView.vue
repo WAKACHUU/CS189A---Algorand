@@ -62,10 +62,7 @@ const submitForm = () => {
     if(value==1){
       console.log("login success")
     }else if(value==0){
-      console.log("password error")
-    }
-    else if(value==-1){
-      console.log("user not exist")
+      console.log("Email not exist or Password error")
     }
   })
 }

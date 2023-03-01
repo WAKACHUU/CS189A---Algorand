@@ -38,7 +38,13 @@ class UserCollection
         //read the user collection data
         const data=this.user_collection_service.read(this.user_collection);
         data.then((value) => {
+            if(value==undefined)
+            {
+                // throw new Error("The email is not registered");
+                return 0;
+            }
             this.user_collection=value;
+            return 1;
         });
     }
     

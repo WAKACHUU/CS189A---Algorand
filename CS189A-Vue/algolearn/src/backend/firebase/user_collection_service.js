@@ -15,6 +15,7 @@ class UserCollectionService {
     async read(data) {
         const docRef =doc(db,"login",data.email);
         const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data());
         return docSnap.data();
     }
 

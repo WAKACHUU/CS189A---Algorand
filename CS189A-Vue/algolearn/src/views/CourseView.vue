@@ -19,7 +19,7 @@
     </div>
     <div class="my-courses">
         <span class="text-span">My Courses</span>
-        <el-scrollbar max-height="1000px" wrap-style="margin-top: 75px">
+        <el-scrollbar max-height="1000px" wrap-style="margin-top: 75px" @click="onClickCard">
             <CourseCard v-for="ci in courseInfo" :key="ci.courseId" :courseInfo="ci" />
         </el-scrollbar>
     </div>
@@ -44,6 +44,10 @@ const courseInfo = ref([
     courseNum: 7
   }
 ])
+
+const onClickCard = (courseId: string) => {
+  console.log(courseId)
+}
 </script>
 
 <style lang="less" scoped>

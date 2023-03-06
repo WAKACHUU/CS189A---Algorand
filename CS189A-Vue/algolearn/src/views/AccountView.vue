@@ -38,12 +38,16 @@
       </el-table>
     </el-tab-pane>
     <el-tab-pane label="Collection" name="collection">Collection</el-tab-pane>
+    <el-tab-pane label="Create NFT" name="transfer">
+      <ProfTransfer />
+    </el-tab-pane>
   </el-tabs>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { Star, StarFilled } from '@element-plus/icons-vue'
+import ProfTransfer from '@/components/ProfTransfer.vue'
 
 const username = ref('username')
 const algoAcc = ref('algoacc')

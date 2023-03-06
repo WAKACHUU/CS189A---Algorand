@@ -1,11 +1,14 @@
 <template>
 
-<el-card class="course-card" :body-style="{ padding: '0px', height: '120px' }">
+<el-card class="course-card" :body-style="{ padding: '0px', height: '219px' }">
   <div class="course-top">
-    <el-button text class="course-name">{{props.courseName}}</el-button>
+    <div class="course-top-text">
+      <span style="font-size: 36px; font-family: Futura; line-height: 39px;">{{ props.courseInfo.courseId }}</span>
+      <span style="font-size: 16px; font-family: Futura; line-height: 39px;">{{ props.courseInfo.courseName }}</span>
+    </div>
   </div>
   <div class="course-bottom">
-      <el-button text class="button">{{props.courseNum}}</el-button>
+      <span style="font-size: 24px; font-family: Futura; line-height: 39px; color: white">{{ props.courseInfo.courseNum }} NFTs owned</span>
   </div>
 </el-card>
 
@@ -15,24 +18,30 @@
 import { defineProps } from 'vue'
 
 const props = defineProps({
-  courseName: String,
-  courseNum: Number
+  courseInfo: {
+    type: Object,
+    default: () => {
+      return {
+        courseId: 'COURSE 000',
+        courseName: 'Course name',
+        courseNum: 0
+      }
+    }
+  }
 })
 </script>
 
 <style lang="less" scoped>
 .course-card {
-    width: 45%;
-    height: 120px;
-}
-.time {
-  font-size: 12px;
-  color: #999;
+    width: 589px;
 }
 
 .course-bottom {
-  padding: 0px 10px;
+  height: 62px;
+  padding: 0px 58px;
   background-color: #2DB6BC;
+  display: flex;
+  align-items: center;
 }
 
 .button {
@@ -43,12 +52,18 @@ const props = defineProps({
 }
 
 .course-top {
-  height: 76px;
-  padding: 10px 10px 0px;
+  height: 157px;
 //   display: block;
 }
 
+.course-top-text {
+  margin: 32px 0 0 58px;
+  display: flex;
+  flex-direction: column;
+}
+
 .course-name {
+    margin: 10px 10px 0px;
     width: 100%;
     padding: 0px;
     display: flex;

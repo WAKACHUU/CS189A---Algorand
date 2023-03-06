@@ -2,6 +2,7 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import {  Timestamp } from "firebase/firestore";
 import { generateAlgorandKeyPair } from "../algorand/algo_create_import";
+import { Asset } from "../algorand/asset_operations";
 import { auth } from "./init.js";
 // import { UserCollection } from "./user_collection.js";
 const UserCollection = require("./user_collection.js").default;
@@ -14,6 +15,7 @@ class FirebaseOperations
     {
         // keep track of the current user data
         this.user=new UserCollection();
+        // this.asset_operation=new Asset();
         this.SignInState=false;
     }
 

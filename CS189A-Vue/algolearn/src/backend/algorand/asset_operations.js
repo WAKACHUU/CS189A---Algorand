@@ -1,18 +1,19 @@
 import algosdk from 'algosdk'
 // import { WalletConnectSession } from './wallets/walletconnect'
 // import { AlgoSignerSession } from './wallets/algosigner'
+import Buffer from 'buffer'
 
 
-export class Asset{
+class AssetOperations{
     // algodclient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
     constructor()
     {
-        this.algodclient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
+        this.algo_client = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
     }
 
-    async create_asset(account1,account2,decimals,totalIssuance,unitName,assetName)
+    async create_asset(account1,decimals,totalIssuance,unitName,assetName)
     {
-        let params = await this.algodclient.getTransactionParams().do();
+        let params = await this.algo_client.getTransactionParams().do();
         // comment out the next two lines to use suggested fee
         // params.fee = 1000;
         // params.flatFee = true;
@@ -43,15 +44,15 @@ export class Asset{
         // that can be changed, and they have to be changed
         // by the current manager
         // Specified address can change reserve, freeze, clawback, and manager
-        let manager = account2.addr;
+        let manager = account1.addr;
         // Specified address is considered the asset reserve
         // (it has no special privileges, this is only informational)
-        let reserve = account2.addr;
+        let reserve = account1.addr;
         // Specified address can freeze or unfreeze user asset holdings 
-        let freeze = account2.addr;
+        let freeze = account1.addr;
         // Specified address can revoke user asset holdings and send 
         // them to other addresses    
-        let clawback = account2.addr;
+        let clawback = account1.addr;
 
         // signing and sending "txn" allows "addr" to create an asset
         let txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
@@ -71,7 +72,7 @@ export class Asset{
             params);
 
         let rawSignedTxn = txn.signTxn(account1.sk)
-        let tx = (await this.algodclient.sendRawTransaction(rawSignedTxn).do());
+        let tx = (await this.algo_client.sendRawTransaction(rawSignedTxn).do());
 
         let assetID = null;
         // wait for transaction to be confirmed
@@ -226,4 +227,47 @@ export class Asset{
         console.log("Account 3 = " + account_to.addr);
         await printAssetHolding(algodclient, account_to.addr, assetID);
     }
+
+    async get_algo_info(account)
+    {
+        // Get the account information for the new account
+        let accountInfo = await algod_client.accountInformation(account.addr).do();
+        console.log("Account balance: %d microAlgos", accountInfo.amount);
+        console.log("Account = " + account.addr);
+        console.log("Account info",accountInfo);
+    }
+
+    async fund_account(account_address,secretKey)
+    {
+        //Get the relevant params from the algod
+        const params = await this.algo_client.getTransactionParams().do();
+        //comment out the next two lines to use suggested fee
+        params.fee = 1000;
+        params.flatFee = true;
+        //Check your balance
+        console.log("Adress",account_address)
+        let accountInfo = await this.algo_client.accountInformation(account_address).do();
+        console.log("Account balance: %d microAlgos", accountInfo.amount);
+        //Create the transaction
+        let txn = algosdk.makePaymentTxnWithSuggestedParams(account_address, account_address, 100000000, undefined, undefined, params);
+        //Sign the transaction
+        console.log("Secret Key",secretKey)
+        const passphrase=secretKey.split(", ").join(" ")
+        let account = algosdk.mnemonicToSecretKey(passphrase);
+        // var passphrase = algosdk.secretKeyToMnemonic(secretKey);
+        console.log("Passphrase",passphrase)
+        // const sk=secretKey.split(" ");
+        // console.log("Secret Key",sk)
+        // var array=Uint8Array.from(sk);
+        // console.log("Array",array)
+        let rawSignedTxn = txn.signTxn(account.sk);
+        let tx = (await this.algo_client.sendRawTransaction(rawSignedTxn).do());
+        //Wait for confirmation
+        let confirmedTxn = await algosdk.waitForConfirmation(algodclient, tx.txId, 4);
+        //Get the completed Transaction
+        console.log("Transaction " + tx.txId + " confirmed in round " + confirmedTxn["confirmed-round"]);
+        //Get the new account information
+        await this.get_algo_info(account);
+    }
 }
+export default AssetOperations;

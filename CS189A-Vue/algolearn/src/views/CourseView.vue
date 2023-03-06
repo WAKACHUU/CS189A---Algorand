@@ -20,7 +20,7 @@
     <div class="my-courses">
         <span class="text-span">My Courses</span>
         <el-scrollbar max-height="1000px" wrap-style="margin-top: 75px" @click="onClickCard">
-            <CourseCard v-for="ci in courseInfo" :key="ci.courseId" :courseInfo="ci" />
+            <CourseCard v-for="ci in courseInfo" :key="ci.courseId" :courseInfo="ci" @click.stop="onClickCard(ci.courseId)" />
         </el-scrollbar>
     </div>
 
@@ -31,6 +31,9 @@
 <script lang="ts" setup>
 import CourseCard from '@/components/CourseCard.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const username = ref('username')
 const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
@@ -46,7 +49,8 @@ const courseInfo = ref([
 ])
 
 const onClickCard = (courseId: string) => {
-  console.log(courseId)
+  router.push({ path: `/course/${courseId}` })
+  console.log(router)
 }
 </script>
 

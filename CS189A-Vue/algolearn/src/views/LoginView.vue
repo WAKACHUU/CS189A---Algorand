@@ -22,6 +22,8 @@
 <script lang="ts" setup>
 import { ref} from 'vue'
 import {useStore} from 'vuex';
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const store=useStore()
 
 
@@ -61,6 +63,9 @@ const submitForm = () => {
   login_message.then((value: unknown)=>{
     if(value==1){
       console.log("login success")
+      // 跳转到主页
+      router.push({path: '/'})
+
     }else if(value==0){
       console.log("Email not exist or Password error")
     }

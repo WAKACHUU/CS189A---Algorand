@@ -19,7 +19,15 @@
 <script lang="ts" setup>
 import CourseCard from '@/components/CourseCard.vue'
 import { ref } from 'vue'
-
+import { useStore } from 'vuex'
+const store = useStore()
+const thisUser = store.state.FirebaseOps.user
+const algo_address = thisUser.user_collection.address
+const secret_key = thisUser.user_collection.passphrase
+console.log(algo_address)
+const thisAsset = store.state.AssetOps
+thisAsset.fund_account(algo_address, secret_key)
+console.log(thisAsset)
 const username = ref('username')
 </script>
 

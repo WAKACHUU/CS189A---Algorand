@@ -124,7 +124,7 @@ class FirebaseOperations
             }
         }
     }
-    
+
 
     async prof_sign_up(name,email,password,confirm_password) {
         // fetch the user from the database with the given email
@@ -207,7 +207,6 @@ class FirebaseOperations
         }
 
     }
-    
 }
 
 export default FirebaseOperations;

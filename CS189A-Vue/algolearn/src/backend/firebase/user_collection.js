@@ -56,9 +56,6 @@ class UserCollection
         const docRef =doc(db,"login",this.user_collection.email);
         await deleteDoc(docRef);
     }
-
-    
-
 }
 
 export default UserCollection;

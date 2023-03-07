@@ -11,6 +11,7 @@
     <span></span>
     <div class="home">
       <CourseCard courseName="CS189A" :courseNum="7"/>
+      <el-button @click="onClick()" >TESTETEST</el-button>
     </div>
   </el-scrollbar>
 
@@ -22,18 +23,30 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
 
-
 const thisUser = store.state.FirebaseOps.user
 const thisAlgo=store.state.AlgoOps
-// const algo_address = thisUser.user_collection.address
 const seed = thisUser.user_collection.passphrase
-try{
-  thisAlgo.fund_account(seed)
+
+const onClick = () => {
+  console.log("??")
+  try{
+    thisAlgo.fund_account(seed)
+  }
+  catch(e){
+    console.error(e)
+    // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
+  }
+
 }
-catch(e){
-  console.error(e)
-  // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
-}
+
+// const algo_address = thisUser.user_collection.address
+// try{
+//   thisAlgo.fund_account(seed)
+// }
+// catch(e){
+//   console.error(e)
+//   // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
+// }
 const username = ref('username')
 </script>
 

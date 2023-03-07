@@ -7,15 +7,15 @@
   <div class="bottom-nav">
     <router-link to="/" class="nav-item">
       <el-icon><House /></el-icon>
-      <span>首页</span>
+      <span>Home</span>
     </router-link>
     <router-link to="/course" class="nav-item">
       <el-icon><School /></el-icon>
-      <span>课程</span>
+      <span>Courses</span>
     </router-link>
     <router-link to="/account" class="nav-item">
       <el-icon><User /></el-icon>
-      <span>我的</span>
+      <span>Profile</span>
     </router-link>
   </div>
   <!-- <nav>

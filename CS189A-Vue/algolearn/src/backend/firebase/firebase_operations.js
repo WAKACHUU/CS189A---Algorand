@@ -101,6 +101,8 @@ class FirebaseOperations
                     address: address,
                     passphrase: passphrase,
                     timestamp: Timestamp.now(),
+                    courses: [],
+                    role:0
                 };
                 this.user.user_collection=docData;
                 console.log(this.user.user_collection);
@@ -122,6 +124,74 @@ class FirebaseOperations
             }
         }
     }
+    
+
+    async prof_sign_up(name,email,password,confirm_password) {
+        // fetch the user from the database with the given email
+            // const q = query(collection(db, "login"), where("email", "==", email));
+            // const querySnapshot = await getDocs(q);
+    
+            this.user.user_collection.email=email;
+            const read_type=await this.user.read()
+            if(read_type==1)
+            {
+                console.error("The email is already registered");
+                console.log(this.user.user_collection)
+                return 0;
+            }
+            // console.log("The email is not registered");
+            // if the user exists, check if the password matches
+            
+            // if the email address does not end with @ucsb.edu, return -2
+            if(!email.endsWith("@ucsb.edu"))
+            {
+                console.error("The email address must end with @ucsb.edu");
+                return -1;
+            }
+            else if(password!= confirm_password)
+            {
+                console.error("The password and confirm password do not match");
+                return -2;
+            }
+            else
+            {   
+                try{
+                    // if the email does not exist, try to use firebase authentication to sign up
+                    const KeyPair = generateAlgorandKeyPair();
+                    const passphrase = KeyPair[1];
+                    const address = KeyPair[0];
+                    console.log(address);
+                    console.log(passphrase);
+                    // console.log(KeyPair);
+                    const docData = {
+                        name: name,
+                        email: email,
+                        address: address,
+                        passphrase: passphrase,
+                        timestamp: Timestamp.now(),
+                        courses: [],
+                        role:1
+                    };
+                    this.user.user_collection=docData;
+                    console.log(this.user.user_collection);
+                    // await setDoc(doc(db, "login",email), docData);
+                    // this.user.user_collection.email=email;
+                    await this.user.update();
+                    console.log("Successfully signed up!");
+                    await createUserWithEmailAndPassword(auth,email, password);
+                    return 1;
+                }
+                catch(error){
+                    if (error.code === 'auth/weak-password') {
+                        console.log('The password is too weak.');
+                        return -3;
+                    } else {
+                        console.log(error);
+                        return -4;
+                    }
+                }
+            }
+        }
 
 
     async sign_out() {

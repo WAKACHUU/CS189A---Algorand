@@ -15,6 +15,8 @@ class UserCollection
             address:"",
             passphrase: "",
             timestamp: "",
+            role:0,
+            courses: []
         };
     }
 

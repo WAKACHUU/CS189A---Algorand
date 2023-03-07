@@ -128,8 +128,6 @@ class AlgoOperations{
         await printCreatedAsset(algodclient, account1.addr, assetID);
     }
 
-
-
     async receive_asset(account_from,account_to,assetID)
     {
         // Opting in to transact with the new asset
@@ -237,8 +235,8 @@ class AlgoOperations{
         console.log("Account info",accountInfo);
     }
 
-
-    async fund_account(seed)
+    // make payment method
+    async make_payment(seed,address_to)
     {
         console.log(seed);
         //Get the relevant params from the algod
@@ -251,8 +249,8 @@ class AlgoOperations{
 
         const payment=algosdk.makePaymentTxnWithSuggestedParamsFromObject({
             "from":algoAccount.addr,
-            "to":algoAccount.addr,
-            "amount":100000000,
+            "to":address_to,
+            "amount":1000000,
             "suggestedParams":params
         });
         
@@ -260,8 +258,20 @@ class AlgoOperations{
         const { txId } = await this.algo_client.sendRawTransaction(signedTxn).do()
         console.log(txId)
 
-        await algosdk.waitForConfirmation(algoClient, txId, 4)
-        document.getElementById('status').innerHTML = 'SDK Status: Working!';
+        await algosdk.waitForConfirmation(this.algo_client, txId, 4)
+        console.log("transaction successful");
+        //document.getElementById('status').innerHTML = 'SDK Status: Working!';
+    }
+
+
+    async fund_account(seed)
+    {
+        console.log(seed);
+        const myAccount = algosdk.mnemonicToSecretKey(seed);
+        const netAddr='https://dispenser.testnet.aws.algodev.network?account=' + myAccount.addr;
+        console.log(netAddr);
+        var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+        window.open(netAddr, "_blank", strWindowFeatures);
     }
 }
 export default AlgoOperations;

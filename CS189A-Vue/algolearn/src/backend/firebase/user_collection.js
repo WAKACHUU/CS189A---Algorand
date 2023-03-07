@@ -1,4 +1,4 @@
-import { getDoc,doc,setDoc} from "firebase/firestore";
+import { getDoc,doc,setDoc, DocumentReference} from "firebase/firestore";
 
 import {db} from "./init.js";
 
@@ -55,8 +55,8 @@ class UserCollection
         await deleteDoc(docRef);
     }
 
-    
 
+    
 }
 
 export default UserCollection;

@@ -24,7 +24,7 @@ import { ref} from 'vue'
 import {useStore} from 'vuex';
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const store=useStore()
+const store = useStore()
 
 
 const form = ref({

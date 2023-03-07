@@ -2,7 +2,7 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import {  Timestamp } from "firebase/firestore";
 import { generateAlgorandKeyPair } from "../algorand/algo_create_import";
-import { Asset } from "../algorand/asset_operations";
+// import AlgoOperations from "../algorand/algo_operations";
 import { auth } from "./init.js";
 // import { UserCollection } from "./user_collection.js";
 const UserCollection = require("./user_collection.js").default;
@@ -31,8 +31,18 @@ class FirebaseOperations
             console.log("Successfully signed in!");
             // get the user data from the database
             this.user.user_collection.email=email;
-            await this.user.read();
-            console.log(this.user.user_collection.email);
+            var status=0;
+            while(true)
+            {
+                status=await this.user.read();
+                // console.log(this.user.user_collection);
+                if(status==1)
+                {
+                    break;
+                }
+            }
+            // this.user.user_collection=await this.user.read();
+            console.log(this.user.user_collection);
             console.log("Successfully read the user data from the database!");
             return 1;
             } catch (error) {

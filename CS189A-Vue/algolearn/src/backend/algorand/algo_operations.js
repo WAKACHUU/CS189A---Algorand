@@ -1,10 +1,10 @@
 import algosdk from 'algosdk'
 // import { WalletConnectSession } from './wallets/walletconnect'
 // import { AlgoSignerSession } from './wallets/algosigner'
-import Buffer from 'buffer'
+// import Buffer from 'buffer'
 
 
-class AssetOperations{
+class AlgoOperations{
     // algodclient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
     constructor()
     {
@@ -237,37 +237,31 @@ class AssetOperations{
         console.log("Account info",accountInfo);
     }
 
-    async fund_account(account_address,secretKey)
+
+    async fund_account(seed)
     {
+        console.log(seed);
         //Get the relevant params from the algod
         const params = await this.algo_client.getTransactionParams().do();
-        //comment out the next two lines to use suggested fee
         params.fee = 1000;
         params.flatFee = true;
-        //Check your balance
-        console.log("Adress",account_address)
-        let accountInfo = await this.algo_client.accountInformation(account_address).do();
-        console.log("Account balance: %d microAlgos", accountInfo.amount);
-        //Create the transaction
-        let txn = algosdk.makePaymentTxnWithSuggestedParams(account_address, account_address, 100000000, undefined, undefined, params);
-        //Sign the transaction
-        console.log("Secret Key",secretKey)
-        const passphrase=secretKey.split(", ").join(" ")
-        let account = algosdk.mnemonicToSecretKey(passphrase);
-        // var passphrase = algosdk.secretKeyToMnemonic(secretKey);
-        console.log("Passphrase",passphrase)
-        // const sk=secretKey.split(" ");
-        // console.log("Secret Key",sk)
-        // var array=Uint8Array.from(sk);
-        // console.log("Array",array)
-        let rawSignedTxn = txn.signTxn(account.sk);
-        let tx = (await this.algo_client.sendRawTransaction(rawSignedTxn).do());
-        //Wait for confirmation
-        let confirmedTxn = await algosdk.waitForConfirmation(algodclient, tx.txId, 4);
-        //Get the completed Transaction
-        console.log("Transaction " + tx.txId + " confirmed in round " + confirmedTxn["confirmed-round"]);
-        //Get the new account information
-        await this.get_algo_info(account);
+
+        // get the algo account from the seed
+        const algoAccount = algosdk.mnemonicToSecretKey(seed);
+
+        const payment=algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            "from":algoAccount.addr,
+            "to":algoAccount.addr,
+            "amount":100000000,
+            "suggestedParams":params
+        });
+        
+        const signedTxn=payment.signTxn(algoAccount.sk);
+        const { txId } = await this.algo_client.sendRawTransaction(signedTxn).do()
+        console.log(txId)
+
+        await algosdk.waitForConfirmation(algoClient, txId, 4)
+        document.getElementById('status').innerHTML = 'SDK Status: Working!';
     }
 }
-export default AssetOperations;
+export default AlgoOperations;

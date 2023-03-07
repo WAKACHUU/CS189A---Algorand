@@ -21,13 +21,19 @@ import CourseCard from '@/components/CourseCard.vue'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
+
+
 const thisUser = store.state.FirebaseOps.user
-const algo_address = thisUser.user_collection.address
-const secret_key = thisUser.user_collection.passphrase
-console.log(algo_address)
-const thisAsset = store.state.AssetOps
-thisAsset.fund_account(algo_address, secret_key)
-console.log(thisAsset)
+const thisAlgo=store.state.AlgoOps
+// const algo_address = thisUser.user_collection.address
+const seed = thisUser.user_collection.passphrase
+try{
+  thisAlgo.fund_account(seed)
+}
+catch(e){
+  console.error(e)
+  // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
+}
 const username = ref('username')
 </script>
 

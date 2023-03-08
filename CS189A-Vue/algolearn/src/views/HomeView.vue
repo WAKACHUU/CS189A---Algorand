@@ -11,7 +11,8 @@
     <span></span>
     <div class="home">
       <CourseCard courseName="CS189A" :courseNum="7"/>
-      <el-button @click="onClick()" >TESTETEST</el-button>
+      <el-button @click="onClick()" >Fund</el-button>
+      <el-button @click="onPress()" >Payment</el-button>
     </div>
   </el-scrollbar>
 
@@ -31,6 +32,19 @@ const onClick = () => {
   console.log("??")
   try{
     thisAlgo.fund_account(seed)
+  }
+  catch(e){
+    console.error(e)
+    // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
+  }
+
+}
+
+const onPress = () => {
+  console.log("!!")
+  try{
+    const account_to="HZ57J3K46JIJXILONBBZOHX6BKPXEM2VVXNRFSUED6DKFD5ZD24PMJ3MVA"
+    thisAlgo.make_payment(seed,account_to,1000000)
   }
   catch(e){
     console.error(e)

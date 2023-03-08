@@ -229,7 +229,7 @@ class AlgoOperations{
     async get_algo_info(account)
     {
         // Get the account information for the new account
-        let accountInfo = await algod_client.accountInformation(account.addr).do();
+        let accountInfo = await this.algo_client.accountInformation(account.addr).do();
         console.log("Account balance: %d microAlgos", accountInfo.amount);
         console.log("Account = " + account.addr);
         console.log("Account info",accountInfo);
@@ -246,7 +246,7 @@ class AlgoOperations{
 
         // get the algo account from the seed
         const algoAccount = algosdk.mnemonicToSecretKey(seed);
-
+        this.get_algo_info(algoAccount);
         const payment=algosdk.makePaymentTxnWithSuggestedParamsFromObject({
             "from":algoAccount.addr,
             "to":address_to,
@@ -260,6 +260,9 @@ class AlgoOperations{
 
         await algosdk.waitForConfirmation(this.algo_client, txId, 4)
         console.log("transaction successful");
+
+        // get the account info
+        this.get_algo_info(algoAccount);
         //document.getElementById('status').innerHTML = 'SDK Status: Working!';
     }
 

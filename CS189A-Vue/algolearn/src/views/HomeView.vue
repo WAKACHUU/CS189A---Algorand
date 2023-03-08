@@ -13,6 +13,9 @@
       <CourseCard courseName="CS189A" :courseNum="7"/>
       <el-button @click="onClick()" >Fund</el-button>
       <el-button @click="onPress()" >Payment</el-button>
+      <el-button @click="onCreate()" >Create</el-button>
+      <el-button @click="onReceive()" >Receive</el-button>
+      <el-button @click="onTransfer()" >Transfer</el-button> 
     </div>
   </el-scrollbar>
 
@@ -35,7 +38,6 @@ const onClick = () => {
   }
   catch(e){
     console.error(e)
-    // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
   }
 
 }
@@ -48,19 +50,42 @@ const onPress = () => {
   }
   catch(e){
     console.error(e)
-    // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
   }
 
 }
 
-// const algo_address = thisUser.user_collection.address
-// try{
-//   thisAlgo.fund_account(seed)
-// }
-// catch(e){
-//   console.error(e)
-//   // document.getElementById('status').innerHTML = `SDK Status: Error - ${e.message}`
-// }
+const onCreate=()=>{
+  console.log("//")
+  try{
+    thisAlgo.create_asset(seed,10, "LATINUM","latinum")
+  }
+  catch(e){
+    console.error(e)
+  }
+}
+
+const onReceive=()=>{
+  console.log("..")
+  try{
+    thisAlgo.receive_asset(seed,"XMOY5PUCIZWGRJQML27EWJSL4AFG2TNAQZKRWUKSBZLORPYLB2XWIIXXZI",162444558)
+  }
+  catch(e){
+    console.error(e)
+  }
+}
+
+const onTransfer=()=>{
+  console.log("==")
+  try{
+    const account_to="HZ57J3K46JIJXILONBBZOHX6BKPXEM2VVXNRFSUED6DKFD5ZD24PMJ3MVA"
+    thisAlgo.transfer_asset(seed,account_to,162444558)
+  }
+  catch(e){
+    console.error(e)
+  }
+}
+
+
 const username = ref('username')
 </script>
 

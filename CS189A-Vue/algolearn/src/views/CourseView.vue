@@ -32,12 +32,18 @@
 import CourseCard from '@/components/CourseCard.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { getDoc } from "firebase/firestore";
 
+
+const store = useStore()
 const router = useRouter()
 
-const username = ref('username')
+const currentUser = store.state.FirebaseOps.user
+
+const username = ref(currentUser.user_collection.name)
 const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
-const userEmail = ref('user@ucsb.edu')
+const userEmail = ref(currentUser.user_collection.email)
 
 // all course info here
 const courseInfo = ref([
@@ -47,6 +53,26 @@ const courseInfo = ref([
     courseNum: 7
   }
 ])
+
+// for (let i = 0; i < currentUser.user_collection.courses.length; i++) {
+//   // const course = currentUser.user_collection.courses[i]
+//   // console.log("course: ", course)
+//   const courses = await getDoc(currentUser.user_collection.courses[i]).then((doc) => {
+//     if (doc.exists()) {
+//       console.log("Document data:", doc.data());
+//     } else {
+//       // doc.data() will be undefined in this case
+//       console.log("No such document!");
+//     }
+//   }).catch((error) => {
+//     console.log("Error getting document:", error);
+//   });
+// }
+
+const courses = await getDoc(currentUser.user_collection.courses[0])
+
+// console.log("course: ", course)
+
 
 const onClickCard = (courseId: string) => {
   router.push({ path: `/course/${courseId}` })

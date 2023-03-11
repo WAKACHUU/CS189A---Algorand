@@ -68,8 +68,19 @@ const courseInfo = ref([
 //     console.log("Error getting document:", error);
 //   });
 // }
-
-const courses = await getDoc(currentUser.user_collection.courses[0])
+for (let i = 0; i < currentUser.user_collection.courses.length; i++) {
+  const courses = currentUser.read_class(i).then((doc : any) => {
+    if (doc != undefined) {
+      console.log("Document data:", doc);
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }).catch((error : any) => {
+    console.log("Error getting document:", error);
+  }
+  );
+}
 
 // console.log("course: ", course)
 

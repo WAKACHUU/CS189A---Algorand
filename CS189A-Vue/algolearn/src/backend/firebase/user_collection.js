@@ -57,6 +57,21 @@ class UserCollection
         await deleteDoc(docRef);
     }
 
+    async read_class(iterator)
+    {
+        // getDoc(this.user_collection.courses[0])
+        const docRef =this.user_collection.courses[iterator];
+        const docSnap=await getDoc(docRef);
+        if(docSnap.data()==undefined)
+        {
+            return undefined;
+        }
+        else
+        {
+            return docSnap.data();
+        }
+    }
+
 
     
 }

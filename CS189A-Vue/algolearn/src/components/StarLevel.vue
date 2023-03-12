@@ -1,8 +1,10 @@
 <template>
     <div class="star-level">
-        <el-icon class="el-icon" :size="34">
-            <StarFilled v-for="(item, index) in props.starLevel" :key="index"/>
-            <Star v-for="(item, index) in 5 - props.starLevel" :key="index"/>
+        <el-icon v-for="(item, index) in props.starLevel" :key="index" :size="34">
+            <StarFilled />
+        </el-icon>
+        <el-icon v-for="(item, index) in 5 - props.starLevel" :key="index" :size="34">
+            <Star />
         </el-icon>
     </div>
 </template>
@@ -22,11 +24,15 @@ const props = defineProps({
 
 <style lang="less" scoped>
 .star-level {
-    font-size: 34px;
+    width: 220px;
 }
 .el-icon {
-    height: 3em;
-    width: 3em;
+    height: 34px!important;
+    width: 34px!important;
+}
+svg {
+    height: 34px!important;
+    width: 34px!important;
     color: #F2CB51;
 }
 </style>

@@ -4,7 +4,7 @@
   </el-avatar>
   <div class="gray-back">
     <div class="content-account">
-      <div style="background-color: white;">
+      <div style="background-color: white; height: calc(100vh - 480px)">
         <div class="account-basic">
           <el-row>
               <span class="account-username">{{ username }} </span>
@@ -20,7 +20,7 @@
         <el-tabs 
           v-model="activeName" 
           class="account-tabs"
-          stretch="false"
+          :stretch="true"
         >
           <!-- my wallet -->
           <el-tab-pane label="My Wallet" name="mywallet">
@@ -50,7 +50,7 @@
                   v-model="inputFilter" 
                   placeholder="Please input"
                   :prefix-icon="Filter"
-                  input-style="width: 1072px"
+                  input-style="width: 1072px; height: 76px; font-size: 24px; font-family: Futura;"
                 ></el-input>          
               </div>
               <div class="nft-cards">
@@ -64,8 +64,6 @@
                   </el-col>
                 </el-row>          
               </div>
-
-              
             </div>
           </el-tab-pane>
           <el-tab-pane label="Create NFT" name="transfer">
@@ -98,6 +96,7 @@ const NFTs = ref([
       name: ref("NFT 1"),
       course: ref("CS189A"),
       comment: ref("This is a comment"),
+      genre: ref("Lecture 1"),
       starLevel: ref(2),
       imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
   },
@@ -105,6 +104,7 @@ const NFTs = ref([
     name: ref("NFT 1"),
     course: ref("CS189A"),
     comment: ref("This is a comment"),
+    genre: ref("Lecture 1"),
     starLevel: ref(2),
     imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
   },
@@ -112,6 +112,7 @@ const NFTs = ref([
     name: ref("NFT 1"),
     course: ref("CS189A"),
     comment: ref("This is a comment"),
+    genre: ref("Challenge"),
     starLevel: ref(2),
     imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
   }
@@ -122,7 +123,7 @@ const NFTs = ref([
 <style lang="less" scoped>
 .gray-back {
   background-color: #F5F5F5;
-  height: 100%;
+  height: 100vh;
 }
 .content-account {
   padding: 480px 20px 0px;
@@ -155,7 +156,17 @@ const NFTs = ref([
 }
 
 .account-tabs {
-  margin-top: 156px;
+  margin: 156px 40px 0;
+
+}
+
+
+/deep/ .el-tabs__item {
+  font-size: 36px;
+  font-family: Futura;
+  font-weight: bold;
+  height: 50px;
+  text-align: center;
 }
 
 .collection-div {
@@ -166,8 +177,14 @@ const NFTs = ref([
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 72px;
 }
 .nft-cards {
-  padding: 37px;
+  padding: 103px 0px 0px;
+}
+.el-col {
+  display: flex;
+  justify-content: center;
+  height: 600px;
 }
 </style>

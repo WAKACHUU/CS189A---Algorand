@@ -18,13 +18,32 @@
             </div>
         </div>
         <div class="my-courses">
-            <span class="text-span">My Courses > {{ courseId }} </span>
-            <el-scrollbar max-height="1000px" wrap-style="margin-top: 75px">
-                <el-row>
-                    <el-col v-for="(item, idx) in NFTs" :key="idx" :span="12">
-                        <NFTCardLite :nftInfo="item" @click.stop="onClickCard(idx)"/>
-                    </el-col>
-                </el-row>
+            <span class="text-span">My Courses > {{ courseId }} > {{ nftInfo.name }}</span>
+            <el-scrollbar 
+                class="scrollbar" 
+                max-height="1000px" 
+                wrap-style="margin-top: 75px; width: 100%;"
+                view-style="display: flex;"
+            >
+                <div>
+                    <el-image style="width: 640px; height: 640px" :src="nftInfo.imgSrc"></el-image>
+                </div>
+                
+                <div style="width: calc(100% - 650px); margin-left: 60px">
+                    <span style="font-size: 50px; font-family: Futura; font-weight: bold;"> {{ nftInfo.name }} </span>  
+                    <div style="margin-top: 50px">
+                        <StarLevel :starLevel="nftInfo.starLevel" /> 
+                    </div> 
+                    <div style="margin-top: 100px">
+                        <span style="font-size: 24px; font-family: Futura;">
+                            {{ nftInfo.comment }}
+                        </span>
+                    </div>
+                    <!-- button for transfer -->
+                    <div style="margin-top: 218px">
+                        <el-button type="primary" @click="onClickTransfer()">Transfer</el-button>
+                    </div>
+                </div>
             </el-scrollbar>
         </div>
     
@@ -35,15 +54,16 @@
     <script lang="ts" setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
-    import NFTCardLite from '@/components/NFTCardLite.vue'
+    import StarLevel from '@/components/StarLevel.vue'
 
     const router = useRouter()
     const courseId  = router.currentRoute.value.params.courseId
-    console.log()
+    const nftId = router.currentRoute.value.params.nftId.toString()
     
     const username = ref('username')
     const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
     const userEmail = ref('user@ucsb.edu')
+    
     
     // all course info here
     const courseInfo = ref([
@@ -54,7 +74,6 @@
       }
     ])
 
-    // all NFT info here
     const NFTs = ref([
     {
         id: ref("1"),
@@ -85,13 +104,14 @@
     }
     ])
 
-    const onClickCard = (idx: number) => {
-        const nftId = idx.toString()
-        router.push({ path: `/course/${courseId}/${nftId}` })
-        console.log(router)
-    }
-    </script>
+    const nftInfo = ref(NFTs.value[parseInt(nftId)]) 
 
+    const onClickTransfer = () => {
+        router.push({path: `/course/${courseId}/${nftId}/transfer`})
+    }
+    
+    </script>
+    
     <style lang="less" scoped>
     .course-area {
         margin: 172px 101px 0px 101px;
@@ -125,10 +145,22 @@
         margin-top: 88px;
         width: 100%;
     }
-    .el-col {
-        display: flex;
-        justify-content: center;
-        height: 363px;
+
+    .scrollbar {
+        width: 100%;
     }
+
+    .el-button {
+        width: 261px;
+        height: 100px;
+        font-size: 36px;
+        font-family: Futura;
+    }
+    
+    .el-button:focus {
+        border-color: #abe1e4;
+        background-color: #abe1e4;
+    }
+
     </style>
     

@@ -2,6 +2,7 @@ import { getDoc,doc,setDoc, DocumentReference} from "firebase/firestore";
 
 import {db} from "./init.js";
 
+
 // utilize the user collection service to create or update a user list in the database
 
 class UserCollection

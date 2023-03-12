@@ -9,6 +9,7 @@ class AlgoOperations{
     constructor()
     {
         this.algo_client = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
+        
     }
 
     // const note = undefined;
@@ -44,7 +45,7 @@ class AlgoOperations{
         // Specified address can revoke user asset holdings and send 
         // them to other addresses    
         // let clawback = account1.addr;
-    async create_asset(seed,decimals,unitName,assetName)
+    async create_asset(seed,unitName,assetName)
     {
         const params = await this.algo_client.getTransactionParams().do();
         // comment out the next two lines to use suggested fee
@@ -54,10 +55,11 @@ class AlgoOperations{
         const algoAccount = algosdk.mnemonicToSecretKey(seed);
         this.get_algo_info(algoAccount);
 
+        const decimals=1;
         const txn=algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
             from: algoAccount.addr,
             note: undefined,
-            totalIssuance: 1000,
+            totalIssuance: 2000,
             decimals: decimals,
             defaultFrozen: false,
             manager: algoAccount.addr,
@@ -66,6 +68,7 @@ class AlgoOperations{
             clawback: algoAccount.addr,
             unitName: unitName,
             assetName: assetName,
+            total: 2000,
             // assetURL: assetURL,
             // assetMetadataHash: assetMetadataHash,
             suggestedParams: params
@@ -127,7 +130,8 @@ class AlgoOperations{
     //     await printCreatedAsset(algodclient, account1.addr, assetID);
     // }
 
-    async receive_asset(seed_to,account_from,assetID)
+    // opt in to asset
+    async opt_in_asset(seed,assetID)
     {
         // Opting in to transact with the new asset
         // Allow accounts that want recieve the new asset
@@ -143,21 +147,13 @@ class AlgoOperations{
         params.fee = 1000;
         params.flatFee = true;
 
-        const algoAccount = algosdk.mnemonicToSecretKey(seed_to);
+        const algoAccount = algosdk.mnemonicToSecretKey(seed);
         this.get_algo_info(algoAccount);
 
-        // We set revocationTarget to undefined as 
-        // This is not a clawback operation
-        // let revocationTarget = undefined;
-        // CloseReaminerTo is set to undefined as
-        // we are not closing out an asset
-        // let closeRemainderTo = undefined;
-        // signing and sending "txn" allows sender to begin accepting asset specified by creator and index
-         // We are sending 0 assets
         const amount = 0;
 
         const txn=algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-            from: account_from,
+            from: algoAccount.addr,
             to: algoAccount.addr,
             amount: amount,
             note: undefined,
@@ -198,7 +194,7 @@ class AlgoOperations{
         this.get_algo_info(algoAccount);
 
         //Amount of the asset to transfer
-        const amount = 0;
+        const amount = 10;
 
         const txn=algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
             from: algoAccount.addr,
@@ -220,25 +216,15 @@ class AlgoOperations{
         console.log("Asset Transfer Transaction " + txId + " confirmed.");
 
         this.get_algo_info(algoAccount);
-        
-        // Must be signed by the account sending the asset  
-        // rawSignedTxn = xtxn.signTxn(account_from.sk)
-        // let xtx = (await algodclient.sendRawTransaction(rawSignedTxn).do());
-
-        // // Wait for confirmation
-        // confirmedTxn = await algosdk.waitForConfirmation(algodclient, xtx.txId, 4);
-        // //Get the completed Transaction
-        // console.log("Transaction " + xtx.txId + " confirmed in round " + confirmedTxn["confirmed-round"]);
-
-        // // You should now see the 10 assets listed in the account information
-        // console.log("Account 3 = " + account_to.addr);
-        // await printAssetHolding(algodclient, account_to.addr, assetID);
     }
 
     async get_algo_info(account)
     {
         // Get the account information for the new account
         let accountInfo = await this.algo_client.accountInformation(account.addr).do();
+        // the list of dictionaries of assets
+        const account_asset=accountInfo.assets;
+        console.log("This is the account assets",account_asset)
         console.log("Account balance: %d microAlgos", accountInfo.amount);
         console.log("Account = " + account.addr);
         console.log("Account info",accountInfo);
@@ -284,6 +270,12 @@ class AlgoOperations{
         console.log(netAddr);
         var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         window.open(netAddr, "_blank", strWindowFeatures);
+    }
+
+    async get_asset_info(assetID)
+    {
+        const assetInfo = await this.algo_client.getAssetByID(assetID).do();
+        console.log('This is the asset info',assetInfo);
     }
 }
 export default AlgoOperations;

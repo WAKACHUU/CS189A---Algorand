@@ -14,8 +14,10 @@
       <el-button @click="onClick()" >Fund</el-button>
       <el-button @click="onPress()" >Payment</el-button>
       <el-button @click="onCreate()" >Create</el-button>
-      <el-button @click="onReceive()" >Receive</el-button>
-      <el-button @click="onTransfer()" >Transfer</el-button> 
+      <el-button @click="onReceive()" >Opt In</el-button>
+      <el-button @click="onTransfer()" >Transfer</el-button>
+      <el-button @click="onGetinfo()" >Get Info</el-button> 
+      <el-button @click="getIPFS()" >Get IPFS</el-button>  
     </div>
   </el-scrollbar>
 
@@ -23,13 +25,18 @@
 
 <script lang="ts" setup>
 import CourseCard from '@/components/CourseCard.vue'
+import { add } from 'lodash';
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import algosdk from 'algosdk'
+// import the ipfs.js functions
+//import { scenario1,createNftScenario1,convertByte32ToIpfsCidV0,convertIpfsCidV0ToByte32 } from '@/backend/algorand/ipfs.js' 
 const store = useStore()
 
 const thisUser = store.state.FirebaseOps.user
 const thisAlgo=store.state.AlgoOps
 const seed = thisUser.user_collection.passphrase
+const address=thisUser.user_collection.address
 
 const onClick = () => {
   console.log("??")
@@ -57,7 +64,7 @@ const onPress = () => {
 const onCreate=()=>{
   console.log("//")
   try{
-    thisAlgo.create_asset(seed,10, "LATINUM","latinum")
+    thisAlgo.create_asset(seed,"YIJIECAI","yijiecai")
   }
   catch(e){
     console.error(e)
@@ -67,7 +74,8 @@ const onCreate=()=>{
 const onReceive=()=>{
   console.log("..")
   try{
-    thisAlgo.receive_asset(seed,"XMOY5PUCIZWGRJQML27EWJSL4AFG2TNAQZKRWUKSBZLORPYLB2XWIIXXZI",162444558)
+    const account_seed="cancel auto fetch nest bench tomorrow cost bless position worry flavor client drastic pole describe steel napkin oyster call rebel valve can secret abstract shield"
+    thisAlgo.opt_in_asset(account_seed,162926582)
   }
   catch(e){
     console.error(e)
@@ -77,14 +85,36 @@ const onReceive=()=>{
 const onTransfer=()=>{
   console.log("==")
   try{
-    const account_to="HZ57J3K46JIJXILONBBZOHX6BKPXEM2VVXNRFSUED6DKFD5ZD24PMJ3MVA"
-    thisAlgo.transfer_asset(seed,account_to,162444558)
+    const account_to="VPIYMTDRYEGAV2NZBMQAW3BEELWRPHEWY2566ZMUEA2GB7IJIKSVCQH3WA"
+    thisAlgo.transfer_asset(seed,account_to,162926582)
   }
   catch(e){
     console.error(e)
   }
 }
 
+const onGetinfo=()=>{
+  console.log("==")
+  try{
+    
+    const algoAccount = algosdk.mnemonicToSecretKey(seed);
+    thisAlgo.get_algo_info(algoAccount)
+    thisAlgo.get_asset_info(162926582)
+  }
+  catch(e){
+    console.error(e)
+  }
+}
+
+const getIPFS=()=>{
+  console.log("==")
+  try{
+    //createNftScenario1()
+  }
+  catch(e){
+    console.error(e)
+  }
+}
 
 const username = ref('username')
 </script>

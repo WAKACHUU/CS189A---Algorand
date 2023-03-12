@@ -13,6 +13,12 @@
                     <el-input type="text" id="username" v-model="form.username" @blur="inputBlur('username',form.username)"></el-input>
                     <p>{{form.usernameError}}</p>
                 </el-form-item>
+                <el-form-item label="Sign Up As">
+                  <el-radio-group v-model="form.role">
+                    <el-radio :label="1">Professor</el-radio>  
+                    <el-radio :label="0">Student</el-radio>  
+                  </el-radio-group>
+                </el-form-item>
                 <el-form-item label="Password">
                     <el-input type="password" id="password" v-model="form.password" @blur="inputBlur('password',form.password)"></el-input>
                     <p>{{form.passwordError}}</p>
@@ -38,6 +44,7 @@ const form = ref({
   username: '',
   password: '',
   confirmPassword: '',
+  role: '',
   usernameError: '',
   emailError: '',
   passwordError: '',
@@ -91,31 +98,43 @@ const submitForm = () => {
   
     }
   else{  
-  const Register_message=store.state.FirebaseOps.sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
-  // console.log(Register_message)
-  Register_message.then((value: unknown)=>{
-    if(value==1){
-      console.log("Register success")
-    }else if(value==0){
-      console.log("Email already exist")
-    }
-    else if (value==-1)
+    console.log(form.value)
+    var Register_message;
+
+    // if student
+    if(form.value.role=="0")
     {
-      console.log("Email does not end with @ucsb.edu")
+      Register_message=store.state.FirebaseOps.sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
     }
-    else if (value==-2)
-    {
-      console.log("Email already exists")
+    // if professor
+    else{
+      Register_message=store.state.FirebaseOps.prof_sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
     }
-    else if (value==-3)
-    {
-      console.log("Password is too short")
-    }
-    else if (value==-4)
-    {
-      console.log("Email is not valid")
-    }
-  })
+    // const Register_message=store.state.FirebaseOps.sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
+    // console.log(Register_message)
+    Register_message.then((value: unknown)=>{
+      if(value==1){
+        console.log("Register success")
+      }else if(value==0){
+        console.log("Email already exist")
+      }
+      else if (value==-1)
+      {
+        console.log("Email does not end with @ucsb.edu")
+      }
+      else if (value==-2)
+      {
+        console.log("Email already exists")
+      }
+      else if (value==-3)
+      {
+        console.log("Password is too short")
+      }
+      else if (value==-4)
+      {
+        console.log("Email is not valid")
+      }
+    })
 }
 }
 

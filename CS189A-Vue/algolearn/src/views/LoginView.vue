@@ -57,7 +57,7 @@ const inputBlur = (errorItem : string, inputContent : string) => {
   }
 }
 
-const submitForm = () => {
+const submitForm = () => { 
   const login_message=store.state.FirebaseOps.sign_in(form.value.user,form.value.password)
   // console.log(login_message)
   login_message.then((value: unknown)=>{

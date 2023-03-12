@@ -9,7 +9,7 @@ class AlgoOperations{
     constructor()
     {
         this.algo_client = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
-        
+        this.assets=[]; 
     }
 
     // const note = undefined;

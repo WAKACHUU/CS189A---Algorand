@@ -77,7 +77,7 @@ const onReceive=()=>{
 const onTransfer=()=>{
   console.log("==")
   try{
-    const account_to="HZ57J3K46JIJXILONBBZOHX6BKPXEM2VVXNRFSUED6DKFD5ZD24PMJ3MVA"
+    const account_to="IXKZ5VDEQHPDQP2VB23K465RCG77SB7WIMQJNVABT7KYXIT4JMFQ"
     thisAlgo.transfer_asset(seed,account_to,162444558)
   }
   catch(e){

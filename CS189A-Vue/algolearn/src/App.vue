@@ -6,16 +6,34 @@
   <!-- bottom navigation bar -->
   <div class="bottom-nav">
     <router-link to="/" class="nav-item">
-      <el-icon><House /></el-icon>
-      <span>Home</span>
+      <div style="justify-content: center;">
+        <div style="width: 100%; display: flex; justify-content: center;">
+          <el-icon><House /></el-icon>          
+        </div>
+        <div class="btm-nav-text">
+          <span>Home</span>
+        </div>
+      </div>
     </router-link>
     <router-link to="/course" class="nav-item">
-      <el-icon><School /></el-icon>
-      <span>Courses</span>
+      <div style="justify-content: center;">
+        <div style="width: 100%; display: flex; justify-content: center;">
+          <el-icon><School /></el-icon>          
+        </div>
+        <div class="btm-nav-text">
+          <span>Courses</span>
+        </div>
+      </div>
     </router-link>
     <router-link to="/account" class="nav-item">
-      <el-icon><User /></el-icon>
-      <span>Profile</span>
+      <div style="justify-content: center;">
+        <div style="width: 100%; display: flex; justify-content: center;">
+          <el-icon><User /></el-icon>          
+        </div>
+        <div class="btm-nav-text">
+          <span>Me</span>
+        </div>
+      </div>
     </router-link>
   </div>
   <!-- <nav>
@@ -49,15 +67,48 @@ body {
   height: 100%;
   position: relative;
 }
+.el-icon {
+  width: 5em;
+  height: 5em;
+  color: #fff;
+  padding-left: 8px;
+}
+
+.el-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+.router-link-active {
+  text-decoration: none;
+}
 
 .bottom-nav {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 50px;
-  background-color: #fff;
+  height: 150px;
+  background-color: #2DB6BC;
   border-top: 1px solid #eee;
   z-index: 100;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.btm-nav-text {
+  font-size: 32px;
+  font-family: Futura;
+  line-height: 39px;
+  color: white;
+  text-decoration: none!important;
+  display: flex;
+  justify-content: center;
 }
 
 </style>

@@ -7,6 +7,8 @@ import CourseView from '../views/CourseView.vue'
 import CourseDetailView from '../views/CourseDetailView.vue'
 import AccountView from '../views/AccountView.vue'
 import SingleCourse from '../views/SingleCourse.vue'
+import NFTDetailView from '../views/NFTDetailView.vue'
+import TransferView from '../views/TransferView.vue'
 // import LoginView from '../views/LoginView.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -14,14 +16,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: AboutView
   },
   {
     path: '/login',
@@ -46,15 +40,25 @@ const routes: Array<RouteRecordRaw> = [
     component: CourseDetailView
   },
   {
+    path: '/course/:courseId/:nftId',
+    name: 'course-detail-nft',
+    component: NFTDetailView,
+  },
+  {
+    path: '/course/:courseId/:nftId/transfer',
+    name: 'course-detail-nft-transfer',
+    component: TransferView,
+  },
+  {
     path: '/account',
     name: 'account',
     component: AccountView
   },
-  {
-    path: '/singlecourse',
-    name: 'singlecourse',
-    component: SingleCourse
-  }
+  // {
+  //   path: '/singlecourse',
+  //   name: 'singlecourse',
+  //   component: SingleCourse
+  // }
 ]
 
 const router = createRouter({

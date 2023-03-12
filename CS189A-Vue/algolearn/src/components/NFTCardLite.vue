@@ -1,24 +1,37 @@
 <template>
     <div class="nft-card-lite">
         <div class="nft-img">
-            <el-image style="width: 231px; height: 240px" :src="nft.image"></el-image>
+            <el-image style="width: 231px; height: 240px" :src="props.nftInfo.imgSrc"></el-image>
         </div>
         <div class="nft-info">
-            <span style="font-size: 24px; font-family: Futura; ">
-                {{ nft.name }}
-            </span>
+            <div style="width:100%;">
+                <span style="font-size: 14px; font-family: Futura; color: #999; text-transform: uppercase; letter-spacing: 4px;">
+                    {{ props.nftInfo.genre }}
+                </span>
+            </div>
+            <div style="width:100%; margin-top: 16px;">
+                <span style="font-size: 30px; font-family: Futura; ">
+                    {{ props.nftInfo.name }}
+                </span>
+            </div>
+            <div style="width:100%; margin-top: 74px">
+                <StarLevel :starLevel="props.nftInfo.starLevel"></StarLevel>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
+import StarLevel from '@/components/StarLevel.vue'
 
-const nft = {
-    name: 'NFT 1',
-    course: 'CS189A',
-    image: 'http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg'
-}
+const props = defineProps({
+    nftInfo: {
+        type: Object,
+        required: true
+    }
+})
 
 
 </script>

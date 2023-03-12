@@ -60,14 +60,16 @@
                     :key="index"
                     :span="8"
                   >
-                    <NFTCard :NFTInfo="item"></NFTCard>
+                    <NFTCard :NFTInfo="item" @click.stop="onClickCard(item.course, item.id)"></NFTCard>
                   </el-col>
                 </el-row>          
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="Create NFT" name="transfer">
-            <ProfTransfer />
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center; padding-top: 120px">
+              <ProfTransfer />
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -83,7 +85,9 @@ import ProfTransfer from '@/components/ProfTransfer.vue'
 import NFTCard from '@/components/NFTCard.vue'
 import StarLevel from '@/components/StarLevel.vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const store = useStore()
 const thisUser = store.state.FirebaseOps.user
 
@@ -97,6 +101,7 @@ const activeName = ref('mywallet')
 const inputFilter = ref('')
 const NFTs = ref([
   {
+      id: ref("1"),
       name: ref("NFT 1"),
       course: ref("CS189A"),
       comment: ref("This is a comment"),
@@ -105,6 +110,7 @@ const NFTs = ref([
       imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
   },
   {
+    id: ref("2"),
     name: ref("NFT 1"),
     course: ref("CS189A"),
     comment: ref("This is a comment"),
@@ -113,6 +119,7 @@ const NFTs = ref([
     imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
   },
   {
+    id: ref("3"),
     name: ref("NFT 1"),
     course: ref("CS189A"),
     comment: ref("This is a comment"),
@@ -121,6 +128,10 @@ const NFTs = ref([
     imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
   }
 ])
+
+const onClickCard = (courseId : string, nftId : string) => {
+  router.push({path: `/course/${courseId}/${nftId}`})
+}
 
 </script>
 

@@ -22,14 +22,44 @@
             class="account-tabs"
           >
             <!-- collection -->
-            <el-tab-pane label="Collection" name="collection">
+            <el-tab-pane label="Transaction" name="transaction">
               <div class="collection-div">
                 <div class="nft-cards">
                     <NFTCard :NFTInfo="nftInfo"></NFTCard>        
                 </div>
-                <span>Send To </span>
-                <el-input v-model="toForm" />
-                <el-button type="primary">Send</el-button>
+                <div style="width: 800px; display: flex; align-items: center;">
+                    <div style="width: 50px; height: 100%; vertical-align: middle;"></div>
+                    <div style="height: 306px;">
+                        <div style="width: 100%;">
+                            <span style="font-family: Futura; font-size: 36px;">Send To: </span>
+                        </div>
+                        <div style="width: 100%;  margin-top: 30px;">
+                            <el-select
+                                v-model="selectedStudents"
+                                multiple
+                                collapse-tags
+                                collapse-tags-tooltip
+                                placeholder="Select"
+                                style="width: 750px; height: 100px"
+                                :popper-append-to-body="false"
+                                popper-class="select-popper"
+                                filterable
+                                >
+                                <el-option
+                                    v-for="(item, idx) in studentNames"
+                                    :key="idx"
+                                    :label="item.label"
+                                    :value="item.value"
+                                >
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <div style="width: 100%;">
+                            <el-button type="primary" >Send</el-button> 
+                        </div>
+                    </div>                                      
+                </div>
+
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -37,9 +67,9 @@
       </div>
     </div>
   
-  </template>
+</template>
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
   import { ref } from 'vue'
   import { Filter } from '@element-plus/icons-vue'
   import { useRouter } from 'vue-router'
@@ -51,7 +81,7 @@
   const useremail = ref('user@email.com')
   
   // tab controller
-  const activeName = ref('mywallet')
+  const activeName = ref('transaction')
 
   const router = useRouter()
   const courseId  = router.currentRoute.value.params.courseId
@@ -90,10 +120,36 @@
   ])
 
   const nftInfo = ref(NFTs.value[parseInt(nftId)]) 
+
+
+  // select logic
+  const selectedStudents = ref([])
+  const studentNames = [
+  {
+    value: 'Option1',
+    label: 'Option1',
+  },
+  {
+    value: 'Option2',
+    label: 'Option2',
+  },
+  {
+    value: 'Option3',
+    label: 'Option3',
+  },
+  {
+    value: 'Option4',
+    label: 'Option4',
+  },
+  {
+    value: 'Option5',
+    label: 'Option5',
+  },
+]
   
-  </script>
+</script>
   
-  <style lang="less" scoped>
+<style lang="less" scoped>
   .gray-back {
     background-color: #F5F5F5;
     height: 100vh;
@@ -145,6 +201,7 @@
   .collection-div {
     width: 100%;
     height: 100%;
+    display: flex;
   }
   .search {
     width: 100%;
@@ -154,6 +211,33 @@
   }
   .nft-cards {
     padding: 103px 0px 0px;
+    margin-left: 50px;
+    height: 600px;
   }
-  </style>
+
+  /deep/ .el-input__wrapper {
+    height: 50px;
+    font-size: 20px;
+  }
   
+  .select-popper {
+    width: 750px;
+    height: 100px;
+    font-size: 20px;
+  }
+
+  /deep/ .el-select__tags {
+    top: 25%!important;
+  }
+
+  .el-button--primary {
+    width: 200px;
+    height: 70px;
+    font-size: 30px;
+    font-family: Futura;
+    font-weight: bold;
+  }
+</style>
+
+<style lang="less">
+</style>

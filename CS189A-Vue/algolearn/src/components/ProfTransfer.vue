@@ -1,16 +1,30 @@
 <template>
-    <el-card>
-        <el-form :model="nftForm" label-width="120px">
+    <el-card class="create-card">
+        <el-form :model="nftForm" label-width="200px" size="large">
             <el-form-item label="NFT Name">
-                <el-input v-model="nftForm.name" />
+                <el-input 
+                  maxlength="200"
+                  v-model="nftForm.name" 
+                  :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                />
             </el-form-item>
             <el-form-item label="Course">
-                <el-select v-model="nftForm.course" placeholder="please select your zone">
+                <el-select v-model="nftForm.course" placeholder="Select a course">
                     <el-option v-for="option in options" :key="option.label" :label="option.label" :value="option.value" />
                 </el-select>
             </el-form-item>
+            <el-form-item label="Level">
+                <el-select v-model="nftForm.starLevel" placeholder="Select a level for your NFT">
+                    <el-option v-for="option in starLevelOptions" :key="option.label" :label="option.label" :value="option.value" />
+                </el-select>
+            </el-form-item>
             <el-form-item label="Comment">
-                <el-input v-model="nftForm.comment" />
+                <el-input 
+                  v-model="nftForm.comment" 
+                  max-length="500" 
+                  type="textarea" 
+                  :input-style="{ height: '110px', fontFamily: 'Futura', fontSize: '24px'}"
+                />
             </el-form-item>
             <!-- Badge Image Upload -->
             <el-form-item label="Badge Image">
@@ -25,7 +39,7 @@
                     <el-button type="primary">Click to upload</el-button>
                     <template #tip>
                     <div class="el-upload__tip">
-                        jpg/png files with a size less than 500kb
+                        jpg/png files with a size less than 500KB.
                     </div>
                     </template>
                 </el-upload>
@@ -62,9 +76,33 @@ const options = [
   }
 ]
 
+const starLevelOptions = ref([
+  {
+    value: '1',
+    label: '1'
+  },
+  {
+    value: '2',
+    label: '2'
+  },
+  {
+    value: '3',
+    label: '3'
+  },
+  {
+    value: '4',
+    label: '4'
+  },
+  {
+    value: '5',
+    label: '5'
+  }
+])
+
 // do not use same name with ref
 const nftForm = reactive({
   name: '',
+  starLevel: 0,
   course: '',
   comment: ''
 })
@@ -75,10 +113,27 @@ const onSubmit = () => {
 </script>
 
 <style lang="less" scoped>
+.create-card {
+  width: 94.7%; 
+}
+/deep/ .el-form-item__label {
+  font-size: 24px!important;
+  font-family: Futura;
+  margin: 10px;
+}
 .avatar-uploader .avatar {
   width: 178px;
   height: 178px;
   display: block;
+}
+
+.el-select.el-select--large  {
+  width: 500px!important;
+  
+  /deep/ .el-input.el-input--large {
+    font-size: 24px!important;
+    height: 56px!important;
+  }
 }
 </style>
 

@@ -88,7 +88,7 @@ const submitForm = () => {
     if(value==1){
       console.log("login success")
       // 跳转到主页
-      router.push({path: '/'})
+      router.push({path: '/course'})
 
     }else if(value==0){
       console.log("Email not exist or Password error")

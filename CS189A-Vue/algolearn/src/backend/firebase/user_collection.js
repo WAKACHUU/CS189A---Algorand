@@ -62,6 +62,7 @@ class UserCollection
     {
         // getDoc(this.user_collection.courses[0])
         const docRef =this.user_collection.courses[iterator];
+        console.log('docRef',docRef)
         const docSnap=await getDoc(docRef);
         if(docSnap.data()==undefined)
         {
@@ -73,7 +74,49 @@ class UserCollection
         }
     }
 
+    async read_class_by_name(class_name)
+    {
+        // getDoc(this.user_collection.courses[0])
+        const docRef =doc(db,"courses",class_name);
+        console.log('docRef',docRef)
+        const docSnap=await getDoc(docRef);
+        if(docSnap.data()==undefined)
+        {
+            return undefined;
+        }
+        else
+        {
+            return docSnap.data();
+        }
+    }
 
+    async read_address_by_email(email)
+    {
+        const docRef =doc(db,"login",email);
+        const docSnap=await getDoc(docRef);
+        if(docSnap.data()==undefined)
+        {
+            return undefined;
+        }
+        else
+        {
+            return docSnap.data();
+        }
+    }
+
+    async read_assets_by_id(asset_id)
+    {
+        const docRef =doc(db,"assets",asset_id);
+        const docSnap=await getDoc(docRef);
+        if(docSnap.data()==undefined)
+        {
+            return undefined;
+        }
+        else
+        {
+            return docSnap.data();
+        }
+    }
     
 }
 

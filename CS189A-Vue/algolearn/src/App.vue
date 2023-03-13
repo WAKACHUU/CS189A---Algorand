@@ -5,7 +5,7 @@
     </div>
   <!-- bottom navigation bar -->
   <div v-if="showBottomBar" class="bottom-nav">
-    <router-link to="/" class="nav-item">
+    <!-- <router-link to="/" class="nav-item">
       <div style="justify-content: center;">
         <div style="width: 100%; display: flex; justify-content: center;">
           <el-icon><House /></el-icon>          
@@ -14,7 +14,7 @@
           <span>Home</span>
         </div>
       </div>
-    </router-link>
+    </router-link> -->
     <router-link to="/course" class="nav-item">
       <div style="justify-content: center;">
         <div style="width: 100%; display: flex; justify-content: center;">
@@ -65,7 +65,7 @@ watch(() => store.state.FirebaseOps.SignInState, (newVal) => {
 
 watch(() => router.currentRoute.value.fullPath, (newVal) => {
   currentRoute.value = newVal
-  if (newVal == '/login') {
+  if (newVal == '/login' || newVal == '/register') {
     showBottomBar.value = false
   } else {
     showBottomBar.value = true

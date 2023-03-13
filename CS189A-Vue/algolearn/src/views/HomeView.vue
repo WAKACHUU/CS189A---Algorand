@@ -2,7 +2,7 @@
   <el-scrollbar>
     <span>User Overview</span>
     <div class="profile-pic">
-      <img src="@/assets/logo.png">
+      <img src="http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg">
     </div>
     <div>
       <span>Welcome, </span>
@@ -29,8 +29,7 @@ import { add } from 'lodash';
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import algosdk from 'algosdk'
-// import the ipfs.js functions
-import { scenario1,createNftScenario1,convertByte32ToIpfsCidV0,convertIpfsCidV0ToByte32 } from '@/backend/algorand/ipfs.js' 
+
 const store = useStore()
 
 const thisUser = store.state.FirebaseOps.user
@@ -65,7 +64,7 @@ const onPress = () => {
 const onCreate=()=>{
   console.log("//")
   try{
-    thisAlgo.create_asset(seed,"YIJIECAI","yijiecai")
+    thisAlgo.create_asset(seed,"CS189A","office_hour","https://cdn.pixabay.com/photo/2016/01/09/18/27/camera-1130731_960_720.jpg")
   }
   catch(e){
     console.error(e)

@@ -57,64 +57,62 @@
 <script lang="ts" setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
+    import { useStore } from 'vuex'
     import StarLevel from '@/components/StarLevel.vue'
+    import algosdk from 'algosdk';
+    const store = useStore()
 
     const router = useRouter()
+
     const courseId  = router.currentRoute.value.params.courseId
     const nftId = router.currentRoute.value.params.nftId.toString()
+
+    const thisUser = store.state.FirebaseOps.user
     
-    const username = ref('username')
     const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
-    const userEmail = ref('user@ucsb.edu')
+    const username = ref(thisUser.user_collection.name)
+    const userEmail = ref(thisUser.user_collection.email)
 
     
-    
-    
-    // all course info here
-    const courseInfo = ref([
-      {
-        courseId: 'CS189A',
-        courseName: 'Capstone Project',
-        courseNum: 7
-      }
-    ])
+    const currentUser = store.state.FirebaseOps.user
 
-    const NFTs = ref([
-    {
-        id: ref("1"),
-        name: ref("NFT 1"),
-        course: ref("CS189A"),
-        comment: ref("This is a comment. This is a comment. This is a comment. This is a comment."),
-        genre: ref("Lecture 1"),
-        starLevel: ref(2),
-        imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-    },
-    {
-        id: ref("2"),
-        name: ref("NFT 1"),
-        course: ref("CS189A"),
-        comment: ref("This is a comment"),
-        genre: ref("Lecture 1"),
-        starLevel: ref(2),
-        imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-    },
-    {
-        id: ref("3"),
-        name: ref("NFT 1"),
-        course: ref("CS189A"),
-        comment: ref("This is a comment"),
-        genre: ref("Challenge"),
-        starLevel: ref(2),
-        imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-    }
-    ])
+    const thisAlgo=store.state.AlgoOps
+    // const attributes = ref({});
+    const nftInfo = ref({});
+    const asset_info=thisAlgo.get_asset_info(nftId)
+    asset_info.then((asset_info:any)=>{
+        console.log(asset_info)
+        console.log(asset_info.params)
+        // let Note=asset_info.params.note
+        // Note=algosdk.decodeObj(Note)
+        // console.log("This is the Note",Note)
 
-    const nftInfo = ref(NFTs.value[parseInt(nftId)]) 
+        if(asset_info.params['unit-name']==courseId){
+                    currentUser.read_assets_by_id(nftId.toString()).then((asset_data:any)=>{
+                        console.log(asset_data)
+                        if(asset_data!=undefined)
+                        {
+                            nftInfo.value={
+                                id:nftId,
+                                name:asset_info.params.name,
+                                course:asset_info.params['unit-name'],
+                                comment: asset_data.comment,
+                                genre: asset_data.genre,
+                                starLevel: parseInt(asset_data.starlevel),
+                                imgSrc: ref(asset_info.params.url)
+                            }   
+                            
+                        }
+                    })
+                }
+        console.log('This is the nftInfo',nftInfo)
+    })
+    // console.log('NFT values',NFTs.value)
 
     const onClickTransfer = () => {
         router.push({path: `/course/${courseId}/${nftId}/transfer`})
     }
-    
+
 </script>
     
 <style lang="less" scoped>

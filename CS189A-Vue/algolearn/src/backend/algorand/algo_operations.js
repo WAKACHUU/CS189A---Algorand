@@ -2,7 +2,12 @@ import algosdk from 'algosdk'
 // import { WalletConnectSession } from './wallets/walletconnect'
 // import { AlgoSignerSession } from './wallets/algosigner'
 // import Buffer from 'buffer'
-
+import {db} from "../firebase/init.js";
+import { getDoc,doc,setDoc, DocumentReference} from "firebase/firestore";
+import { parseStringStyle } from '@vue/shared';
+import { string } from 'i/lib/util';
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 
 class AlgoOperations{
     // algodclient = new algosdk.Algodv2('', 'https://testnet-api.algonode.cloud', '')
@@ -45,21 +50,24 @@ class AlgoOperations{
         // Specified address can revoke user asset holdings and send 
         // them to other addresses    
         // let clawback = account1.addr;
-    async create_asset(seed,unitName,assetName)
+    async create_asset(seed,unitName,assetName,assetURL,comment,genre,starlevel)
     {
         const params = await this.algo_client.getTransactionParams().do();
         // comment out the next two lines to use suggested fee
         params.fee = 1000;
         params.flatFee = true;
 
+        // const infos=assetName+"\n"+comment+"\n"+genre+"\n"+starlevel;
+
         const algoAccount = algosdk.mnemonicToSecretKey(seed);
         this.get_algo_info(algoAccount);
 
-        const decimals=1;
+        const MetadataHash = await this.hash_file_data(assetURL);
+        // const decoded_metadata=algosdk.decodeObj(MetadataHash);
+        const decimals=0;
         const txn=algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
             from: algoAccount.addr,
-            note: undefined,
-            totalIssuance: 2000,
+            totalIssuance: 200,
             decimals: decimals,
             defaultFrozen: false,
             manager: algoAccount.addr,
@@ -68,9 +76,9 @@ class AlgoOperations{
             clawback: algoAccount.addr,
             unitName: unitName,
             assetName: assetName,
-            total: 2000,
-            // assetURL: assetURL,
-            // assetMetadataHash: assetMetadataHash,
+            total: 200,
+            assetURL: assetURL,
+            assetMetadataHash: MetadataHash,
             suggestedParams: params
         })
 
@@ -79,11 +87,55 @@ class AlgoOperations{
         console.log(txId)
 
         // wait for transaction to be confirmed
-        await algosdk.waitForConfirmation(this.algo_client, txId, 4);
+        let ptx=await algosdk.waitForConfirmation(this.algo_client, txId, 4);
         console.log("Asset Creation Transaction " + txId + " confirmed.");
-    
+        // console.log(decoded_metadata)
         this.get_algo_info(algoAccount);
+
+        const assetID = ptx['asset-index'];
+        console.log(assetID.toString());
+
+        // add data collection to firebase
+        const docRef=doc(db,"assets",assetID.toString());
+        const data={
+            comment:comment,
+            genre:genre,
+            starlevel:starlevel,
+            assetID:assetID,
+        }
+        await setDoc(docRef,data);
+        console.log("data added to firebase");
+        
+        // router.go(0);
+
     }
+
+    async hash_file_data(filename, returnType = "bytes") {
+        //read the image file from local folder and convert it to array buffer
+        const fileBlob = await fetch(filename).then(r => r.blob());
+
+
+        const fileArrayBuffer = await fileBlob.arrayBuffer();
+        const fileData = new Uint8Array(fileArrayBuffer);
+      
+        const hashBuffer = await crypto.subtle.digest("SHA-256", fileData);
+      
+        if (returnType === "bytes") {
+            const hashBytes = new Uint8Array(hashBuffer);
+            const base64String = btoa(String.fromCharCode(...hashBytes));
+            console.log(hashBytes);
+            console.log(base64String);
+            return hashBytes;
+        } else if (returnType === "base64") {
+            const hashBytes = new Uint8Array(hashBuffer);
+            const base64String = btoa(String.fromCharCode(...hashBytes));
+            return base64String;
+        }
+    }
+
+
+
+                
 
 
     // async modify_asset(account1,account2,assetID)
@@ -194,7 +246,7 @@ class AlgoOperations{
         this.get_algo_info(algoAccount);
 
         //Amount of the asset to transfer
-        const amount = 10;
+        const amount = 1;
 
         const txn=algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
             from: algoAccount.addr,
@@ -283,9 +335,7 @@ class AlgoOperations{
         // console.log('This is the asset info',assetInfo);
     }
 
-    get_account_assets()
-    {
-        return this.assets;
-    }
+
+
 }
 export default AlgoOperations;

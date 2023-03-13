@@ -1,16 +1,19 @@
 <template>
   <el-avatar :size="414" class="top-avatar" shape="circle">
-    <img src="@/assets/logo.png">
+    <img src="http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg">
   </el-avatar>
   <div class="gray-back">
     <div class="content-account">
       <div style="background-color: white; height: calc(100vh - 480px)">
         <div class="account-basic">
           <el-row>
+            <div style="display: flex">              
               <span class="account-username">{{ username }} </span>
+            </div>
           </el-row>
           <el-row>
             <span class="account-algoacc">{{ algoAcc }} </span>
+            <el-button type="primary" @click="onClickFundAccount()">Fund Account</el-button>
           </el-row>
           <el-row>
             <span class="account-algoacc">{{ useremail }}</span>
@@ -21,6 +24,7 @@
           v-model="activeName" 
           class="account-tabs"
           :stretch="true"
+          @tab-click="onTabClick"
         >
           <!-- my wallet
           <el-tab-pane label="My Wallet" name="mywallet">
@@ -53,8 +57,9 @@
                   placeholder="Please input"
                   :prefix-icon="Filter"
                   input-style="width: 1072px; height: 76px; font-size: 24px; font-family: Futura;"
-                ></el-input>          
+                ></el-input>         
               </div>
+              <el-button plain @click="onRefresh()">Refresh</el-button> 
               <div class="nft-cards">
                 <el-row>
                   <el-col
@@ -62,7 +67,7 @@
                     :key="index"
                     :span="8"
                   >
-                    <NFTCard :NFTInfo="item" @click.stop="onClickCard(item.course, index)"></NFTCard>
+                    <NFTCard :NFTInfo="item" @click.stop="onClickCard(item.course, item.id)"></NFTCard>
                   </el-col>
                 </el-row>          
               </div>
@@ -102,7 +107,7 @@ const useremail = ref(thisUser.user_collection.email)
 const activeName = ref('collection')
 
 const inputFilter = ref('')
-const NFTs = ref([
+var NFTs = ref([
 ])
 
 
@@ -118,18 +123,25 @@ thisAlgo.get_algo_info(algosdk.mnemonicToSecretKey(seed)).then((asset_lit:any)=>
     let asset_id=asset_lit[i]['asset-id']
     // console.log(asset_id)
     thisAlgo.get_asset_info(asset_id).then((asset_info:any)=>{
-      // console.log(asset_info)
+      console.log(asset_info)
       // console.log(asset_info.params)
-      let attributes={
-        id:asset_id,
-        name:asset_info.params.name,
-        course:asset_info.params['unit-name'],
-        comment: asset_info.params.total,
-        genre: ref("Lecture 1"),
-        starLevel: ref(2),
-        imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-      }
-      NFTs.value.push(attributes)
+      currentUser.read_assets_by_id(asset_id.toString()).then((asset_data:any)=>{
+          console.log(asset_data)
+          if(asset_data!=undefined)
+          {
+              let attributes={
+                  id:asset_id,
+                  name:asset_info.params.name,
+                  course:asset_info.params['unit-name'],
+                  comment: asset_data.comment,
+                  genre: asset_data.genre,
+                  starLevel: parseInt(asset_data.starlevel),
+                  imgSrc: ref(asset_info.params.url)
+              }   
+              NFTs.value.push(attributes)
+          }
+      })
+                
     })
   }
 })
@@ -138,8 +150,61 @@ thisAlgo.get_algo_info(algosdk.mnemonicToSecretKey(seed)).then((asset_lit:any)=>
 
 // tab controller
 
+const onRefresh = () => {
+  console.log("refresh")
+  NFTs = ref([])
+  thisAlgo.get_algo_info(algosdk.mnemonicToSecretKey(seed)).then((asset_lit:any)=>{
+    // print the length of asset list
+    // console.log(asset_lit.length)
+    for (let i = 0; i < asset_lit.length; i++)
+    {
+      let asset_id=asset_lit[i]['asset-id']
+      // console.log(asset_id)
+      thisAlgo.get_asset_info(asset_id).then((asset_info:any)=>{
+        console.log(asset_info)
+        // console.log(asset_info.params)
+        currentUser.read_assets_by_id(asset_id.toString()).then((asset_data:any)=>{
+            console.log(asset_data)
+            if(asset_data!=undefined)
+            {
+                let attributes={
+                    id:asset_id,
+                    name:asset_info.params.name,
+                    course:asset_info.params['unit-name'],
+                    comment: asset_data.comment,
+                    genre: asset_data.genre,
+                    starLevel: parseInt(asset_data.starlevel),
+                    imgSrc: ref(asset_info.params.url)
+                }   
+                NFTs.value.push(attributes)
+            }
+        })
+                  
+      })
+    }
+  })
+}
+
 const onClickCard = (courseId : string, nftId : number) => {
   router.push({path: `/course/${courseId}/${nftId}`})
+}
+
+// fund account
+const onClickFundAccount = () => {
+  console.log("fund?")
+  try{
+    thisAlgo.fund_account(seed)
+  }
+  catch(e){
+    console.error(e)
+  }
+
+}
+
+const onTabClick = (pane, ev) => {
+  if (pane="Collection") {
+    console.log("collection！！！！")
+  }
 }
 
 </script>
@@ -210,5 +275,6 @@ const onClickCard = (courseId : string, nftId : number) => {
   display: flex;
   justify-content: center;
   height: 600px;
+  margin-bottom: 20px;
 }
 </style>

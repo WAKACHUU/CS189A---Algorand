@@ -20,7 +20,15 @@
     <div class="my-courses">
         <span class="text-span">My Courses</span>
         <el-scrollbar max-height="1000px" wrap-style="margin-top: 75px" @click="onClickCard">
-            <CourseCard v-for="ci in courseInfo" :key="ci.courseId" :courseInfo="ci" @click.stop="onClickCard(ci.courseId)" />
+          <el-row>
+            <el-col
+              v-for="ci in courseInfo" 
+              :key="ci.courseId"
+              :span="12"
+            >
+              <CourseCard :courseInfo="ci" @click.stop="onClickCard(ci.courseId)" />
+            </el-col>
+          </el-row>
         </el-scrollbar>
     </div>
 

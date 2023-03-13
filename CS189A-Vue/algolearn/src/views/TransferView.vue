@@ -1,6 +1,6 @@
 <template>
     <el-avatar :size="414" class="top-avatar" shape="circle">
-      <img src="@/assets/logo.png">
+      <img src="http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg">
     </el-avatar>
     <div class="gray-back">
       <div class="content-account">
@@ -21,11 +21,10 @@
             v-model="activeName" 
             class="account-tabs"
           >
-            <!-- collection -->
             <el-tab-pane label="Transaction" name="transaction">
               <div class="collection-div">
                 <div class="nft-cards">
-                    <NFTCard :NFTInfo="nftInfo"></NFTCard>        
+                    <!-- <NFTCard :NFTInfo="nftInfo"></NFTCard>         -->
                 </div>
                 <div style="width: 800px; display: flex; align-items: center;">
                     <div style="width: 50px; height: 100%; vertical-align: middle;"></div>
@@ -55,7 +54,7 @@
                             </el-select>
                         </div>
                         <div style="width: 100%;">
-                            <el-button type="primary" >Send</el-button> 
+                            <el-button type="primary" @click="onClickSend()">Send</el-button> 
                         </div>
                     </div>                                      
                 </div>
@@ -75,6 +74,7 @@
   import { Filter } from '@element-plus/icons-vue'
   import { useRouter } from 'vue-router'
   import NFTCard from '@/components/NFTCard.vue'
+  import {db} from "./init.js";
 
   const store = useStore();
   const thisUser = store.state.FirebaseOps.user
@@ -90,66 +90,76 @@
   const courseId  = router.currentRoute.value.params.courseId
   const nftId = router.currentRoute.value.params.nftId.toString()
 
-  const toForm = ref('')
-  
-  const NFTs = ref([
-    {
-        id: ref("1"),
-        name: ref("NFT 1"),
-        course: ref("CS189A"),
-        comment: ref("This is a comment"),
-        genre: ref("Lecture 1"),
-        starLevel: ref(2),
-        imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-    },
-    {
-      id: ref("2"),
-      name: ref("NFT 1"),
-      course: ref("CS189A"),
-      comment: ref("This is a comment"),
-      genre: ref("Lecture 1"),
-      starLevel: ref(2),
-      imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-    },
-    {
-      id: ref("3"),
-      name: ref("NFT 1"),
-      course: ref("CS189A"),
-      comment: ref("This is a comment"),
-      genre: ref("Challenge"),
-      starLevel: ref(2),
-      imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-    }
-  ])
+  const thisAlgo=store.state.AlgoOps
+  const seed = thisUser.user_collection.passphrase
 
-  const nftInfo = ref(NFTs.value[parseInt(nftId)]) 
+  // const toForm = ref('')
+
+  const studentNames = ref([])
+  
+  const nftInfo = ref({});
+  const asset_info=thisAlgo.get_asset_info(nftId)
+  asset_info.then((asset_info:any)=>{
+      console.log(asset_info)
+      console.log(asset_info.params)
+      nftInfo.value={
+          id:nftId,
+          name:asset_info.params.name,
+          course:asset_info.params['unit-name'],
+          comment: asset_info.params.total,
+          genre: ref("Lecture 1"),
+          starLevel: ref(2),
+          imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
+      }
+      console.log('This is the nftInfo',nftInfo)
+
+      // set the students enrolled in this course
+      const student_enrolled=thisUser.read_class_by_name("CS189A")
+      student_enrolled.then((student_enrolled:any)=>{
+        let emails=student_enrolled.enrolledEmail
+        for (let i=0;i<emails.length;i++){
+          let info=thisUser.read_address_by_email(emails[i])
+          info.then((info:any)=>{
+            console.log(info)
+            studentNames.value.push({
+                value: {address: info.address, name: info.name, passphrase: info.passphrase},
+                label: info.name}
+            )
+          })
+        }
+      })
+  })
 
 
   // select logic
   const selectedStudents = ref([])
-  const studentNames = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-]
+  // console.log('Selected Students',selectedStudents.value)
+
+const onClickSend = () => {
+  console.log("send?")
+  // console.log('Selected Students',selectedStudents.value) 
+  for (let i=0;i<selectedStudents.value.length;i++){
+    let students_seeds=selectedStudents.value[i]['passphrase']
+    let address_to=selectedStudents.value[i]['address']
+    console.log("ID",students_seeds)
+    console.log("address",address_to)
+    thisAlgo.opt_in_asset(students_seeds,parseInt(nftId)).then(()=>{
+      console.log(2)
+      thisAlgo.transfer_asset(seed,address_to,parseInt(nftId)).then(()=>{
+        console.log(1)
+      })
+    })
+    // thisAlgo.transfer_asset(seed,address_to,parseInt(nftId))
+  }
+
+
+
+}
   
+
+function doc(db: any, arg1: string, email: any) {
+throw new Error('Function not implemented.')
+}
 </script>
   
 <style lang="less" scoped>

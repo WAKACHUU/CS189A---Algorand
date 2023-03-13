@@ -43,7 +43,7 @@
                         </span>
                     </div>
                     <!-- button for transfer -->
-                    <div style="position: absolute; bottom: 0">
+                    <div v-if="role=='1'" style="position: absolute; bottom: 0">
                         <el-button type="primary" @click="onClickTransfer()">Transfer</el-button>
                     </div>
                 </div>
@@ -68,6 +68,7 @@
     const nftId = router.currentRoute.value.params.nftId.toString()
 
     const thisUser = store.state.FirebaseOps.user
+    const role = ref(thisUser.user_collection.role)
     
     const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
     const username = ref(thisUser.user_collection.name)

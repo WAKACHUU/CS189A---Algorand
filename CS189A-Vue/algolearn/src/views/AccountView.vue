@@ -6,18 +6,24 @@
     <div class="content-account">
       <div style="background-color: white; height: calc(100vh - 480px)">
         <div class="account-basic">
-          <el-row>
-            <div style="display: flex">              
-              <span class="account-username">{{ username }} </span>
-            </div>
-          </el-row>
-          <el-row>
-            <span class="account-algoacc">{{ algoAcc }} </span>
-            <el-button type="primary" @click="onClickFundAccount()">Fund Account</el-button>
-          </el-row>
-          <el-row>
-            <span class="account-algoacc">{{ useremail }}</span>
-          </el-row>
+          <div>
+            <el-row>
+              <div style="display: flex">              
+                <span class="account-username">{{ username }} </span>
+              </div>
+            </el-row>
+            <el-row>
+              <span class="account-algoacc">{{ algoAcc }} </span>
+              
+            </el-row>
+            <el-row>
+              <span class="account-algoacc">{{ useremail }}</span>
+            </el-row>      
+            <div style="position: absolute; right: 60px; top: 60px;">
+              <el-button type="primary" @click="onClickFundAccount()">Fund Account</el-button>
+              <el-button type="info" @click="router.push({path: `/login`})">Log Out</el-button>
+            </div>      
+          </div>
         </div>
         <!-- tabs -->
         <el-tabs 
@@ -73,7 +79,7 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="Create NFT" name="transfer">
+          <el-tab-pane label="Create NFT" name="transfer" v-if="role == '1'? true: false">
             <div style="width: 100%; height: 660px; display: flex; justify-content: center; align-items: center; padding-top: 120px">
               <ProfTransfer />
             </div>
@@ -98,6 +104,8 @@ import algosdk from 'algosdk'
 const router = useRouter();
 const store = useStore()
 const thisUser = store.state.FirebaseOps.user
+
+const role = ref(thisUser.user_collection.role)
 
 const username = ref(thisUser.user_collection.name)
 const algoAcc = ref(thisUser.user_collection.address)
@@ -242,6 +250,7 @@ const onTabClick = (pane, ev) => {
   font-family: Futura; 
   width: 100%;
   line-height: 26px;
+  margin-top: 10px;
 }
 
 .account-tabs {
@@ -276,5 +285,17 @@ const onTabClick = (pane, ev) => {
   justify-content: center;
   height: 600px;
   margin-bottom: 20px;
+}
+
+.el-button {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    font-family: Futura;
+}
+
+.el-button:focus {
+    border-color: #abe1e4;
+    background-color: #abe1e4;
 }
 </style>

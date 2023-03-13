@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="course-bottom">
-      <span style="font-size: 24px; font-family: Futura; line-height: 39px; color: white">{{ props.courseInfo.courseNum }} NFTs owned</span>
+      
   </div>
 </el-card>
 

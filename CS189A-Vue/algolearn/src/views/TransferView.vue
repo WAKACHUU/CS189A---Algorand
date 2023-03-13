@@ -20,6 +20,7 @@
           <el-tabs 
             v-model="activeName" 
             class="account-tabs"
+            v-if="role=='1'"
           >
             <el-tab-pane label="Transaction" name="transaction">
               <div class="collection-div">
@@ -35,18 +36,18 @@
                         <div style="width: 100%;  margin-top: 30px;">
                             <el-select
                                 v-model="selectedStudents"
+                                value-key="address"
                                 multiple
                                 collapse-tags
                                 collapse-tags-tooltip
                                 placeholder="Select"
                                 style="width: 750px; height: 100px"
-                                :popper-append-to-body="false"
                                 popper-class="select-popper"
                                 filterable
                                 >
                                 <el-option
-                                    v-for="(item, idx) in studentNames"
-                                    :key="idx"
+                                    v-for="item in studentNames"
+                                    :key="item.label"
                                     :label="item.label"
                                     :value="item.value"
                                 >
@@ -79,6 +80,8 @@
   const store = useStore();
   const thisUser = store.state.FirebaseOps.user
 
+  const role = ref(thisUser.user_collection.role)
+
   const username = ref(thisUser.user_collection.name)
   const algoAcc = ref(thisUser.user_collection.address)
   const useremail = ref(thisUser.user_collection.email)
@@ -96,6 +99,8 @@
   // const toForm = ref('')
 
   const studentNames = ref([])
+  const selectedStudents = ref([])
+  console.log('Selected Students',selectedStudents.value)
   
   const nftInfo = ref({});
   const asset_info=thisAlgo.get_asset_info(nftId)
@@ -130,14 +135,12 @@
       })
   })
 
-
+  console.log("studentNames",studentNames.value)
   // select logic
-  const selectedStudents = ref([])
-  // console.log('Selected Students',selectedStudents.value)
 
 const onClickSend = () => {
   console.log("send?")
-  // console.log('Selected Students',selectedStudents.value) 
+  console.log('Selected Students',selectedStudents.value) 
   for (let i=0;i<selectedStudents.value.length;i++){
     let students_seeds=selectedStudents.value[i]['passphrase']
     let address_to=selectedStudents.value[i]['address']

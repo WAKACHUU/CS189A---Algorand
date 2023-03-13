@@ -62,6 +62,7 @@
   
   .image {
     width: 100%;
+    height: 386px;
     display: block;
   }
 

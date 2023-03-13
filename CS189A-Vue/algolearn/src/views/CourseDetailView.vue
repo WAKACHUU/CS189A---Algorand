@@ -86,7 +86,7 @@
     ])
 
     const onClickCard = (idx: number) => {
-        const nftId = idx.toString()
+        const nftId = idx
         router.push({ path: `/course/${courseId}/${nftId}` })
         console.log(router)
     }

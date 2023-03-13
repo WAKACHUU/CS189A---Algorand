@@ -22,7 +22,7 @@
           class="account-tabs"
           :stretch="true"
         >
-          <!-- my wallet -->
+          <!-- my wallet
           <el-tab-pane label="My Wallet" name="mywallet">
             <el-table :data="NFTs" style="width: 100%">
               <el-table-column label="Collection" width="210">
@@ -39,9 +39,11 @@
                     <StarLevel :starLevel="scope.row.starLevel"></StarLevel>
                   </template>
               </el-table-column>
+              <el-table-column label="Tran">
 
+              </el-table-column>
             </el-table>
-          </el-tab-pane>
+          </el-tab-pane> -->
           <!-- collection -->
           <el-tab-pane label="Collection" name="collection">
             <div class="collection-div">
@@ -60,14 +62,14 @@
                     :key="index"
                     :span="8"
                   >
-                    <NFTCard :NFTInfo="item" @click.stop="onClickCard(item.course, item.id)"></NFTCard>
+                    <NFTCard :NFTInfo="item" @click.stop="onClickCard(item.course, index)"></NFTCard>
                   </el-col>
                 </el-row>          
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="Create NFT" name="transfer">
-            <div style="width: 100%; display: flex; justify-content: center; align-items: center; padding-top: 120px">
+            <div style="width: 100%; height: 660px; display: flex; justify-content: center; align-items: center; padding-top: 120px">
               <ProfTransfer />
             </div>
           </el-tab-pane>
@@ -96,7 +98,7 @@ const algoAcc = ref(thisUser.user_collection.address)
 const useremail = ref(thisUser.user_collection.email)
 
 // tab controller
-const activeName = ref('mywallet')
+const activeName = ref('collection')
 
 const inputFilter = ref('')
 const NFTs = ref([
@@ -129,7 +131,7 @@ const NFTs = ref([
   }
 ])
 
-const onClickCard = (courseId : string, nftId : string) => {
+const onClickCard = (courseId : string, nftId : number) => {
   router.push({path: `/course/${courseId}/${nftId}`})
 }
 

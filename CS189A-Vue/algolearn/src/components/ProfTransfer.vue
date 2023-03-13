@@ -45,8 +45,9 @@
                 </el-upload>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">Create</el-button>
-                <el-button>Cancel</el-button>
+                <div style="margin-left: 15px">
+                  <el-button type="primary" class="create-button" @click="onSubmit">Create</el-button>
+                </div>
             </el-form-item>
         </el-form>
     </el-card>
@@ -113,8 +114,21 @@ const onSubmit = () => {
 </script>
 
 <style lang="less" scoped>
+.el-button.create-button {
+    width: 200px;
+    height: 80px;
+    font-size: 30px;
+    font-family: Futura;
+}
+
+.el-button.create-button:focus {
+    border-color: #abe1e4;
+    background-color: #abe1e4;
+}
+
 .create-card {
   width: 94.7%; 
+  height: 650px;
 }
 /deep/ .el-form-item__label {
   font-size: 24px!important;

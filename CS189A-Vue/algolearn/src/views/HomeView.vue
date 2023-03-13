@@ -30,13 +30,14 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import algosdk from 'algosdk'
 // import the ipfs.js functions
-//import { scenario1,createNftScenario1,convertByte32ToIpfsCidV0,convertIpfsCidV0ToByte32 } from '@/backend/algorand/ipfs.js' 
+import { scenario1,createNftScenario1,convertByte32ToIpfsCidV0,convertIpfsCidV0ToByte32 } from '@/backend/algorand/ipfs.js' 
 const store = useStore()
 
 const thisUser = store.state.FirebaseOps.user
 const thisAlgo=store.state.AlgoOps
 const seed = thisUser.user_collection.passphrase
 const address=thisUser.user_collection.address
+
 
 const onClick = () => {
   console.log("??")
@@ -109,7 +110,7 @@ const onGetinfo=()=>{
 const getIPFS=()=>{
   console.log("==")
   try{
-    //createNftScenario1()
+    createNftScenario1()
   }
   catch(e){
     console.error(e)

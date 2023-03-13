@@ -1,12 +1,12 @@
 module.exports = {
-    algodClientUrl: "https://api.testnet.algoexplorer.io",
-    algodClientPort: "",
-    algodClientToken: "",
-    pinataApiKey: "111111",
-    pinataApiSecret: "1111111",
+    // algodClientUrl: "https://api.testnet.algoexplorer.io",
+    // algodClientPort: "",
+    // algodClientToken: "",
+    pinataApiKey: "965ca553a2682f1a69c7",
+    pinataApiSecret: "7a843e8bed61eec264db6141cd3de1bedd2919070f7926570807b8cc8224b47f",
     pinataFileUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
     pinataJSONUrl: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-    ipfsNode: "http://localhost:5002",
+    ipfsNode: "http://localhost:8081",
     arc3MetadataJSON: {
         "name": "",
         "description": "",

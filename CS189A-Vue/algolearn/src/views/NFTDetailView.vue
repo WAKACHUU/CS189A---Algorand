@@ -29,18 +29,21 @@
                     <el-image style="width: 640px; height: 640px" :src="nftInfo.imgSrc"></el-image>
                 </div>
                 
-                <div style="width: calc(100% - 650px); margin-left: 60px">
+                <div style="width: calc(100% - 650px); height: 640px; margin-left: 60px">
                     <span style="font-size: 50px; font-family: Futura; font-weight: bold;"> {{ nftInfo.name }} </span>  
                     <div style="margin-top: 50px">
                         <StarLevel :starLevel="nftInfo.starLevel" /> 
                     </div> 
+                    <div style="margin-top: 50px">
+                        <el-tag class="ml-2" type="info">{{ nftInfo.genre }}</el-tag>
+                    </div>
                     <div style="margin-top: 100px">
                         <span style="font-size: 24px; font-family: Futura;">
                             {{ nftInfo.comment }}
                         </span>
                     </div>
                     <!-- button for transfer -->
-                    <div style="margin-top: 218px">
+                    <div style="position: absolute; bottom: 0">
                         <el-button type="primary" @click="onClickTransfer()">Transfer</el-button>
                     </div>
                 </div>
@@ -49,9 +52,9 @@
     
     </div>
     
-    </template>
+</template>
     
-    <script lang="ts" setup>
+<script lang="ts" setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
     import StarLevel from '@/components/StarLevel.vue'
@@ -110,9 +113,15 @@
         router.push({path: `/course/${courseId}/${nftId}/transfer`})
     }
     
-    </script>
+</script>
     
-    <style lang="less" scoped>
+<style lang="less" scoped>
+    .el-tag {
+        height: 36px;
+        font-size: 20px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
     .course-area {
         margin: 172px 101px 0px 101px;
     }
@@ -162,5 +171,5 @@
         background-color: #abe1e4;
     }
 
-    </style>
+</style>
     

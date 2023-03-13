@@ -2,42 +2,70 @@
 <!-- eslint-disable @typescript-eslint/no-var-requires -->
 <template>
     <div class="dialog">
-        <div class="RegisterPage">
-            <h1>Register</h1>
-            <el-form :model="form">
-              <el-form-item label="Email">
-                  <el-input type="text" id="email" v-model="form.email" @blur="inputBlur('email',form.email)"></el-input>
-                  <p>{{form.emailError}}</p>
-              </el-form-item>
-                <el-form-item label="Username">
-                    <el-input type="text" id="username" v-model="form.username" @blur="inputBlur('username',form.username)"></el-input>
-                    <p>{{form.usernameError}}</p>
-                </el-form-item>
-                <el-form-item label="Sign Up As">
-                  <el-radio-group v-model="form.role">
-                    <el-radio :label="1">Professor</el-radio>  
-                    <el-radio :label="0">Student</el-radio>  
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="Password">
-                    <el-input type="password" id="password" v-model="form.password" @blur="inputBlur('password',form.password)"></el-input>
-                    <p>{{form.passwordError}}</p>
-                </el-form-item>
-                <el-form-item label="Confirm Password">
-                    <el-input type="comfirmPassword" id="comfirmPassword" v-model="form.confirmPassword" @blur="inputBlur('confirmPassword',form.confirmPassword)"></el-input>
-                    <p>{{form.confirmPasswordError}}</p>
-                </el-form-item>
-                <el-button type="primary" @click="submitForm()" v-bind:disabled="form.beDisabled">Register</el-button>
-            </el-form>
+      <div style="position: fixed; top:20px; left:20px;">
+        <el-image style="width:273px;height:74px;" src="https://www.algorand.com/assets/media-kit/logos/full/png/algorand_full_logo_black.png"></el-image>
+      </div>
+      <div>
+        <div style="width: 100%; display:flex; justify-content: center;">
+            <span style="font-size: 72px; font-family: Futura; margin-bottom: 30px;;">Welcome to AlgoLearn</span>
         </div>
+        <el-card class="login-card">
+          <el-form :model="form">
+            <el-form-item label="Email">
+                <el-input type="text" id="email" 
+                  v-model="form.email" 
+                  @blur="inputBlur('email',form.email)"
+                  :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                ></el-input>
+                <p>{{form.emailError}}</p>
+            </el-form-item>
+              <el-form-item label="Username">
+                  <el-input type="text" id="username" 
+                    v-model="form.username" 
+                    @blur="inputBlur('username',form.username)"
+                    :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                  ></el-input>
+                  <p>{{form.usernameError}}</p>
+              </el-form-item>
+              <el-form-item label="Sign Up As">
+                <el-radio-group v-model="form.role">
+                  <el-radio :label="1">Professor</el-radio>  
+                  <el-radio :label="0">Student</el-radio>  
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="Password">
+                  <el-input 
+                    type="password" id="password" 
+                    v-model="form.password" 
+                    @blur="inputBlur('password',form.password)"
+                    :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                  ></el-input>
+                  <p>{{form.passwordError}}</p>
+              </el-form-item>
+              <el-form-item label="Confirm Password">
+                  <el-input type="password" id="comfirmPassword" 
+                    v-model="form.confirmPassword" 
+                    @blur="inputBlur('confirmPassword',form.confirmPassword)"
+                    :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                  ></el-input>
+                  <p>{{form.confirmPasswordError}}</p>
+              </el-form-item>
+              <div style="width: 100%; display: flex; justify-content: center;">
+                <el-button class="create-button" type="primary" @click="submitForm()" v-bind:disabled="form.beDisabled">Register</el-button>
+              </div>           
+          </el-form>
+        </el-card>
+      </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import {ref} from 'vue'
 import {useStore} from 'vuex';  
-const store=useStore()
+import {useRouter} from 'vue-router'
 
+const store=useStore()
+const router=useRouter()
 
 const form = ref({
   email: '',
@@ -105,10 +133,12 @@ const submitForm = () => {
     if(form.value.role=="0")
     {
       Register_message=store.state.FirebaseOps.sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
+      router.push('/login')
     }
     // if professor
     else{
       Register_message=store.state.FirebaseOps.prof_sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
+      router.push('/login')
     }
     // const Register_message=store.state.FirebaseOps.sign_up(form.value.username,form.value.email,form.value.password,form.value.confirmPassword)
     // console.log(Register_message)
@@ -140,31 +170,67 @@ const submitForm = () => {
 
 </script>
 
-<style scoped>
-    html,body{
-        margin: 0;
-        padding: 0;
-        position: relative;
-    }
-    .dialog{
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,.8);
-    }
-    .RegisterPage{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-left: -175px;
-        width: 350px;
-        min-height: 300px;
-        padding: 30px 20px 20px;
-        border-radius: 8px;
-        box-sizing: border-box;
-        background-color: #fff;
-    }
-    .RegisterPage p{
-        color: red;
-        text-align: left;
-    }
+<style lang="less" scoped>
+.login-card {
+  margin: auto;
+  width: 800px;
+  height: 660px;
+  padding-top: 80px;
+}
+
+/deep/ .el-radio__label {
+  font-size: 24px;
+  font-family: Futura;
+}
+.el-button.create-button {
+    width: 200px;
+    height: 80px;
+    font-size: 30px;
+    font-family: Futura;
+    background-color: #2DB6BC;
+}
+
+.el-button.create-button:focus {
+    border-color: #abe1e4;
+    background-color: #abe1e4;
+}
+.register-link {
+    font-size: 16px;
+    font-family: Futura;
+}
+.dialog{
+    width: 100%;
+    height: 100vh;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginPage{
+    width: 100%;
+    min-height: 300px;
+    padding: 30px 20px 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+p{
+    color: red;
+    text-align: left;
+    margin: 0;
+}
+
+/deep/ .el-form-item__label {
+  font-size: 24px!important;
+  font-family: Futura;
+  margin: 10px;
+}
+
+/deep/ .el-form-item__content {
+  width: 580px!important;
+}
+
+.el-form-item.el-form-item--large {
+  margin-bottom: 70px;
+}
 </style>

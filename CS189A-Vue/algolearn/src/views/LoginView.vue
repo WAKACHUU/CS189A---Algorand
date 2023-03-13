@@ -2,20 +2,44 @@
 <!-- eslint-disable @typescript-eslint/no-var-requires -->
 <template>
     <div class="dialog">
-        <div class="loginPage">
-            <h1>Login</h1>
-            <el-form :model="form">
-                <el-form-item label="user">
-                    <el-input type="text" id="user" v-model="form.user" @blur="inputBlur('user',form.user)"></el-input>
-                    <p>{{form.userError}}</p>
-                </el-form-item>
-                <el-form-item label="password">
-                    <el-input type="password" id="password" v-model="form.password" @blur="inputBlur('password',form.password)"></el-input>
-                    <p>{{form.passwordError}}</p>
-                </el-form-item>
-                <el-button type="primary" @click="submitForm()" v-bind:disabled="form.beDisabled">Login</el-button>
-            </el-form>
+      <div style="position: fixed; top:20px; left:20px;">
+        <el-image style="width:273px;height:74px;" src="https://www.algorand.com/assets/media-kit/logos/full/png/algorand_full_logo_black.png"></el-image>
+      </div>
+      <div>
+        <div style="width: 100%; display:flex; justify-content: center;">
+            <span style="font-size: 72px; font-family: Futura; margin-bottom: 30px;;">Welcome to AlgoLearn</span>
         </div>
+        <el-card class="login-card">
+          <el-form :model="form" label-width="100px" size="large">
+              <el-form-item label="Account">
+                  <el-input 
+                    type="text" 
+                    id="user" 
+                    v-model="form.user" 
+                    @blur="inputBlur('user',form.user)"
+                    :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                  ></el-input>
+                  <p>{{form.userError}}</p>
+              </el-form-item>
+              <el-form-item label="Password">
+                  <el-input 
+                    type="password" 
+                    id="password" 
+                    v-model="form.password" 
+                    @blur="inputBlur('password',form.password)"
+                    :input-style="{ height: '56px', fontFamily: 'Futura', fontSize: '24px'}"
+                  ></el-input>
+                  <p>{{form.passwordError}}</p>
+              </el-form-item>
+              <div style="width: 100%; display: flex; justify-content: center;">
+                <el-button type="primary" class="create-button" @click="submitForm()" v-bind:disabled="form.beDisabled">Login</el-button>               
+              </div>     
+              <div style="width: 100%; display: flex; justify-content: center;">
+                <el-button class="register-link" link type="primary" @click="goToRegister()">No account? Register here!</el-button>
+              </div>                  
+          </el-form>
+        </el-card>
+      </div>
     </div>
 </template>
 
@@ -72,33 +96,70 @@ const submitForm = () => {
   })
 }
 
+const goToRegister = () => {
+  router.push({path: '/register'})
+}
+
 </script>
 
-<style scoped>
-    html,body{
-        margin: 0;
-        padding: 0;
-        position: relative;
-    }
-    .dialog{
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,.8);
-    }
-    .loginPage{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-left: -175px;
-        width: 350px;
-        min-height: 300px;
-        padding: 30px 20px 20px;
-        border-radius: 8px;
-        box-sizing: border-box;
-        background-color: #fff;
-    }
-    .loginPage p{
-        color: red;
-        text-align: left;
-    }
+<style lang="less" scoped>
+.login-card {
+  margin: auto;
+  width: 800px;
+  height: 520px;
+  padding-top: 100px;
+}
+
+.el-button.create-button {
+    width: 200px;
+    height: 80px;
+    font-size: 30px;
+    font-family: Futura;
+    background-color: #2DB6BC;
+}
+
+.el-button.create-button:focus {
+    border-color: #abe1e4;
+    background-color: #abe1e4;
+}
+.register-link {
+    font-size: 16px;
+    font-family: Futura;
+}
+.dialog{
+    width: 100%;
+    height: 100vh;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginPage{
+    width: 100%;
+    min-height: 300px;
+    padding: 30px 20px 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+p{
+    color: red;
+    text-align: left;
+    margin: 0;
+}
+
+/deep/ .el-form-item__label {
+  font-size: 24px!important;
+  font-family: Futura;
+  margin: 10px;
+}
+
+/deep/ .el-form-item__content {
+  width: 580px!important;
+}
+
+.el-form-item.el-form-item--large {
+  margin-bottom: 70px;
+}
+    
 </style>

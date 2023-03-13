@@ -38,6 +38,7 @@
   .nft-title {
     font-size: 24px;
     font-family: Futura;
+    font-weight: bold;
     color: #2DB6BC;
     line-height: 34px;
   }

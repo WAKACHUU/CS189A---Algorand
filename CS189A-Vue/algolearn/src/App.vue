@@ -4,7 +4,7 @@
       <router-view/>
     </div>
   <!-- bottom navigation bar -->
-  <div class="bottom-nav">
+  <div v-if="showBottomBar" class="bottom-nav">
     <router-link to="/" class="nav-item">
       <div style="justify-content: center;">
         <div style="width: 100%; display: flex; justify-content: center;">
@@ -46,8 +46,31 @@
 
 <script lang="ts" setup>
 import { House, School, User } from '@element-plus/icons-vue'
-// import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
+
+const store = useStore()
+const router = useRouter()
+const currentRoute = ref(router.currentRoute.value.fullPath)
+console.log(currentRoute)
+
+const showBottomBar = ref(store.state.FirebaseOps.SignInState)
+
+watch(() => store.state.FirebaseOps.SignInState, (newVal) => {
+  showBottomBar.value = newVal
+  console.log(showBottomBar.value)
+})
+
+watch(() => router.currentRoute.value.fullPath, (newVal) => {
+  currentRoute.value = newVal
+  if (newVal == '/login') {
+    showBottomBar.value = false
+  } else {
+    showBottomBar.value = true
+  }
+})
 </script>
 
 <style lang="less" >

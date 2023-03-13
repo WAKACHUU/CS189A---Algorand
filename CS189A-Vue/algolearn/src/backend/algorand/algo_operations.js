@@ -223,11 +223,12 @@ class AlgoOperations{
         // Get the account information for the new account
         let accountInfo = await this.algo_client.accountInformation(account.addr).do();
         // the list of dictionaries of assets
-        const account_asset=accountInfo.assets;
-        console.log("This is the account assets",account_asset)
-        console.log("Account balance: %d microAlgos", accountInfo.amount);
-        console.log("Account = " + account.addr);
-        console.log("Account info",accountInfo);
+        this.assets=accountInfo.assets;
+        console.log("This is the account assets",this.assets)
+        return this.assets;
+        // console.log("Account balance: %d microAlgos", accountInfo.amount);
+        // console.log("Account = " + account.addr);
+        // console.log("Account info",accountInfo);
     }
 
     // make payment method
@@ -276,6 +277,15 @@ class AlgoOperations{
     {
         const assetInfo = await this.algo_client.getAssetByID(assetID).do();
         console.log('This is the asset info',assetInfo);
+        return assetInfo;
+        // this.assets=assetInfo.assets;
+        // console.log('This is the asset info',this.assets);
+        // console.log('This is the asset info',assetInfo);
+    }
+
+    get_account_assets()
+    {
+        return this.assets;
     }
 }
 export default AlgoOperations;

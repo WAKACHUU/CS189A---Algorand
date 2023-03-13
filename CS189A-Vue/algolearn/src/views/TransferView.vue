@@ -71,14 +71,17 @@
   
 <script lang="ts" setup>
   import { ref } from 'vue'
+  import { useStore } from 'vuex'
   import { Filter } from '@element-plus/icons-vue'
   import { useRouter } from 'vue-router'
   import NFTCard from '@/components/NFTCard.vue'
 
-  
-  const username = ref('username')
-  const algoAcc = ref('algoacc')
-  const useremail = ref('user@email.com')
+  const store = useStore();
+  const thisUser = store.state.FirebaseOps.user
+
+  const username = ref(thisUser.user_collection.name)
+  const algoAcc = ref(thisUser.user_collection.address)
+  const useremail = ref(thisUser.user_collection.email)
   
   // tab controller
   const activeName = ref('transaction')

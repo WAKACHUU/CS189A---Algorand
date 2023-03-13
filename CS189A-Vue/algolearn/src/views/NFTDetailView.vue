@@ -66,6 +66,8 @@
     const username = ref('username')
     const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
     const userEmail = ref('user@ucsb.edu')
+
+    
     
     
     // all course info here

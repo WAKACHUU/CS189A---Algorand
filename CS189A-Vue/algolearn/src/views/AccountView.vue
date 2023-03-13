@@ -88,6 +88,7 @@ import NFTCard from '@/components/NFTCard.vue'
 import StarLevel from '@/components/StarLevel.vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import algosdk from 'algosdk'
 
 const router = useRouter();
 const store = useStore()
@@ -102,34 +103,40 @@ const activeName = ref('collection')
 
 const inputFilter = ref('')
 const NFTs = ref([
-  {
-      id: ref("1"),
-      name: ref("NFT 1"),
-      course: ref("CS189A"),
-      comment: ref("This is a comment"),
-      genre: ref("Lecture 1"),
-      starLevel: ref(2),
-      imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-  },
-  {
-    id: ref("2"),
-    name: ref("NFT 1"),
-    course: ref("CS189A"),
-    comment: ref("This is a comment"),
-    genre: ref("Lecture 1"),
-    starLevel: ref(2),
-    imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-  },
-  {
-    id: ref("3"),
-    name: ref("NFT 1"),
-    course: ref("CS189A"),
-    comment: ref("This is a comment"),
-    genre: ref("Challenge"),
-    starLevel: ref(2),
-    imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
-  }
 ])
+
+
+const currentUser = store.state.FirebaseOps.user
+
+const thisAlgo=store.state.AlgoOps
+var seed=currentUser.user_collection.passphrase
+thisAlgo.get_algo_info(algosdk.mnemonicToSecretKey(seed)).then((asset_lit:any)=>{
+  // print the length of asset list
+  // console.log(asset_lit.length)
+  for (let i = 0; i < asset_lit.length; i++)
+  {
+    let asset_id=asset_lit[i]['asset-id']
+    // console.log(asset_id)
+    thisAlgo.get_asset_info(asset_id).then((asset_info:any)=>{
+      // console.log(asset_info)
+      // console.log(asset_info.params)
+      let attributes={
+        id:asset_id,
+        name:asset_info.params.name,
+        course:asset_info.params['unit-name'],
+        comment: asset_info.params.total,
+        genre: ref("Lecture 1"),
+        starLevel: ref(2),
+        imgSrc: ref("https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png")
+      }
+      NFTs.value.push(attributes)
+    })
+  }
+})
+
+// console.log(thisAlgo.get_account_assets())
+
+// tab controller
 
 const onClickCard = (courseId : string, nftId : number) => {
   router.push({path: `/course/${courseId}/${nftId}`})

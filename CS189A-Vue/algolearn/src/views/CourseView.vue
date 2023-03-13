@@ -34,10 +34,12 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getDoc } from "firebase/firestore";
+import algosdk from 'algosdk';
 
 
 const store = useStore()
 const router = useRouter()
+
 
 const currentUser = store.state.FirebaseOps.user
 
@@ -45,14 +47,13 @@ const username = ref(currentUser.user_collection.name)
 const profilePicSrc = ref('http://img01.yohoboys.com/contentimg/2018/11/22/13/0187be5a52edcdc999f749b9e24c7815fb.jpg')
 const userEmail = ref(currentUser.user_collection.email)
 
+const thisAlgo=store.state.AlgoOps
+var seed=currentUser.user_collection.passphrase
+
+thisAlgo.get_algo_info(algosdk.mnemonicToSecretKey(seed))
+
 // all course info here
-const courseInfo = ref([
-  {
-    courseId: 'CS189A',
-    courseName: 'Capstone Project',
-    courseNum: 7
-  }
-])
+const courseInfo = ref([])
 
 // for (let i = 0; i < currentUser.user_collection.courses.length; i++) {
 //   // const course = currentUser.user_collection.courses[i]
@@ -71,6 +72,15 @@ const courseInfo = ref([
 for (let i = 0; i < currentUser.user_collection.courses.length; i++) {
   const courses = currentUser.read_class(i).then((doc : any) => {
     if (doc != undefined) {
+      let ID=doc.courseId
+      let name=doc.courseName
+      let dic={
+        courseId: ID,
+        courseName: name,
+        courseNum: 0
+      }
+      courseInfo.value.push(dic)
+
       console.log("Document data:", doc);
     } else {
       // doc.data() will be undefined in this case

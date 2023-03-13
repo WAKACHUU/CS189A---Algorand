@@ -98,8 +98,8 @@ const onGetinfo=()=>{
   console.log("==")
   try{
     
-    const algoAccount = algosdk.mnemonicToSecretKey(seed);
-    thisAlgo.get_algo_info(algoAccount)
+    // const algoAccount = algosdk.mnemonicToSecretKey(seed);
+    // thisAlgo.get_algo_info(algoAccount)
     thisAlgo.get_asset_info(162926582)
   }
   catch(e){
